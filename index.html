@@ -1,860 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0Z6QZX9XT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-Q0Z6QZX9XT');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROBOTAH - Future of Robotics</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>Robotah.com - Domain For Sale</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        :root {
-            --primary-color: #00ffff;
-            --secondary-color: #ff00ff;
-            --accent-color: #ffff00;
-            --dark-bg: #0a0a0a;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-        }
-
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border-radius: 5px;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
+        
+        .container {
+            max-width: 800px;
             width: 100%;
-            padding: 20px 50px;
-            background: rgba(10, 10, 10, 0.8);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            z-index: 1000;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #4cc9f0;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.7);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+        }
+        
+        .domain-name {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 30px 0;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        
+        .for-sale {
+            display: inline-block;
+            background: #ff4d6d;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding: 10px 30px;
+            border-radius: 50px;
+            margin: 20px 0 30px;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            transform: rotate(-2deg);
+        }
+        
+        .description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: #e0e0e0;
+        }
+        
+        .contact-section {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+        
+        .contact-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #4cc9f0;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info i {
+            font-size: 1.5rem;
+            color: #4cc9f0;
+        }
+        
+        .email {
+            font-size: 1.4rem;
+            color: #fff;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
-
-        nav.scrolled {
-            padding: 15px 50px;
-            background: rgba(10, 10, 10, 0.95);
+        
+        .email:hover {
+            color: #4cc9f0;
+            text-shadow: 0 0 8px rgba(76, 201, 240, 0.7);
         }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 10px var(--primary-color)); }
-            to { filter: drop-shadow(0 0 20px var(--secondary-color)); }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-primary);
-            text-decoration: none;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 1;
-            max-width: 1000px;
-            padding: 0 20px;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes textGlow {
-            from { filter: drop-shadow(0 0 20px var(--primary-color)); }
-            to { filter: drop-shadow(0 0 30px var(--secondary-color)); }
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-        }
-
+        
         .cta-button {
             display: inline-block;
+            background: #4cc9f0;
+            color: #1a2a6c;
+            font-size: 1.3rem;
+            font-weight: 700;
             padding: 15px 40px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: var(--dark-bg);
-            text-decoration: none;
             border-radius: 50px;
-            font-weight: bold;
+            text-decoration: none;
+            margin-top: 20px;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
         }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            transition: left 0.5s ease;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
+        
         .cta-button:hover {
+            background: #fff;
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+            box-shadow: 0 8px 20px rgba(76, 201, 240, 0.6);
         }
-
-        /* Floating Particles */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            animation: float 10s infinite linear;
-        }
-
-        @keyframes float {
-            from {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            to {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Features Section */
-        .features {
-            padding: 100px 50px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 60px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-            border-radius: 20px;
-            opacity: 0;
-            z-index: -1;
-            transition: opacity 0.3s ease;
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-        }
-
-        /* Robotics Showcase */
-        .showcase {
-            padding: 100px 50px;
-            background: linear-gradient(180deg, transparent, rgba(0, 255, 255, 0.05));
-        }
-
-        .showcase-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .robot-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .robot-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .robot-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
-        }
-
-        .robot-image {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            color: var(--primary-color);
-        }
-
-        .robot-info {
-            padding: 30px;
-        }
-
-        .robot-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .robot-info p {
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .robot-specs {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .spec {
-            background: rgba(0, 255, 255, 0.1);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--primary-color);
-        }
-
-        /* Stats Section */
-        .stats {
-            padding: 100px 50px;
-            background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
-        }
-
-        .stats-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 100px 50px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .contact-form {
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 50px;
-        }
-
-        .form-group {
-            margin-bottom: 30px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 10px;
-            color: var(--text-primary);
+        
+        .footer {
+            margin-top: 40px;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            color: #a0a0a0;
         }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 10px;
-            color: var(--dark-bg);
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
-        }
-
-        /* Footer */
-        footer {
-            padding: 50px;
-            background: rgba(0, 0, 0, 0.5);
-            text-align: center;
-            border-top: 1px solid rgba(0, 255, 255, 0.3);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .social-links a {
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--primary-color);
-            transform: translateY(-5px);
-        }
-
-        /* Mobile Responsive */
+        
         @media (max-width: 768px) {
-            nav {
-                padding: 15px 20px;
+            .domain-name {
+                font-size: 3rem;
             }
-
-            .nav-links {
-                display: none;
+            
+            .logo {
+                font-size: 2.8rem;
             }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .features,
-            .showcase,
-            .stats,
-            .contact {
-                padding: 50px 20px;
-            }
-
-            .section-title {
-                font-size: 2rem;
+            
+            .container {
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <div class="logo">ROBOTAH</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#showcase">Robots</a></li>
-                <li><a href="#stats">Stats</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+    <div class="container">
+        <div class="logo">ROBOTAH</div>
+        <div class="tagline">The Future of Robotics</div>
+        
+        <div class="domain-name">robotah.com</div>
+        <div class="for-sale">DOMAIN FOR SALE</div>
+        
+        <p class="description">
+            Premium domain name perfect for robotics companies, AI startups, tech blogs, or innovative automation solutions. 
+            Short, memorable, and brandable - the perfect foundation for your next venture in the robotics industry.
+        </p>
+        
+        <div class="contact-section">
+            <h2 class="contact-title">Make an Offer</h2>
+            <div class="contact-info">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:technicaladk@gmail.com" class="email">technicaladk@gmail.com</a>
+            </div>
+            <p>All serious inquiries will be responded to promptly.</p>
+            <a href="mailto:technicaladk@gmail.com" class="cta-button">Contact Us</a>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="particles" id="particles"></div>
-        <div class="hero-content">
-            <h1>Welcome to the Future</h1>
-            <p>Revolutionizing the world with advanced robotics and AI technology</p>
-            <a href="#features" class="cta-button">Explore More</a>
+        
+        <div class="footer">
+            <p>&copy; 2023 Robotah.com Domain Sale. All rights reserved.</p>
         </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <h2 class="section-title">Our Features</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <h3>Advanced AI</h3>
-                <p>State-of-the-art artificial intelligence powering our next-generation robots</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-microchip"></i>
-                </div>
-                <h3>Quantum Processing</h3>
-                <p>Ultra-fast quantum processors for real-time decision making</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3>Secure Systems</h3>
-                <p>Military-grade encryption and security protocols</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-infinity"></i>
-                </div>
-                <h3>Scalable Solutions</h3>
-                <p>Adaptable systems that grow with your needs</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-sync-alt"></i>
-                </div>
-                <h3>Self-Learning</h3>
-                <p>Continuous improvement through machine learning</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-network-wired"></i>
-                </div>
-                <h3>Connected Ecosystem</h3>
-                <p>Seamless integration with IoT and smart systems</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Robotics Showcase -->
-    <section class="showcase" id="showcase">
-        <div class="showcase-container">
-            <h2 class="section-title">Our Robots</h2>
-            <div class="robot-grid">
-                <div class="robot-card">
-                    <div class="robot-image">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="robot-info">
-                        <h3>NEXUS-7</h3>
-                        <p>Advanced humanoid robot designed for complex tasks and human interaction</p>
-                        <div class="robot-specs">
-                            <span class="spec">AI v3.0</span>
-                            <span class="spec">Quantum Core</span>
-                            <span class="spec">Self-Learning</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="robot-card">
-                    <div class="robot-image">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <div class="robot-info">
-                        <h3>INDUSTRIAL-X</h3>
-                        <p>Heavy-duty industrial robot for manufacturing and automation</p>
-                        <div class="robot-specs">
-                            <span class="spec">10 Ton Capacity</span>
-                            <span class="spec">Precision Control</span>
-                            <span class="spec">24/7 Operation</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="robot-card">
-                    <div class="robot-image">
-                        <i class="fas fa-microscope"></i>
-                    </div>
-                    <div class="robot-info">
-                        <h3>MED-BOT</h3>
-                        <p>Medical assistance robot for healthcare and surgical procedures</p>
-                        <div class="robot-specs">
-                            <span class="spec">Sub-millimeter Precision</span>
-                            <span class="spec">Sterile Design</span>
-                            <span class="spec">AI Diagnosis</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats" id="stats">
-        <h2 class="section-title">By the Numbers</h2>
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-number" data-target="1000">0</div>
-                <div class="stat-label">Robots Deployed</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="50">0</div>
-                <div class="stat-label">Countries Served</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="99">0</div>
-                <div class="stat-label">Accuracy %</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="24">0</div>
-                <div class="stat-label">Support Hours</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <h2 class="section-title">Get in Touch</h2>
-        <form class="contact-form" id="contactForm">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="submit-btn">Send Message</button>
-        </form>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="social-links">
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-        <p>&copy; 2024 ROBOTAH. All rights reserved. Building the future, one robot at a time.</p>
-    </footer>
-
-    <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        createParticles();
-
-        // Animated counter for stats
-        function animateCounters() {
-            const counters = document.querySelectorAll('.stat-number');
-            const speed = 200;
-
-            counters.forEach(counter => {
-                const animate = () => {
-                    const target = +counter.getAttribute('data-target');
-                    const count = +counter.innerText;
-                    const increment = target / speed;
-
-                    if (count < target) {
-                        counter.innerText = Math.ceil(count + increment);
-                        setTimeout(animate, 10);
-                    } else {
-                        counter.innerText = target;
-                    }
-                };
-
-                // Start animation when element is in view
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            animate();
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                });
-
-                observer.observe(counter);
-            });
-        }
-
-        animateCounters();
-
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const message = formData.get('message');
-
-            // Create success message
-            const successMessage = document.createElement('div');
-            successMessage.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-                color: var(--dark-bg);
-                padding: 30px 50px;
-                border-radius: 20px;
-                font-size: 1.2rem;
-                font-weight: bold;
-                z-index: 2000;
-                animation: fadeIn 0.5s ease;
-            `;
-            successMessage.textContent = `Thank you, ${name}! Your message has been sent.`;
-            document.body.appendChild(successMessage);
-
-            // Reset form
-            this.reset();
-
-            // Remove message after 3 seconds
-            setTimeout(() => {
-                successMessage.style.animation = 'fadeOut 0.5s ease';
-                setTimeout(() => {
-                    document.body.removeChild(successMessage);
-                }, 500);
-            }, 3000);
-        });
-
-        // Add fade animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-                to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            }
-            @keyframes fadeOut {
-                from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-                to { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Add hover effect to robot cards
-        document.querySelectorAll('.robot-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.05) rotateY(5deg)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1) rotateY(0deg)';
-            });
-        });
-    </script>
+    </div>
 </body>
-
 </html>
