@@ -13,17 +13,19 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-color: #00C9FF;
-            --secondary-color: #92FE9D;
-            --accent-color: #FF6B6B;
-            --dark-color: #1A1A2E;
-            --light-color: #F8F9FA;
-            --text-color: #333;
+            --primary-color: #6366F1;
+            --secondary-color: #10B981;
+            --accent-color: #F59E0B;
+            --dark-color: #1F2937;
+            --light-color: #F9FAFB;
+            --text-color: #374151;
             --card-bg: #FFFFFF;
+            --bg-light: #F3F4F6;
+            --border-color: #E5E7EB;
         }
         
         * {
@@ -33,10 +35,10 @@
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             color: var(--text-color);
-            background-color: #f0f4ff;
-            line-height: 1.7;
+            background-color: var(--bg-light);
+            line-height: 1.6;
             overflow-x: hidden;
         }
         
@@ -47,8 +49,8 @@
         }
         
         .navbar {
-            background-color: var(--dark-color);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            background-color: var(--card-bg);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             padding: 1rem 0;
             transition: all 0.3s ease;
         }
@@ -56,17 +58,17 @@
         .navbar-brand {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--primary-color) !important;
-            text-shadow: 0 0 20px rgba(0, 201, 255, 0.5);
         }
         
         .nav-link {
-            color: rgba(255, 255, 255, 0.85) !important;
+            color: var(--text-color) !important;
             font-weight: 500;
             margin: 0 0.5rem;
             transition: all 0.3s ease;
             position: relative;
+            padding: 0.5rem 0;
         }
         
         .nav-link:hover {
@@ -78,20 +80,19 @@
             position: absolute;
             width: 0;
             height: 2px;
-            bottom: -5px;
-            left: 50%;
+            bottom: 0;
+            left: 0;
             background-color: var(--primary-color);
             transition: all 0.3s ease;
-            transform: translateX(-50%);
         }
         
         .nav-link:hover::after {
-            width: 80%;
+            width: 100%;
         }
         
         .hero-section {
-            background: linear-gradient(135deg, var(--dark-color) 0%, #16213e 100%);
-            color: white;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
+            color: var(--dark-color);
             padding: 6rem 0;
             position: relative;
             overflow: hidden;
@@ -105,8 +106,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 80%, rgba(0, 201, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(146, 254, 157, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
             opacity: 0.5;
         }
         
@@ -119,86 +120,81 @@
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes glow {
-            from { text-shadow: 0 0 10px rgba(0, 201, 255, 0.5); }
-            to { text-shadow: 0 0 20px rgba(146, 254, 157, 0.5); }
+            color: var(--dark-color);
         }
         
         .hero-subtitle {
-            font-size: 1.4rem;
-            font-weight: 300;
+            font-size: 1.25rem;
+            font-weight: 400;
             margin-bottom: 2.5rem;
-            max-width: 700px;
-            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            color: #6B7280;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), #00a0cc);
+            background-color: var(--primary-color);
             border: none;
             font-weight: 600;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
+            padding: 0.75rem 1.75rem;
+            border-radius: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 201, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(99, 102, 241, 0.1);
         }
         
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 201, 255, 0.4);
+            background-color: #5558E3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
         }
         
         .btn-outline-light {
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50px;
-            padding: 0.8rem 2rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.75rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: var(--card-bg);
+            color: var(--text-color);
         }
         
         .btn-outline-light:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-            border-color: white;
+            background-color: var(--bg-light);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
         }
         
         .search-section {
             padding: 3rem 0;
-            background-color: white;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             position: relative;
             z-index: 10;
             margin-top: -30px;
-            border-radius: 20px;
+            border-radius: 1rem;
         }
         
         .search-box {
             position: relative;
-            max-width: 700px;
+            max-width: 600px;
             margin: 0 auto;
         }
         
         .search-input {
             width: 100%;
-            padding: 1.2rem 3.5rem 1.2rem 1.8rem;
-            border: 2px solid #e0e6ff;
-            border-radius: 50px;
-            font-size: 1.1rem;
+            padding: 1rem 3.5rem 1rem 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.75rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
-            background-color: #f8faff;
+            background-color: var(--light-color);
         }
         
         .search-input:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(0, 201, 255, 0.2);
-            background-color: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background-color: var(--card-bg);
         }
         
         .search-btn {
@@ -206,11 +202,11 @@
             right: 8px;
             top: 50%;
             transform: translateY(-50%);
-            background: linear-gradient(135deg, var(--primary-color), #00a0cc);
+            background-color: var(--primary-color);
             border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -220,8 +216,8 @@
         }
         
         .search-btn:hover {
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 5px 15px rgba(0, 201, 255, 0.4);
+            background-color: #5558E3;
+            transform: translateY(-50%) scale(1.05);
         }
         
         .category-section {
@@ -229,7 +225,7 @@
         }
         
         .section-title {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 1rem;
             text-align: center;
@@ -243,105 +239,89 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 5px;
+            width: 80px;
+            height: 4px;
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            border-radius: 3px;
+            border-radius: 2px;
         }
         
         .section-subtitle {
             text-align: center;
-            max-width: 700px;
-            margin: 0 auto 3.5rem;
-            color: #555;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            color: #6B7280;
             font-size: 1.1rem;
         }
         
         .category-card {
             background-color: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
             height: 100%;
             display: flex;
             flex-direction: column;
             position: relative;
-            border: 1px solid #f0f4ff;
+            border: 1px solid var(--border-color);
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
         
         .category-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border-color: var(--primary-color);
+            text-decoration: none;
+            color: inherit;
         }
         
         .category-icon {
-            height: 140px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.5rem;
+            font-size: 3rem;
             color: white;
             position: relative;
             overflow: hidden;
         }
         
-        .category-icon::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-            opacity: 0;
-        }
-        
-        .category-card:hover .category-icon::before {
-            opacity: 1;
-            top: -100%;
-            left: -100%;
-        }
-        
         .category-icon.beginner {
-            background: linear-gradient(135deg, var(--primary-color), #00a0cc);
+            background: linear-gradient(135deg, var(--primary-color), #818CF8);
         }
         
         .category-icon.business {
-            background: linear-gradient(135deg, var(--secondary-color), #4ade80);
+            background: linear-gradient(135deg, var(--secondary-color), #34D399);
         }
         
         .category-icon.build {
-            background: linear-gradient(135deg, var(--accent-color), #ff8787);
+            background: linear-gradient(135deg, var(--accent-color), #FBBF24);
         }
         
         .category-icon.news {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
         }
         
         .category-body {
-            padding: 2rem;
+            padding: 1.5rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
         
         .category-title {
-            font-size: 1.6rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
             color: var(--dark-color);
         }
         
         .category-text {
-            color: #555;
-            margin-bottom: 1.8rem;
+            color: #6B7280;
+            margin-bottom: 1.5rem;
             flex-grow: 1;
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 0.95rem;
         }
         
         .category-link {
@@ -351,11 +331,11 @@
             display: inline-flex;
             align-items: center;
             transition: all 0.3s ease;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
         
         .category-link:hover {
-            color: #00a0cc;
+            color: #5558E3;
         }
         
         .category-link i {
@@ -364,47 +344,49 @@
         }
         
         .category-link:hover i {
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
         
         .tutorials-section {
             padding: 5rem 0;
-            background-color: white;
+            background-color: var(--card-bg);
         }
         
         .tutorial-card {
-            border-radius: 20px;
+            border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
             height: 100%;
             display: flex;
             flex-direction: column;
             cursor: pointer;
             text-decoration: none;
             color: inherit;
-            border: 2px solid transparent;
-            background: white;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
         }
         
         .tutorial-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 201, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border-color: var(--primary-color);
+            text-decoration: none;
+            color: inherit;
         }
         
         .tutorial-img {
-            height: 200px;
+            height: 180px;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
         }
         
         .tutorial-card:hover .tutorial-img {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
         
         .tutorial-body {
-            padding: 2rem;
+            padding: 1.5rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -412,38 +394,37 @@
         
         .tutorial-badge {
             display: inline-block;
-            padding: 0.4rem 1rem;
-            background-color: rgba(0, 201, 255, 0.1);
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(99, 102, 241, 0.1);
             color: var(--primary-color);
-            border-radius: 50px;
-            font-size: 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
         
         .tutorial-title {
-            font-size: 1.4rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
             color: var(--dark-color);
-            font-weight: 700;
+            font-weight: 600;
         }
         
         .tutorial-text {
-            color: #555;
-            margin-bottom: 1.8rem;
+            color: #6B7280;
+            margin-bottom: 1.5rem;
             flex-grow: 1;
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 0.95rem;
         }
         
         .tutorial-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9rem;
-            color: #777;
+            font-size: 0.875rem;
+            color: #9CA3AF;
             padding-top: 1rem;
-            border-top: 1px solid #f0f4ff;
+            border-top: 1px solid var(--border-color);
         }
         
         .comparison-section {
@@ -451,26 +432,26 @@
         }
         
         .comparison-table {
-            background-color: white;
-            border-radius: 20px;
+            background-color: var(--card-bg);
+            border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid #f0f4ff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
         }
         
         .comparison-table th {
-            background: linear-gradient(135deg, var(--dark-color), #16213e);
+            background-color: var(--dark-color);
             color: white;
             font-weight: 600;
-            padding: 1.2rem;
+            padding: 1rem;
             text-align: left;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
         }
         
         .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #f0f4ff;
-            font-size: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
         }
         
         .comparison-table tr:last-child td {
@@ -478,60 +459,62 @@
         }
         
         .comparison-table tr:hover {
-            background-color: rgba(0, 201, 255, 0.05);
+            background-color: rgba(99, 102, 241, 0.05);
         }
         
         .rating {
-            color: #fbbf24;
+            color: #F59E0B;
         }
         
         .blog-section {
             padding: 5rem 0;
-            background-color: white;
+            background-color: var(--card-bg);
         }
         
         .blog-card {
-            border-radius: 20px;
+            border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
             height: 100%;
             display: flex;
             flex-direction: column;
             cursor: pointer;
             text-decoration: none;
             color: inherit;
-            border: 2px solid transparent;
-            background: white;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
         }
         
         .blog-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 201, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border-color: var(--primary-color);
+            text-decoration: none;
+            color: inherit;
         }
         
         .blog-img {
-            height: 220px;
+            height: 200px;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
         }
         
         .blog-card:hover .blog-img {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
         
         .blog-body {
-            padding: 2rem;
+            padding: 1.5rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
         
         .blog-date {
-            font-size: 0.9rem;
-            color: #777;
-            margin-bottom: 0.8rem;
+            font-size: 0.875rem;
+            color: #9CA3AF;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
         }
@@ -542,19 +525,18 @@
         }
         
         .blog-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
             color: var(--dark-color);
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.3;
         }
         
         .blog-text {
-            color: #555;
-            margin-bottom: 1.8rem;
+            color: #6B7280;
+            margin-bottom: 1.5rem;
             flex-grow: 1;
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 0.95rem;
         }
         
         .blog-link {
@@ -564,11 +546,11 @@
             display: inline-flex;
             align-items: center;
             transition: all 0.3s ease;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
         
         .blog-link:hover {
-            color: #00a0cc;
+            color: #5558E3;
         }
         
         .blog-link i {
@@ -577,13 +559,13 @@
         }
         
         .blog-link:hover i {
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
         
         .newsletter-section {
-            background: linear-gradient(135deg, var(--dark-color) 0%, #16213e 100%);
+            background: linear-gradient(135deg, var(--dark-color) 0%, #374151 100%);
             color: white;
-            padding: 5rem 0;
+            padding: 4rem 0;
             position: relative;
             overflow: hidden;
         }
@@ -596,8 +578,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 80%, rgba(0, 201, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(146, 254, 157, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
             opacity: 0.5;
         }
         
@@ -610,18 +592,15 @@
         }
         
         .newsletter-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
         }
         
         .newsletter-text {
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             opacity: 0.9;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         .newsletter-form {
@@ -631,9 +610,9 @@
         
         .newsletter-input {
             flex-grow: 1;
-            padding: 1rem 1.5rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
             font-size: 1rem;
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
@@ -648,22 +627,22 @@
             outline: none;
             border-color: var(--primary-color);
             background-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 0 4px rgba(0, 201, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
         
         .footer {
             background-color: var(--dark-color);
             color: rgba(255, 255, 255, 0.7);
-            padding: 4rem 0 1.5rem;
+            padding: 3rem 0 1.5rem;
         }
         
         .footer-title {
             color: white;
-            font-size: 1.5rem;
-            margin-bottom: 1.8rem;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
             position: relative;
-            padding-bottom: 0.8rem;
-            font-weight: 700;
+            padding-bottom: 0.75rem;
+            font-weight: 600;
         }
         
         .footer-title::after {
@@ -671,7 +650,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 50px;
+            width: 40px;
             height: 3px;
             background-color: var(--primary-color);
             border-radius: 1.5px;
@@ -683,7 +662,7 @@
         }
         
         .footer-links li {
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
         
         .footer-links a {
@@ -691,25 +670,26 @@
             text-decoration: none;
             transition: all 0.3s ease;
             display: inline-block;
+            font-size: 0.95rem;
         }
         
         .footer-links a:hover {
             color: var(--primary-color);
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
         
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 0.75rem;
+            margin-top: 1rem;
         }
         
         .social-link {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
             border-radius: 50%;
@@ -718,16 +698,16 @@
         
         .social-link:hover {
             background-color: var(--primary-color);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 201, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
         
         .copyright {
             text-align: center;
-            padding-top: 2.5rem;
-            margin-top: 2.5rem;
+            padding-top: 2rem;
+            margin-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.95rem;
+            font-size: 0.875rem;
         }
         
         .floating-shapes {
@@ -742,7 +722,7 @@
         
         .shape {
             position: absolute;
-            opacity: 0.05;
+            opacity: 0.03;
             animation: float 20s infinite linear;
         }
         
@@ -790,10 +770,17 @@
         }
         
         .article-card {
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .article-card:hover {
+            text-decoration: none;
+            color: inherit;
         }
         
         .article-card::before {
@@ -803,7 +790,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0, 201, 255, 0.05), rgba(146, 254, 157, 0.05));
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.03), rgba(16, 185, 129, 0.03));
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: 1;
@@ -824,11 +811,11 @@
             }
             
             .hero-subtitle {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
             
             .section-title {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
             .newsletter-form {
@@ -850,7 +837,7 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">Robotah</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -897,7 +884,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="hero-image text-center">
-                        <img src="https://picsum.photos/seed/robotah-hero/600/400.jpg" alt="Robot and AI technology" class="img-fluid rounded-4 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1596495577876-7a611d0ce043?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Advanced humanoid robot" class="img-fluid rounded-3 shadow" onerror="this.src='https://picsum.photos/seed/robot-hero/600/400.jpg'">
                     </div>
                 </div>
             </div>
@@ -924,55 +911,55 @@
             
             <div class="row g-4">
                 <div class="col-md-6 col-lg-3" id="beginners">
-                    <div class="category-card article-card" onclick="window.location.href='#beginners-articles'">
+                    <a href="#beginners-articles" class="category-card article-card">
                         <div class="category-icon beginner">
                             <i class="fas fa-robot"></i>
                         </div>
                         <div class="category-body article-content">
                             <h3 class="category-title">Best Robots for Beginners</h3>
                             <p class="category-text">Explore our curated list of beginner-friendly robots perfect for starting your robotics journey. Find detailed reviews, comparisons, and recommendations.</p>
-                            <a href="#beginners-articles" class="category-link">Explore Robots <i class="fas fa-arrow-right"></i></a>
+                            <div class="category-link">Explore Robots <i class="fas fa-arrow-right"></i></div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 
                 <div class="col-md-6 col-lg-3" id="business">
-                    <div class="category-card article-card" onclick="window.location.href='#business-articles'">
+                    <a href="#business-articles" class="category-card article-card">
                         <div class="category-icon business">
                             <i class="fas fa-briefcase"></i>
                         </div>
                         <div class="category-body article-content">
                             <h3 class="category-title">AI Tools for Business</h3>
                             <p class="category-text">Discover powerful AI tools that can transform your business operations. From automation to analytics, find the right solutions for your needs.</p>
-                            <a href="#business-articles" class="category-link">Explore Tools <i class="fas fa-arrow-right"></i></a>
+                            <div class="category-link">Explore Tools <i class="fas fa-arrow-right"></i></div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 
                 <div class="col-md-6 col-lg-3" id="build">
-                    <div class="category-card article-card" onclick="window.location.href='#build-articles'">
+                    <a href="#build-articles" class="category-card article-card">
                         <div class="category-icon build">
                             <i class="fas fa-tools"></i>
                         </div>
                         <div class="category-body article-content">
                             <h3 class="category-title">How to Build a Robot</h3>
                             <p class="category-text">Step-by-step guides and tutorials for building your own robots. Learn the fundamentals, components, and programming skills needed.</p>
-                            <a href="#build-articles" class="category-link">Start Building <i class="fas fa-arrow-right"></i></a>
+                            <div class="category-link">Start Building <i class="fas fa-arrow-right"></i></div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 
                 <div class="col-md-6 col-lg-3" id="news">
-                    <div class="category-card article-card" onclick="window.location.href='#news-articles'">
+                    <a href="#news-articles" class="category-card article-card">
                         <div class="category-icon news">
                             <i class="fas fa-newspaper"></i>
                         </div>
                         <div class="category-body article-content">
                             <h3 class="category-title">AI News & Updates</h3>
                             <p class="category-text">Stay updated with the latest developments in AI and robotics. Industry news, breakthrough technologies, and expert insights.</p>
-                            <a href="#news-articles" class="category-link">Read News <i class="fas fa-arrow-right"></i></a>
+                            <div class="category-link">Read News <i class="fas fa-arrow-right"></i></div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -987,7 +974,7 @@
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
                     <a href="#" class="tutorial-card article-card">
-                        <img src="https://picsum.photos/seed/robot-tutorial-1/400/300.jpg" alt="Robot programming tutorial" class="tutorial-img">
+                        <img src="https://picsum.photos/seed/arduino-robotics/400/300.jpg" alt="Robot programming tutorial" class="tutorial-img" onerror="this.src='https://picsum.photos/seed/tutorial1/400/300.jpg'">
                         <div class="tutorial-body article-content">
                             <span class="tutorial-badge">Beginner</span>
                             <h3 class="tutorial-title">Getting Started with Arduino Robotics</h3>
@@ -1002,7 +989,7 @@
                 
                 <div class="col-md-6 col-lg-4">
                     <a href="#" class="tutorial-card article-card">
-                        <img src="https://picsum.photos/seed/robot-tutorial-2/400/300.jpg" alt="AI integration tutorial" class="tutorial-img">
+                        <img src="https://picsum.photos/seed/ai-integration/400/300.jpg" alt="AI integration tutorial" class="tutorial-img" onerror="this.src='https://picsum.photos/seed/tutorial2/400/300.jpg'">
                         <div class="tutorial-body article-content">
                             <span class="tutorial-badge">Intermediate</span>
                             <h3 class="tutorial-title">Integrating AI into Your Robot Projects</h3>
@@ -1017,7 +1004,7 @@
                 
                 <div class="col-md-6 col-lg-4">
                     <a href="#" class="tutorial-card article-card">
-                        <img src="https://picsum.photos/seed/robot-tutorial-3/400/300.jpg" alt="Robot arm tutorial" class="tutorial-img">
+                        <img src="https://picsum.photos/seed/robotic-arm/400/300.jpg" alt="Robot arm tutorial" class="tutorial-img" onerror="this.src='https://picsum.photos/seed/tutorial3/400/300.jpg'">
                         <div class="tutorial-body article-content">
                             <span class="tutorial-badge">Advanced</span>
                             <h3 class="tutorial-title">Building a Robotic Arm with Servo Motors</h3>
@@ -1109,7 +1096,7 @@
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
                     <a href="#" class="blog-card article-card">
-                        <img src="https://picsum.photos/seed/ai-news-1/400/300.jpg" alt="AI breakthrough news" class="blog-img">
+                        <img src="https://picsum.photos/seed/ai-reasoning/400/300.jpg" alt="AI breakthrough news" class="blog-img" onerror="this.src='https://picsum.photos/seed/news1/400/300.jpg'">
                         <div class="blog-body article-content">
                             <div class="blog-date">
                                 <i class="far fa-calendar"></i> May 15, 2023
@@ -1123,7 +1110,7 @@
                 
                 <div class="col-md-6 col-lg-4">
                     <a href="#" class="blog-card article-card">
-                        <img src="https://picsum.photos/seed/robot-news-2/400/300.jpg" alt="Robotics innovation news" class="blog-img">
+                        <img src="https://picsum.photos/seed/soft-robotics/400/300.jpg" alt="Robotics innovation news" class="blog-img" onerror="this.src='https://picsum.photos/seed/news2/400/300.jpg'">
                         <div class="blog-body article-content">
                             <div class="blog-date">
                                 <i class="far fa-calendar"></i> May 12, 2023
@@ -1137,7 +1124,7 @@
                 
                 <div class="col-md-6 col-lg-4">
                     <a href="#" class="blog-card article-card">
-                        <img src="https://picsum.photos/seed/ai-news-3/400/300.jpg" alt="AI business news" class="blog-img">
+                        <img src="https://picsum.photos/seed/ai-business/400/300.jpg" alt="AI business news" class="blog-img" onerror="this.src='https://picsum.photos/seed/news3/400/300.jpg'">
                         <div class="blog-body article-content">
                             <div class="blog-date">
                                 <i class="far fa-calendar"></i> May 10, 2023
@@ -1262,7 +1249,7 @@
             });
         });
         
-        // Add click functionality to all article cards
+        // Handle clicks on article cards
         document.querySelectorAll('.article-card').forEach(card => {
             card.addEventListener('click', function(e) {
                 // If the clicked element is a link, let it handle the navigation
@@ -1270,16 +1257,13 @@
                     return;
                 }
                 
-                // Get the link from the card or navigate to a default
-                const link = this.querySelector('a') || this.getAttribute('onclick');
-                if (link) {
-                    if (typeof link === 'string' && link.includes('window.location.href')) {
-                        eval(link);
-                    } else {
-                        link.click();
-                    }
+                // Get the href from the card if it's an anchor tag
+                const href = this.getAttribute('href');
+                if (href && href !== '#') {
+                    // Navigate to the link
+                    window.location.href = href;
                 } else {
-                    // Fallback: show a message that the article would open
+                    // If no href, show the article title in an alert
                     const title = this.querySelector('h3').textContent;
                     alert(`Opening article: ${title}`);
                 }
@@ -1289,7 +1273,7 @@
         // Add interactive hover effects to cards
         document.querySelectorAll('.category-card, .tutorial-card, .blog-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px)';
+                this.style.transform = 'translateY(-5px)';
             });
             
             card.addEventListener('mouseleave', function() {
