@@ -411,10 +411,11 @@
         }
         
         .tutorial-text {
-            color: #6B7280;
+            color: #4B5563;
             margin-bottom: 1.5rem;
             flex-grow: 1;
             font-size: 0.95rem;
+            line-height: 1.6;
         }
         
         .tutorial-meta {
@@ -533,10 +534,11 @@
         }
         
         .blog-text {
-            color: #6B7280;
+            color: #4B5563;
             margin-bottom: 1.5rem;
             flex-grow: 1;
             font-size: 0.95rem;
+            line-height: 1.6;
         }
         
         .blog-link {
@@ -805,6 +807,32 @@
             z-index: 2;
         }
         
+        /* Modal styles */
+        .modal-content {
+            border-radius: 1rem;
+            border: none;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+        
+        .modal-title {
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+        }
+        
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
@@ -973,53 +1001,53 @@
             
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
-                    <a href="#" class="tutorial-card article-card">
+                    <div class="tutorial-card article-card" data-bs-toggle="modal" data-bs-target="#tutorialModal1">
                         <img src="https://picsum.photos/seed/arduino-robotics/400/300.jpg" alt="Robot programming tutorial" class="tutorial-img" onerror="this.src='https://picsum.photos/seed/tutorial1/400/300.jpg'">
                         <div class="tutorial-body article-content">
                             <span class="tutorial-badge">Beginner</span>
                             <h3 class="tutorial-title">Getting Started with Arduino Robotics</h3>
-                            <p class="tutorial-text">Learn the basics of Arduino programming and build your first simple robot with step-by-step instructions.</p>
+                            <p class="tutorial-text">Learn the basics of Arduino programming and build your first simple robot with step-by-step instructions. Perfect for beginners with no prior experience.</p>
                             <div class="tutorial-meta">
                                 <span><i class="far fa-clock"></i> 30 min</span>
                                 <span><i class="far fa-eye"></i> 12.5k views</span>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 
                 <div class="col-md-6 col-lg-4">
-                    <a href="#" class="tutorial-card article-card">
+                    <div class="tutorial-card article-card" data-bs-toggle="modal" data-bs-target="#tutorialModal2">
                         <img src="https://picsum.photos/seed/ai-integration/400/300.jpg" alt="AI integration tutorial" class="tutorial-img" onerror="this.src='https://picsum.photos/seed/tutorial2/400/300.jpg'">
                         <div class="tutorial-body article-content">
                             <span class="tutorial-badge">Intermediate</span>
                             <h3 class="tutorial-title">Integrating AI into Your Robot Projects</h3>
-                            <p class="tutorial-text">Discover how to add AI capabilities to your robots using machine learning models and computer vision.</p>
+                            <p class="tutorial-text">Discover how to add AI capabilities to your robots using machine learning models and computer vision. Take your projects to the next level.</p>
                             <div class="tutorial-meta">
                                 <span><i class="far fa-clock"></i> 45 min</span>
                                 <span><i class="far fa-eye"></i> 8.2k views</span>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 
                 <div class="col-md-6 col-lg-4">
-                    <a href="#" class="tutorial-card article-card">
+                    <div class="tutorial-card article-card" data-bs-toggle="modal" data-bs-target="#tutorialModal3">
                         <img src="https://picsum.photos/seed/robotic-arm/400/300.jpg" alt="Robot arm tutorial" class="tutorial-img" onerror="this.src='https://picsum.photos/seed/tutorial3/400/300.jpg'">
                         <div class="tutorial-body article-content">
                             <span class="tutorial-badge">Advanced</span>
                             <h3 class="tutorial-title">Building a Robotic Arm with Servo Motors</h3>
-                            <p class="tutorial-text">Create a fully functional robotic arm with precise control using servo motors and microcontrollers.</p>
+                            <p class="tutorial-text">Create a fully functional robotic arm with precise control using servo motors and microcontrollers. Advanced project for experienced builders.</p>
                             <div class="tutorial-meta">
                                 <span><i class="far fa-clock"></i> 1 hr 20 min</span>
                                 <span><i class="far fa-eye"></i> 5.7k views</span>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
             
             <div class="text-center mt-5">
-                <a href="#" class="btn btn-primary">View All Tutorials</a>
+                <a href="#" class="btn btn-primary" onclick="showComingSoon('tutorials')">View All Tutorials</a>
             </div>
         </div>
     </section>
@@ -1082,7 +1110,7 @@
             </div>
             
             <div class="text-center mt-5">
-                <a href="#" class="btn btn-primary">View Full Comparison</a>
+                <a href="#" class="btn btn-primary" onclick="showComingSoon('comparison')">View Full Comparison</a>
             </div>
         </div>
     </section>
@@ -1095,7 +1123,7 @@
             
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
-                    <a href="#" class="blog-card article-card">
+                    <div class="blog-card article-card" data-bs-toggle="modal" data-bs-target="#newsModal1">
                         <img src="https://picsum.photos/seed/ai-reasoning/400/300.jpg" alt="AI breakthrough news" class="blog-img" onerror="this.src='https://picsum.photos/seed/news1/400/300.jpg'">
                         <div class="blog-body article-content">
                             <div class="blog-date">
@@ -1105,11 +1133,11 @@
                             <p class="blog-text">Researchers have developed a new AI system that demonstrates human-like reasoning abilities in solving complex problems that previously required human intuition.</p>
                             <div class="blog-link">Read More <i class="fas fa-arrow-right"></i></div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 
                 <div class="col-md-6 col-lg-4">
-                    <a href="#" class="blog-card article-card">
+                    <div class="blog-card article-card" data-bs-toggle="modal" data-bs-target="#newsModal2">
                         <img src="https://picsum.photos/seed/soft-robotics/400/300.jpg" alt="Robotics innovation news" class="blog-img" onerror="this.src='https://picsum.photos/seed/news2/400/300.jpg'">
                         <div class="blog-body article-content">
                             <div class="blog-date">
@@ -1119,11 +1147,11 @@
                             <p class="blog-text">A new approach to soft robotics allows machines to move with unprecedented flexibility and adaptability, bringing us closer to truly human-like robots.</p>
                             <div class="blog-link">Read More <i class="fas fa-arrow-right"></i></div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 
                 <div class="col-md-6 col-lg-4">
-                    <a href="#" class="blog-card article-card">
+                    <div class="blog-card article-card" data-bs-toggle="modal" data-bs-target="#newsModal3">
                         <img src="https://picsum.photos/seed/ai-business/400/300.jpg" alt="AI business news" class="blog-img" onerror="this.src='https://picsum.photos/seed/news3/400/300.jpg'">
                         <div class="blog-body article-content">
                             <div class="blog-date">
@@ -1133,12 +1161,12 @@
                             <p class="blog-text">Small businesses are increasingly adopting AI tools to streamline operations, improve customer service, and gain competitive advantages in their markets.</p>
                             <div class="blog-link">Read More <i class="fas fa-arrow-right"></i></div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
             
             <div class="text-center mt-5">
-                <a href="#" class="btn btn-primary">View All News</a>
+                <a href="#" class="btn btn-primary" onclick="showComingSoon('news')">View All News</a>
             </div>
         </div>
     </section>
@@ -1187,11 +1215,11 @@
                 <div class="col-md-2">
                     <h3 class="footer-title">Resources</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Robot Comparison</a></li>
-                        <li><a href="#">Glossary</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Forums</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#" onclick="showComingSoon('comparison')">Robot Comparison</a></li>
+                        <li><a href="#" onclick="showComingSoon('glossary')">Glossary</a></li>
+                        <li><a href="#" onclick="showComingSoon('community')">Community</a></li>
+                        <li><a href="#" onclick="showComingSoon('forums')">Forums</a></li>
+                        <li><a href="#" onclick="showComingSoon('faq')">FAQ</a></li>
                     </ul>
                 </div>
                 
@@ -1206,10 +1234,244 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 Robotah. All rights reserved. | <a href="#" style="color: var(--primary-color);">Privacy Policy</a> | <a href="#" style="color: var(--primary-color);">Terms of Service</a></p>
+                <p>&copy; 2023 Robotah. All rights reserved. | <a href="#" onclick="showComingSoon('privacy')" style="color: var(--primary-color);">Privacy Policy</a> | <a href="#" onclick="showComingSoon('terms')" style="color: var(--primary-color);">Terms of Service</a></p>
             </div>
         </div>
     </footer>
+
+    <!-- Tutorial Modals -->
+    <div class="modal fade" id="tutorialModal1" tabindex="-1" aria-labelledby="tutorialModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tutorialModal1Label">Getting Started with Arduino Robotics</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/seed/arduino-robotics/600/400.jpg" alt="Arduino Robotics" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/tutorial1/600/400.jpg'">
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Course Overview</h4>
+                            <p>This beginner-friendly tutorial will guide you through the basics of Arduino programming and help you build your first simple robot. No prior experience is required!</p>
+                            <ul>
+                                <li>Introduction to Arduino and its components</li>
+                                <li>Setting up your Arduino environment</li>
+                                <li>Basic programming concepts</li>
+                                <li>Building your first robot</li>
+                                <li>Testing and troubleshooting</li>
+                            </ul>
+                            <div class="mt-3">
+                                <span class="badge bg-primary me-2">Beginner</span>
+                                <span class="badge bg-secondary me-2">30 min</span>
+                                <span class="badge bg-info">12.5k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="showComingSoon('tutorial')">Start Tutorial</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tutorialModal2" tabindex="-1" aria-labelledby="tutorialModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tutorialModal2Label">Integrating AI into Your Robot Projects</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/seed/ai-integration/600/400.jpg" alt="AI Integration" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/tutorial2/600/400.jpg'">
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Course Overview</h4>
+                            <p>Take your robot projects to the next level by integrating AI capabilities. This intermediate tutorial covers machine learning models and computer vision for robotics.</p>
+                            <ul>
+                                <li>Introduction to AI for robotics</li>
+                                <li>Setting up machine learning environments</li>
+                                <li>Computer vision basics</li>
+                                <li>Integrating AI models with Arduino</li>
+                                <li>Real-world applications</li>
+                            </ul>
+                            <div class="mt-3">
+                                <span class="badge bg-primary me-2">Intermediate</span>
+                                <span class="badge bg-secondary me-2">45 min</span>
+                                <span class="badge bg-info">8.2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="showComingSoon('tutorial')">Start Tutorial</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tutorialModal3" tabindex="-1" aria-labelledby="tutorialModal3Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tutorialModal3Label">Building a Robotic Arm with Servo Motors</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/seed/robotic-arm/600/400.jpg" alt="Robotic Arm" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/tutorial3/600/400.jpg'">
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Course Overview</h4>
+                            <p>Create a fully functional robotic arm with precise control using servo motors and microcontrollers. This advanced project is perfect for experienced builders.</p>
+                            <ul>
+                                <li>Understanding servo motors</li>
+                                <li>Mechanical design principles</li>
+                                <li>Electronics and wiring</li>
+                                <li>Programming precise movements</li>
+                                <li>Advanced control techniques</li>
+                            </ul>
+                            <div class="mt-3">
+                                <span class="badge bg-primary me-2">Advanced</span>
+                                <span class="badge bg-secondary me-2">1 hr 20 min</span>
+                                <span class="badge bg-info">5.7k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="showComingSoon('tutorial')">Start Tutorial</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Modals -->
+    <div class="modal fade" id="newsModal1" tabindex="-1" aria-labelledby="newsModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newsModal1Label">New AI Model Achieves Human-Level Reasoning in Complex Tasks</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/seed/ai-reasoning/600/400.jpg" alt="AI Reasoning" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/news1/600/400.jpg'">
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Article Summary</h4>
+                            <p>Researchers have developed a new AI system that demonstrates human-like reasoning abilities in solving complex problems that previously required human intuition.</p>
+                            <p>The breakthrough comes from a team at NeuroTech AI, who've created a neural architecture that can understand abstract concepts and apply them to novel situations, a key component of human reasoning.</p>
+                            <p>This advancement could have significant implications for fields ranging from autonomous vehicles to medical diagnosis, where complex decision-making is crucial.</p>
+                            <div class="mt-3">
+                                <span class="badge bg-primary me-2">AI Research</span>
+                                <span class="badge bg-secondary me-2">May 15, 2023</span>
+                                <span class="badge bg-info">5 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="showComingSoon('article')">Read Full Article</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newsModal2" tabindex="-1" aria-labelledby="newsModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newsModal2Label">Soft Robotics Breakthrough Enables More Human-like Movement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/seed/soft-robotics/600/400.jpg" alt="Soft Robotics" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/news2/600/400.jpg'">
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Article Summary</h4>
+                            <p>A new approach to soft robotics allows machines to move with unprecedented flexibility and adaptability, bringing us closer to truly human-like robots.</p>
+                            <p>The innovation comes from researchers at MIT's Computer Science and Artificial Intelligence Laboratory (CSAIL), who've developed a new material that can change its stiffness on demand.</p>
+                            <p>This technology could revolutionize fields from healthcare to manufacturing, where robots need to interact safely and effectively with humans and delicate objects.</p>
+                            <div class="mt-3">
+                                <span class="badge bg-primary me-2">Robotics</span>
+                                <span class="badge bg-secondary me-2">May 12, 2023</span>
+                                <span class="badge bg-info">4 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="showComingSoon('article')">Read Full Article</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newsModal3" tabindex="-1" aria-labelledby="newsModal3Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newsModal3Label">How AI is Transforming Small Business Operations in 2023</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/seed/ai-business/600/400.jpg" alt="AI Business" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/news3/600/400.jpg'">
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Article Summary</h4>
+                            <p>Small businesses are increasingly adopting AI tools to streamline operations, improve customer service, and gain competitive advantages in their markets.</p>
+                            <p>According to a recent survey by Small Business Tech, 68% of small businesses have implemented at least one AI tool in their operations, up from just 23% two years ago.</p>
+                            <p>The most popular applications include customer service chatbots, inventory management systems, and marketing automation tools, allowing small businesses to compete more effectively with larger corporations.</p>
+                            <div class="mt-3">
+                                <span class="badge bg-primary me-2">Business AI</span>
+                                <span class="badge bg-secondary me-2">May 10, 2023</span>
+                                <span class="badge bg-info">6 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="showComingSoon('article')">Read Full Article</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Coming Soon Modal -->
+    <div class="modal fade" id="comingSoonModal" tabindex="-1" aria-labelledby="comingSoonModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="comingSoonModalLabel">Coming Soon!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="fas fa-robot fa-4x text-primary mb-3"></i>
+                    <p id="comingSoonMessage">This feature is coming soon! We're working hard to bring you the best content.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it!</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1257,6 +1519,11 @@
                     return;
                 }
                 
+                // If the card has a modal trigger, Bootstrap will handle it
+                if (this.getAttribute('data-bs-toggle') === 'modal') {
+                    return;
+                }
+                
                 // Get the href from the card if it's an anchor tag
                 const href = this.getAttribute('href');
                 if (href && href !== '#') {
@@ -1280,6 +1547,28 @@
                 this.style.transform = 'translateY(0)';
             });
         });
+        
+        // Function to show coming soon modal
+        function showComingSoon(feature) {
+            const messages = {
+                'tutorials': 'Our full tutorial library is coming soon! We\'re working hard to bring you the best robotics and AI tutorials.',
+                'news': 'Our full news section is coming soon! Stay tuned for the latest updates in AI and robotics.',
+                'comparison': 'Our detailed robot comparison tool is coming soon! We\'re gathering data to help you make the best choice.',
+                'glossary': 'Our comprehensive robotics and AI glossary is coming soon!',
+                'community': 'Our community forum is coming soon! Connect with other robotics enthusiasts.',
+                'forums': 'Our discussion forums are coming soon! Share your projects and get help from the community.',
+                'faq': 'Our FAQ section is coming soon! We\'re compiling answers to your most common questions.',
+                'privacy': 'Our Privacy Policy is being updated and will be available soon.',
+                'terms': 'Our Terms of Service are being updated and will be available soon.',
+                'tutorial': 'This full tutorial is coming soon! We\'re adding more detailed instructions and videos.',
+                'article': 'The full article is coming soon! We\'re adding more in-depth analysis and insights.'
+            };
+            
+            document.getElementById('comingSoonMessage').textContent = messages[feature] || 'This feature is coming soon! We\'re working hard to bring you the best content.';
+            
+            const comingSoonModal = new bootstrap.Modal(document.getElementById('comingSoonModal'));
+            comingSoonModal.show();
+        }
     </script>
 </body>
 </html>
