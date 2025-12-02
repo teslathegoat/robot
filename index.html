@@ -3,1572 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Robotah - Your ultimate resource for robotics and AI. Discover beginner-friendly robots, AI business tools, robot building tutorials, and the latest AI news.">
-    <meta name="keywords" content="robotics, AI, artificial intelligence, beginner robots, AI tools, robot building, AI news">
-    <meta name="author" content="Robotah Team">
-    <title>Robotah - Explore Robotics & AI</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
+    <title>Robotah.com - Domain For Sale</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
-        :root {
-            --primary-color: #6366F1;
-            --secondary-color: #10B981;
-            --accent-color: #F59E0B;
-            --dark-color: #1F2937;
-            --light-color: #F9FAFB;
-            --text-color: #374151;
-            --card-bg: #FFFFFF;
-            --bg-light: #F3F4F6;
-            --border-color: #E5E7EB;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-color);
-            background-color: var(--bg-light);
-            line-height: 1.6;
+            background-color: #0a192f;
+            color: #e6f1ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             overflow-x: hidden;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            color: var(--dark-color);
-        }
-        
-        .navbar {
-            background-color: var(--card-bg);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
-            transition: all 0.3s ease;
-        }
-        
-        .navbar-brand {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: var(--primary-color) !important;
-        }
-        
-        .nav-link {
-            color: var(--text-color) !important;
-            font-weight: 500;
-            margin: 0 0.5rem;
-            transition: all 0.3s ease;
             position: relative;
-            padding: 0.5rem 0;
         }
         
-        .nav-link:hover {
-            color: var(--primary-color) !important;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .hero-section {
-            background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
-            color: var(--dark-color);
-            padding: 6rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero-section::before {
-            content: "";
+        /* Robot-themed background pattern */
+        .robot-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-            opacity: 0.5;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: var(--dark-color);
-        }
-        
-        .hero-subtitle {
-            font-size: 1.25rem;
-            font-weight: 400;
-            margin-bottom: 2.5rem;
-            max-width: 600px;
-            color: #6B7280;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            border: none;
-            font-weight: 600;
-            padding: 0.75rem 1.75rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(99, 102, 241, 0.1);
-        }
-        
-        .btn-primary:hover {
-            background-color: #5558E3;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
-        }
-        
-        .btn-outline-light {
-            border: 2px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 0.75rem 1.75rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-        }
-        
-        .btn-outline-light:hover {
-            background-color: var(--bg-light);
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-        
-        .search-section {
-            padding: 3rem 0;
-            background-color: var(--card-bg);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            position: relative;
-            z-index: 10;
-            margin-top: -30px;
-            border-radius: 1rem;
-        }
-        
-        .search-box {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 1rem 3.5rem 1rem 1.5rem;
-            border: 2px solid var(--border-color);
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background-color: var(--light-color);
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-            background-color: var(--card-bg);
-        }
-        
-        .search-btn {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: var(--primary-color);
-            border: none;
-            border-radius: 0.5rem;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .search-btn:hover {
-            background-color: #5558E3;
-            transform: translateY(-50%) scale(1.05);
-        }
-        
-        .category-section {
-            padding: 5rem 0;
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            text-align: center;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            border-radius: 2px;
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            color: #6B7280;
-            font-size: 1.1rem;
-        }
-        
-        .category-card {
-            background-color: var(--card-bg);
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-color);
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .category-icon {
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .category-icon.beginner {
-            background: linear-gradient(135deg, var(--primary-color), #818CF8);
-        }
-        
-        .category-icon.business {
-            background: linear-gradient(135deg, var(--secondary-color), #34D399);
-        }
-        
-        .category-icon.build {
-            background: linear-gradient(135deg, var(--accent-color), #FBBF24);
-        }
-        
-        .category-icon.news {
-            background: linear-gradient(135deg, #3B82F6, #60A5FA);
-        }
-        
-        .category-body {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .category-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: var(--dark-color);
-        }
-        
-        .category-text {
-            color: #6B7280;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-            font-size: 0.95rem;
-        }
-        
-        .category-link {
-            color: var(--primary-color);
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-        }
-        
-        .category-link:hover {
-            color: #5558E3;
-        }
-        
-        .category-link i {
-            margin-left: 0.5rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .category-link:hover i {
-            transform: translateX(3px);
-        }
-        
-        .tutorials-section {
-            padding: 5rem 0;
-            background-color: var(--card-bg);
-        }
-        
-        .tutorial-card {
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-        }
-        
-        .tutorial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-color);
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .tutorial-img {
-            height: 180px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .tutorial-card:hover .tutorial-img {
-            transform: scale(1.02);
-        }
-        
-        .tutorial-body {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .tutorial-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background-color: rgba(99, 102, 241, 0.1);
-            color: var(--primary-color);
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .tutorial-title {
-            font-size: 1.125rem;
-            margin-bottom: 0.75rem;
-            color: var(--dark-color);
-            font-weight: 600;
-        }
-        
-        .tutorial-text {
-            color: #4B5563;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        
-        .tutorial-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.875rem;
-            color: #9CA3AF;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .comparison-section {
-            padding: 5rem 0;
-        }
-        
-        .comparison-table {
-            background-color: var(--card-bg);
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border-color);
-        }
-        
-        .comparison-table th {
-            background-color: var(--dark-color);
-            color: white;
-            font-weight: 600;
-            padding: 1rem;
-            text-align: left;
-            font-size: 0.95rem;
-        }
-        
-        .comparison-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.95rem;
-        }
-        
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .comparison-table tr:hover {
-            background-color: rgba(99, 102, 241, 0.05);
-        }
-        
-        .rating {
-            color: #F59E0B;
-        }
-        
-        .blog-section {
-            padding: 5rem 0;
-            background-color: var(--card-bg);
-        }
-        
-        .blog-card {
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-        }
-        
-        .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-color);
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .blog-img {
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .blog-card:hover .blog-img {
-            transform: scale(1.02);
-        }
-        
-        .blog-body {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .blog-date {
-            font-size: 0.875rem;
-            color: #9CA3AF;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .blog-date i {
-            margin-right: 0.5rem;
-            color: var(--primary-color);
-        }
-        
-        .blog-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: var(--dark-color);
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .blog-text {
-            color: #4B5563;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        
-        .blog-link {
-            color: var(--primary-color);
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-        }
-        
-        .blog-link:hover {
-            color: #5558E3;
-        }
-        
-        .blog-link i {
-            margin-left: 0.5rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .blog-link:hover i {
-            transform: translateX(3px);
-        }
-        
-        .newsletter-section {
-            background: linear-gradient(135deg, var(--dark-color) 0%, #374151 100%);
-            color: white;
-            padding: 4rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .newsletter-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-            opacity: 0.5;
-        }
-        
-        .newsletter-content {
-            position: relative;
-            z-index: 1;
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        .newsletter-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        
-        .newsletter-text {
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            font-size: 1rem;
-        }
-        
-        .newsletter-form {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .newsletter-input {
-            flex-grow: 1;
-            padding: 0.75rem 1.25rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .newsletter-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        .newsletter-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-        
-        .footer {
-            background-color: var(--dark-color);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 3rem 0 1.5rem;
-        }
-        
-        .footer-title {
-            color: white;
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .footer-title::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background-color: var(--primary-color);
-            border-radius: 1.5px;
-        }
-        
-        .footer-links {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-            font-size: 0.95rem;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-color);
-            transform: translateX(3px);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-        
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-        
-        .social-link:hover {
-            background-color: var(--primary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.875rem;
-        }
-        
-        .floating-shapes {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100, 255, 218, 0.05) 0%, transparent 20%),
+                linear-gradient(45deg, rgba(100, 255, 218, 0.03) 25%, transparent 25%, transparent 50%, rgba(100, 255, 218, 0.03) 50%, rgba(100, 255, 218, 0.03) 75%, transparent 75%, transparent);
+            background-size: 400px 400px, 400px 400px, 20px 20px;
             z-index: -1;
-            overflow: hidden;
         }
         
-        .shape {
+        /* Floating robot elements */
+        .robot-element {
             position: absolute;
-            opacity: 0.03;
-            animation: float 20s infinite linear;
+            opacity: 0.1;
+            z-index: -1;
         }
         
-        .shape:nth-child(1) {
+        .robot-head {
+            top: 10%;
+            left: 5%;
+            font-size: 80px;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .robot-body {
+            bottom: 15%;
+            right: 8%;
+            font-size: 100px;
+            animation: float 7s ease-in-out infinite 1s;
+        }
+        
+        .robot-gear {
             top: 20%;
-            left: 10%;
-            width: 80px;
-            height: 80px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            animation-duration: 25s;
-        }
-        
-        .shape:nth-child(2) {
-            top: 60%;
-            left: 80%;
-            width: 120px;
-            height: 120px;
-            background: var(--secondary-color);
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            animation-duration: 30s;
-            animation-direction: reverse;
-        }
-        
-        .shape:nth-child(3) {
-            top: 80%;
-            left: 20%;
-            width: 60px;
-            height: 60px;
-            background: var(--accent-color);
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation-duration: 35s;
+            right: 15%;
+            font-size: 60px;
+            animation: rotate 20s linear infinite;
         }
         
         @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-100px) rotate(180deg);
-            }
-            100% {
-                transform: translateY(0) rotate(360deg);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
         
-        .article-card {
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         
-        .article-card:hover {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .article-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.03), rgba(16, 185, 129, 0.03));
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .container {
+            max-width: 800px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: rgba(10, 25, 47, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(100, 255, 218, 0.1);
             z-index: 1;
         }
         
-        .article-card:hover::before {
-            opacity: 1;
-        }
-        
-        .article-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Modal styles */
-        .modal-content {
-            border-radius: 1rem;
-            border: none;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        .modal-header {
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.5rem;
-        }
-        
-        .modal-title {
+        .domain-name {
+            font-size: 3.5rem;
             font-weight: 700;
-            color: var(--dark-color);
+            margin-bottom: 20px;
+            color: #64ffda;
+            letter-spacing: 1px;
         }
         
-        .modal-body {
-            padding: 1.5rem;
+        .for-sale {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #ccd6f6;
         }
         
-        .modal-footer {
-            border-top: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
+        .description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            color: #8892b0;
+        }
+        
+        .contact-section {
+            margin-top: 30px;
+        }
+        
+        .contact-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #ccd6f6;
+        }
+        
+        .email-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .email-icon {
+            font-size: 1.5rem;
+            color: #64ffda;
+            margin-right: 15px;
+        }
+        
+        .email {
+            font-size: 1.3rem;
+            color: #64ffda;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .email:hover {
+            color: #a8ffea;
+            text-shadow: 0 0 8px rgba(100, 255, 218, 0.5);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: transparent;
+            color: #64ffda;
+            border: 2px solid #64ffda;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        
+        .cta-button:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.2);
+        }
+        
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #8892b0;
         }
         
         @media (max-width: 768px) {
-            .hero-title {
+            .domain-name {
                 font-size: 2.5rem;
             }
             
-            .hero-subtitle {
-                font-size: 1.1rem;
+            .for-sale {
+                font-size: 1.5rem;
             }
             
-            .section-title {
-                font-size: 2rem;
+            .description {
+                font-size: 1rem;
             }
             
-            .newsletter-form {
-                flex-direction: column;
+            .robot-head, .robot-body {
+                font-size: 50px;
             }
             
-            .floating-shapes {
-                display: none;
+            .robot-gear {
+                font-size: 40px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Shapes -->
-    <div class="floating-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Robotah</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#beginners">Beginner Robots</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#business">AI Tools</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#build">Build Robots</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#news">AI News</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#tutorials">Tutorials</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#blog">Blog</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="hero-content">
-                        <h1 class="hero-title">Explore the Future of Robotics & AI</h1>
-                        <p class="hero-subtitle">Your ultimate resource for beginner-friendly robots, AI business tools, building tutorials, and the latest industry news.</p>
-                        <div class="d-flex flex-wrap gap-3">
-                            <a href="#categories" class="btn btn-primary">Explore Categories</a>
-                            <a href="#tutorials" class="btn btn-outline-light">View Tutorials</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="hero-image text-center">
-                        <img src="https://images.unsplash.com/photo-1596495577876-7a611d0ce043?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Advanced humanoid robot" class="img-fluid rounded-3 shadow" onerror="this.src='https://picsum.photos/seed/robot-hero/600/400.jpg'">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Search Section -->
-    <section class="search-section">
-        <div class="container">
-            <div class="search-box">
-                <input type="text" class="search-input" placeholder="Search for robots, AI tools, tutorials, and more...">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Categories Section -->
-    <section id="categories" class="category-section">
-        <div class="container">
-            <h2 class="section-title">Explore Our Categories</h2>
-            <p class="section-subtitle">Discover the world of robotics and AI through our carefully curated content categories designed for all knowledge levels.</p>
-            
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3" id="beginners">
-                    <a href="#beginners-articles" class="category-card article-card">
-                        <div class="category-icon beginner">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="category-body article-content">
-                            <h3 class="category-title">Best Robots for Beginners</h3>
-                            <p class="category-text">Explore our curated list of beginner-friendly robots perfect for starting your robotics journey. Find detailed reviews, comparisons, and recommendations.</p>
-                            <div class="category-link">Explore Robots <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="col-md-6 col-lg-3" id="business">
-                    <a href="#business-articles" class="category-card article-card">
-                        <div class="category-icon business">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        <div class="category-body article-content">
-                            <h3 class="category-title">AI Tools for Business</h3>
-                            <p class="category-text">Discover powerful AI tools that can transform your business operations. From automation to analytics, find the right solutions for your needs.</p>
-                            <div class="category-link">Explore Tools <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="col-md-6 col-lg-3" id="build">
-                    <a href="#build-articles" class="category-card article-card">
-                        <div class="category-icon build">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <div class="category-body article-content">
-                            <h3 class="category-title">How to Build a Robot</h3>
-                            <p class="category-text">Step-by-step guides and tutorials for building your own robots. Learn the fundamentals, components, and programming skills needed.</p>
-                            <div class="category-link">Start Building <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="col-md-6 col-lg-3" id="news">
-                    <a href="#news-articles" class="category-card article-card">
-                        <div class="category-icon news">
-                            <i class="fas fa-newspaper"></i>
-                        </div>
-                        <div class="category-body article-content">
-                            <h3 class="category-title">AI News & Updates</h3>
-                            <p class="category-text">Stay updated with the latest developments in AI and robotics. Industry news, breakthrough technologies, and expert insights.</p>
-                            <div class="category-link">Read News <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tutorials Section -->
-    <section id="tutorials" class="tutorials-section">
-        <div class="container">
-            <h2 class="section-title">Featured Tutorials</h2>
-            <p class="section-subtitle">Learn robotics and AI with our beginner-friendly tutorials designed to help you build practical skills.</p>
-            
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="tutorial-card article-card" data-bs-toggle="modal" data-bs-target="#tutorialModal1">
-                        <img src="https://picsum.photos/seed/arduino-robotics/400/300.jpg" alt="Robot programming tutorial" class="tutorial-img" onerror="this.src='https://picsum.photos/seed/tutorial1/400/300.jpg'">
-                        <div class="tutorial-body article-content">
-                            <span class="tutorial-badge">Beginner</span>
-                            <h3 class="tutorial-title">Getting Started with Arduino Robotics</h3>
-                            <p class="tutorial-text">Learn the basics of Arduino programming and build your first simple robot with step-by-step instructions. Perfect for beginners with no prior experience.</p>
-                            <div class="tutorial-meta">
-                                <span><i class="far fa-clock"></i> 30 min</span>
-                                <span><i class="far fa-eye"></i> 12.5k views</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="tutorial-card article-card" data-bs-toggle="modal" data-bs-target="#tutorialModal2">
-                        <img src="https://picsum.photos/seed/ai-integration/400/300.jpg" alt="AI integration tutorial" class="tutorial-img" onerror="this.src='https://picsum.photos/seed/tutorial2/400/300.jpg'">
-                        <div class="tutorial-body article-content">
-                            <span class="tutorial-badge">Intermediate</span>
-                            <h3 class="tutorial-title">Integrating AI into Your Robot Projects</h3>
-                            <p class="tutorial-text">Discover how to add AI capabilities to your robots using machine learning models and computer vision. Take your projects to the next level.</p>
-                            <div class="tutorial-meta">
-                                <span><i class="far fa-clock"></i> 45 min</span>
-                                <span><i class="far fa-eye"></i> 8.2k views</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="tutorial-card article-card" data-bs-toggle="modal" data-bs-target="#tutorialModal3">
-                        <img src="https://picsum.photos/seed/robotic-arm/400/300.jpg" alt="Robot arm tutorial" class="tutorial-img" onerror="this.src='https://picsum.photos/seed/tutorial3/400/300.jpg'">
-                        <div class="tutorial-body article-content">
-                            <span class="tutorial-badge">Advanced</span>
-                            <h3 class="tutorial-title">Building a Robotic Arm with Servo Motors</h3>
-                            <p class="tutorial-text">Create a fully functional robotic arm with precise control using servo motors and microcontrollers. Advanced project for experienced builders.</p>
-                            <div class="tutorial-meta">
-                                <span><i class="far fa-clock"></i> 1 hr 20 min</span>
-                                <span><i class="far fa-eye"></i> 5.7k views</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-5">
-                <a href="#" class="btn btn-primary" onclick="showComingSoon('tutorials')">View All Tutorials</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comparison Section -->
-    <section class="comparison-section">
-        <div class="container">
-            <h2 class="section-title">Robot Comparison Guide</h2>
-            <p class="section-subtitle">Compare the best robots for beginners to find the perfect one for your needs and budget.</p>
-            
-            <div class="comparison-table">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Robot Model</th>
-                            <th>Price Range</th>
-                            <th>Skill Level</th>
-                            <th>Features</th>
-                            <th>Rating</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>LEGO Mindstorms EV3</strong></td>
-                            <td>$300-$350</td>
-                            <td>Beginner</td>
-                            <td>Programmable bricks, sensors, motors</td>
-                            <td><span class="rating">★★★★★</span> 4.8/5</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Sphero RVR</strong></td>
-                            <td>$200-$250</td>
-                            <td>Beginner</td>
-                            <td>Programmable, all-terrain, expandable</td>
-                            <td><span class="rating">★★★★☆</span> 4.5/5</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Makeblock mBot</strong></td>
-                            <td>$80-$120</td>
-                            <td>Beginner</td>
-                            <td>Arduino-based, easy assembly, sensors</td>
-                            <td><span class="rating">★★★★☆</span> 4.3/5</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ozobot Evo</strong></td>
-                            <td>$90-$100</td>
-                            <td>Beginner</td>
-                            <td>Screen-free coding, color sensors, small size</td>
-                            <td><span class="rating">★★★★☆</span> 4.2/5</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Wonder Workshop Dash</strong></td>
-                            <td>$140-$150</td>
-                            <td>Beginner</td>
-                            <td>Visual programming, voice control, sensors</td>
-                            <td><span class="rating">★★★★★</span> 4.7/5</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="text-center mt-5">
-                <a href="#" class="btn btn-primary" onclick="showComingSoon('comparison')">View Full Comparison</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section id="blog" class="blog-section">
-        <div class="container">
-            <h2 class="section-title">Latest AI & Robotics News</h2>
-            <p class="section-subtitle">Stay updated with the latest developments, breakthroughs, and trends in the world of AI and robotics.</p>
-            
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="blog-card article-card" data-bs-toggle="modal" data-bs-target="#newsModal1">
-                        <img src="https://picsum.photos/seed/ai-reasoning/400/300.jpg" alt="AI breakthrough news" class="blog-img" onerror="this.src='https://picsum.photos/seed/news1/400/300.jpg'">
-                        <div class="blog-body article-content">
-                            <div class="blog-date">
-                                <i class="far fa-calendar"></i> May 15, 2023
-                            </div>
-                            <h3 class="blog-title">New AI Model Achieves Human-Level Reasoning in Complex Tasks</h3>
-                            <p class="blog-text">Researchers have developed a new AI system that demonstrates human-like reasoning abilities in solving complex problems that previously required human intuition.</p>
-                            <div class="blog-link">Read More <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="blog-card article-card" data-bs-toggle="modal" data-bs-target="#newsModal2">
-                        <img src="https://picsum.photos/seed/soft-robotics/400/300.jpg" alt="Robotics innovation news" class="blog-img" onerror="this.src='https://picsum.photos/seed/news2/400/300.jpg'">
-                        <div class="blog-body article-content">
-                            <div class="blog-date">
-                                <i class="far fa-calendar"></i> May 12, 2023
-                            </div>
-                            <h3 class="blog-title">Soft Robotics Breakthrough Enables More Human-like Movement</h3>
-                            <p class="blog-text">A new approach to soft robotics allows machines to move with unprecedented flexibility and adaptability, bringing us closer to truly human-like robots.</p>
-                            <div class="blog-link">Read More <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="blog-card article-card" data-bs-toggle="modal" data-bs-target="#newsModal3">
-                        <img src="https://picsum.photos/seed/ai-business/400/300.jpg" alt="AI business news" class="blog-img" onerror="this.src='https://picsum.photos/seed/news3/400/300.jpg'">
-                        <div class="blog-body article-content">
-                            <div class="blog-date">
-                                <i class="far fa-calendar"></i> May 10, 2023
-                            </div>
-                            <h3 class="blog-title">How AI is Transforming Small Business Operations in 2023</h3>
-                            <p class="blog-text">Small businesses are increasingly adopting AI tools to streamline operations, improve customer service, and gain competitive advantages in their markets.</p>
-                            <div class="blog-link">Read More <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-5">
-                <a href="#" class="btn btn-primary" onclick="showComingSoon('news')">View All News</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter Section -->
-    <section class="newsletter-section">
-        <div class="container">
-            <div class="newsletter-content">
-                <h2 class="newsletter-title">Stay Updated with Robotah</h2>
-                <p class="newsletter-text">Subscribe to our newsletter for the latest tutorials, robot reviews, AI tools, and industry news delivered to your inbox.</p>
-                <form class="newsletter-form">
-                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h3 class="footer-title">About Robotah</h3>
-                    <p>Your ultimate resource for robotics and AI education, tools, and news. We make learning about technology accessible and fun for everyone.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                
-                <div class="col-md-2">
-                    <h3 class="footer-title">Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#beginners">Beginner Robots</a></li>
-                        <li><a href="#business">AI Tools</a></li>
-                        <li><a href="#build">Build Robots</a></li>
-                        <li><a href="#news">AI News</a></li>
-                        <li><a href="#tutorials">Tutorials</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-md-2">
-                    <h3 class="footer-title">Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#" onclick="showComingSoon('comparison')">Robot Comparison</a></li>
-                        <li><a href="#" onclick="showComingSoon('glossary')">Glossary</a></li>
-                        <li><a href="#" onclick="showComingSoon('community')">Community</a></li>
-                        <li><a href="#" onclick="showComingSoon('forums')">Forums</a></li>
-                        <li><a href="#" onclick="showComingSoon('faq')">FAQ</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-md-4">
-                    <h3 class="footer-title">Contact Us</h3>
-                    <ul class="footer-links">
-                        <li><i class="fas fa-envelope"></i> info@robotah.com</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Silicon Valley, CA</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 Robotah. All rights reserved. | <a href="#" onclick="showComingSoon('privacy')" style="color: var(--primary-color);">Privacy Policy</a> | <a href="#" onclick="showComingSoon('terms')" style="color: var(--primary-color);">Terms of Service</a></p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Tutorial Modals -->
-    <div class="modal fade" id="tutorialModal1" tabindex="-1" aria-labelledby="tutorialModal1Label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tutorialModal1Label">Getting Started with Arduino Robotics</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="https://picsum.photos/seed/arduino-robotics/600/400.jpg" alt="Arduino Robotics" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/tutorial1/600/400.jpg'">
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Course Overview</h4>
-                            <p>This beginner-friendly tutorial will guide you through the basics of Arduino programming and help you build your first simple robot. No prior experience is required!</p>
-                            <ul>
-                                <li>Introduction to Arduino and its components</li>
-                                <li>Setting up your Arduino environment</li>
-                                <li>Basic programming concepts</li>
-                                <li>Building your first robot</li>
-                                <li>Testing and troubleshooting</li>
-                            </ul>
-                            <div class="mt-3">
-                                <span class="badge bg-primary me-2">Beginner</span>
-                                <span class="badge bg-secondary me-2">30 min</span>
-                                <span class="badge bg-info">12.5k views</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="showComingSoon('tutorial')">Start Tutorial</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tutorialModal2" tabindex="-1" aria-labelledby="tutorialModal2Label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tutorialModal2Label">Integrating AI into Your Robot Projects</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="https://picsum.photos/seed/ai-integration/600/400.jpg" alt="AI Integration" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/tutorial2/600/400.jpg'">
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Course Overview</h4>
-                            <p>Take your robot projects to the next level by integrating AI capabilities. This intermediate tutorial covers machine learning models and computer vision for robotics.</p>
-                            <ul>
-                                <li>Introduction to AI for robotics</li>
-                                <li>Setting up machine learning environments</li>
-                                <li>Computer vision basics</li>
-                                <li>Integrating AI models with Arduino</li>
-                                <li>Real-world applications</li>
-                            </ul>
-                            <div class="mt-3">
-                                <span class="badge bg-primary me-2">Intermediate</span>
-                                <span class="badge bg-secondary me-2">45 min</span>
-                                <span class="badge bg-info">8.2k views</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="showComingSoon('tutorial')">Start Tutorial</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tutorialModal3" tabindex="-1" aria-labelledby="tutorialModal3Label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tutorialModal3Label">Building a Robotic Arm with Servo Motors</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="https://picsum.photos/seed/robotic-arm/600/400.jpg" alt="Robotic Arm" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/tutorial3/600/400.jpg'">
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Course Overview</h4>
-                            <p>Create a fully functional robotic arm with precise control using servo motors and microcontrollers. This advanced project is perfect for experienced builders.</p>
-                            <ul>
-                                <li>Understanding servo motors</li>
-                                <li>Mechanical design principles</li>
-                                <li>Electronics and wiring</li>
-                                <li>Programming precise movements</li>
-                                <li>Advanced control techniques</li>
-                            </ul>
-                            <div class="mt-3">
-                                <span class="badge bg-primary me-2">Advanced</span>
-                                <span class="badge bg-secondary me-2">1 hr 20 min</span>
-                                <span class="badge bg-info">5.7k views</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="showComingSoon('tutorial')">Start Tutorial</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- News Modals -->
-    <div class="modal fade" id="newsModal1" tabindex="-1" aria-labelledby="newsModal1Label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newsModal1Label">New AI Model Achieves Human-Level Reasoning in Complex Tasks</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="https://picsum.photos/seed/ai-reasoning/600/400.jpg" alt="AI Reasoning" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/news1/600/400.jpg'">
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Article Summary</h4>
-                            <p>Researchers have developed a new AI system that demonstrates human-like reasoning abilities in solving complex problems that previously required human intuition.</p>
-                            <p>The breakthrough comes from a team at NeuroTech AI, who've created a neural architecture that can understand abstract concepts and apply them to novel situations, a key component of human reasoning.</p>
-                            <p>This advancement could have significant implications for fields ranging from autonomous vehicles to medical diagnosis, where complex decision-making is crucial.</p>
-                            <div class="mt-3">
-                                <span class="badge bg-primary me-2">AI Research</span>
-                                <span class="badge bg-secondary me-2">May 15, 2023</span>
-                                <span class="badge bg-info">5 min read</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="showComingSoon('article')">Read Full Article</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="newsModal2" tabindex="-1" aria-labelledby="newsModal2Label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newsModal2Label">Soft Robotics Breakthrough Enables More Human-like Movement</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="https://picsum.photos/seed/soft-robotics/600/400.jpg" alt="Soft Robotics" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/news2/600/400.jpg'">
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Article Summary</h4>
-                            <p>A new approach to soft robotics allows machines to move with unprecedented flexibility and adaptability, bringing us closer to truly human-like robots.</p>
-                            <p>The innovation comes from researchers at MIT's Computer Science and Artificial Intelligence Laboratory (CSAIL), who've developed a new material that can change its stiffness on demand.</p>
-                            <p>This technology could revolutionize fields from healthcare to manufacturing, where robots need to interact safely and effectively with humans and delicate objects.</p>
-                            <div class="mt-3">
-                                <span class="badge bg-primary me-2">Robotics</span>
-                                <span class="badge bg-secondary me-2">May 12, 2023</span>
-                                <span class="badge bg-info">4 min read</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="showComingSoon('article')">Read Full Article</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="newsModal3" tabindex="-1" aria-labelledby="newsModal3Label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newsModal3Label">How AI is Transforming Small Business Operations in 2023</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="https://picsum.photos/seed/ai-business/600/400.jpg" alt="AI Business" class="img-fluid rounded mb-3" onerror="this.src='https://picsum.photos/seed/news3/600/400.jpg'">
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Article Summary</h4>
-                            <p>Small businesses are increasingly adopting AI tools to streamline operations, improve customer service, and gain competitive advantages in their markets.</p>
-                            <p>According to a recent survey by Small Business Tech, 68% of small businesses have implemented at least one AI tool in their operations, up from just 23% two years ago.</p>
-                            <p>The most popular applications include customer service chatbots, inventory management systems, and marketing automation tools, allowing small businesses to compete more effectively with larger corporations.</p>
-                            <div class="mt-3">
-                                <span class="badge bg-primary me-2">Business AI</span>
-                                <span class="badge bg-secondary me-2">May 10, 2023</span>
-                                <span class="badge bg-info">6 min read</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="showComingSoon('article')">Read Full Article</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Coming Soon Modal -->
-    <div class="modal fade" id="comingSoonModal" tabindex="-1" aria-labelledby="comingSoonModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="comingSoonModalLabel">Coming Soon!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <i class="fas fa-robot fa-4x text-primary mb-3"></i>
-                    <p id="comingSoonMessage">This feature is coming soon! We're working hard to bring you the best content.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it!</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="robot-bg"></div>
     
-    <script>
-        // Simple search functionality
-        document.querySelector('.search-btn').addEventListener('click', function() {
-            const searchTerm = document.querySelector('.search-input').value;
-            if (searchTerm) {
-                alert(`Searching for: ${searchTerm}`);
-                // In a real implementation, this would perform an actual search
-            }
-        });
+    <!-- Robot-themed decorative elements -->
+    <div class="robot-element robot-head">
+        <i class="fas fa-robot"></i>
+    </div>
+    <div class="robot-element robot-body">
+        <i class="fas fa-android"></i>
+    </div>
+    <div class="robot-element robot-gear">
+        <i class="fas fa-cog"></i>
+    </div>
+    
+    <div class="container">
+        <h1 class="domain-name">Robotah.com</h1>
+        <h2 class="for-sale">This domain is for sale</h2>
+        <p class="description">
+            Premium domain name perfect for robotics, AI, automation, or technology businesses. 
+            Make an offer to acquire this valuable digital asset.
+        </p>
         
-        // Newsletter form submission
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = this.querySelector('.newsletter-input').value;
-            if (email) {
-                alert(`Thank you for subscribing with: ${email}`);
-                this.reset();
-                // In a real implementation, this would submit to a backend service
-            }
-        });
+        <div class="contact-section">
+            <h3 class="contact-title">Contact for Inquiries</h3>
+            <div class="email-container">
+                <i class="fas fa-envelope email-icon"></i>
+                <a href="mailto:technicaladk@gmail.com" class="email">technicaladk@gmail.com</a>
+            </div>
+            <a href="mailto:technicaladk@gmail.com" class="cta-button">
+                <i class="fas fa-paper-plane"></i> Send Inquiry
+            </a>
+        </div>
         
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Handle clicks on article cards
-        document.querySelectorAll('.article-card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                // If the clicked element is a link, let it handle the navigation
-                if (e.target.tagName === 'A' || e.target.closest('a')) {
-                    return;
-                }
-                
-                // If the card has a modal trigger, Bootstrap will handle it
-                if (this.getAttribute('data-bs-toggle') === 'modal') {
-                    return;
-                }
-                
-                // Get the href from the card if it's an anchor tag
-                const href = this.getAttribute('href');
-                if (href && href !== '#') {
-                    // Navigate to the link
-                    window.location.href = href;
-                } else {
-                    // If no href, show the article title in an alert
-                    const title = this.querySelector('h3').textContent;
-                    alert(`Opening article: ${title}`);
-                }
-            });
-        });
-        
-        // Add interactive hover effects to cards
-        document.querySelectorAll('.category-card, .tutorial-card, .blog-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-        
-        // Function to show coming soon modal
-        function showComingSoon(feature) {
-            const messages = {
-                'tutorials': 'Our full tutorial library is coming soon! We\'re working hard to bring you the best robotics and AI tutorials.',
-                'news': 'Our full news section is coming soon! Stay tuned for the latest updates in AI and robotics.',
-                'comparison': 'Our detailed robot comparison tool is coming soon! We\'re gathering data to help you make the best choice.',
-                'glossary': 'Our comprehensive robotics and AI glossary is coming soon!',
-                'community': 'Our community forum is coming soon! Connect with other robotics enthusiasts.',
-                'forums': 'Our discussion forums are coming soon! Share your projects and get help from the community.',
-                'faq': 'Our FAQ section is coming soon! We\'re compiling answers to your most common questions.',
-                'privacy': 'Our Privacy Policy is being updated and will be available soon.',
-                'terms': 'Our Terms of Service are being updated and will be available soon.',
-                'tutorial': 'This full tutorial is coming soon! We\'re adding more detailed instructions and videos.',
-                'article': 'The full article is coming soon! We\'re adding more in-depth analysis and insights.'
-            };
-            
-            document.getElementById('comingSoonMessage').textContent = messages[feature] || 'This feature is coming soon! We\'re working hard to bring you the best content.';
-            
-            const comingSoonModal = new bootstrap.Modal(document.getElementById('comingSoonModal'));
-            comingSoonModal.show();
-        }
-    </script>
+        <div class="footer">
+            <p>© 2023 Robotah.com. All rights reserved.</p>
+        </div>
+    </div>
 </body>
 </html>
