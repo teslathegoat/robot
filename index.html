@@ -3,234 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotah.com - Domain For Sale</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Robotah.com - Premium Domain For Sale</title>
+    
+    <!-- Using Inter for clean, modern sans-serif typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
+        /* CSS Reset & Variables */
+        :root {
+            --bg-color: #000000;
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --border-color: #333333;
+            --input-bg: #111111;
+            --accent-hover: #ffffff;
+            --transition-speed: 0.3s;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: #0a192f;
-            color: #e6f1ff;
-            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
-            position: relative;
+            overflow: hidden; /* Prevent scrolling on main body, content is centered */
         }
-        
-        /* Robot-themed background pattern */
-        .robot-bg {
+
+        /* Subtle Background Gradient */
+        body::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(100, 255, 218, 0.05) 0%, transparent 20%),
-                linear-gradient(45deg, rgba(100, 255, 218, 0.03) 25%, transparent 25%, transparent 50%, rgba(100, 255, 218, 0.03) 50%, rgba(100, 255, 218, 0.03) 75%, transparent 75%, transparent);
-            background-size: 400px 400px, 400px 400px, 20px 20px;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 70%);
             z-index: -1;
+            pointer-events: none;
         }
-        
-        /* Floating robot elements */
-        .robot-element {
-            position: absolute;
-            opacity: 0.1;
-            z-index: -1;
-        }
-        
-        .robot-head {
-            top: 10%;
-            left: 5%;
-            font-size: 80px;
-            animation: float 8s ease-in-out infinite;
-        }
-        
-        .robot-body {
-            bottom: 15%;
-            right: 8%;
-            font-size: 100px;
-            animation: float 7s ease-in-out infinite 1s;
-        }
-        
-        .robot-gear {
-            top: 20%;
-            right: 15%;
-            font-size: 60px;
-            animation: rotate 20s linear infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
+
+        /* Layout Container */
         .container {
-            max-width: 800px;
-            padding: 40px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
             text-align: center;
-            background-color: rgba(10, 25, 47, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(100, 255, 218, 0.1);
-            z-index: 1;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 1.2s ease-out;
         }
-        
+
+        /* Header / Domain Name */
+        .domain-header {
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
         .domain-name {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #64ffda;
-            letter-spacing: 1px;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
         }
-        
-        .for-sale {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            color: #ccd6f6;
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 0 auto;
         }
-        
-        .description {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            line-height: 1.6;
-            color: #8892b0;
+
+        /* Main Section */
+        .sales-info {
+            margin-bottom: 3rem;
         }
-        
-        .contact-section {
-            margin-top: 30px;
+
+        .headline {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 2.5rem; /* Increased margin for spacing balance */
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
-        
-        .contact-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #ccd6f6;
+
+        /* Bullet Points */
+        .features-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+            align-items: center;
         }
-        
-        .email-container {
+
+        .features-list li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
+            gap: 0.5rem;
         }
-        
-        .email-icon {
-            font-size: 1.5rem;
-            color: #64ffda;
-            margin-right: 15px;
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--text-primary);
+            font-weight: 600;
         }
-        
-        .email {
-            font-size: 1.3rem;
-            color: #64ffda;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .email:hover {
-            color: #a8ffea;
-            text-shadow: 0 0 8px rgba(100, 255, 218, 0.5);
-        }
-        
+
+        /* Call to Action Button */
         .cta-button {
-            display: inline-block;
-            background-color: transparent;
-            color: #64ffda;
-            border: 2px solid #64ffda;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            border-radius: 4px;
+            background-color: var(--text-primary);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px; /* Rounded button */
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            margin-top: 20px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
         }
-        
+
         .cta-button:hover {
-            background-color: rgba(100, 255, 218, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.2);
+            transform: translateY(-2px);
+            background-color: #e0e0e0;
         }
-        
-        .footer {
-            margin-top: 40px;
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid #111;
+            background-color: #000;
+        }
+
+        .footer-email {
+            display: block;
+            color: var(--text-secondary);
             font-size: 0.9rem;
-            color: #8892b0;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
-        
-        @media (max-width: 768px) {
-            .domain-name {
-                font-size: 2.5rem;
-            }
-            
-            .for-sale {
-                font-size: 1.5rem;
-            }
-            
-            .description {
-                font-size: 1rem;
-            }
-            
-            .robot-head, .robot-body {
-                font-size: 50px;
-            }
-            
-            .robot-gear {
-                font-size: 40px;
+
+        .footer-email:hover {
+            color: var(--text-primary);
+        }
+
+        /* Modal (Popup) Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #0a0a0a;
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 450px;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #555;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--text-primary);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #dcdcdc;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="robot-bg"></div>
-    
-    <!-- Robot-themed decorative elements -->
-    <div class="robot-element robot-head">
-        <i class="fas fa-robot"></i>
-    </div>
-    <div class="robot-element robot-body">
-        <i class="fas fa-android"></i>
-    </div>
-    <div class="robot-element robot-gear">
-        <i class="fas fa-cog"></i>
-    </div>
-    
-    <div class="container">
-        <h1 class="domain-name">Robotah.com</h1>
-        <h2 class="for-sale">This domain is for sale</h2>
-        <p class="description">
-            Premium domain name perfect for robotics, AI, automation, or technology businesses. 
-            Make an offer to acquire this valuable digital asset.
-        </p>
-        
-        <div class="contact-section">
-            <h3 class="contact-title">Contact for Inquiries</h3>
-            <div class="email-container">
-                <i class="fas fa-envelope email-icon"></i>
-                <a href="mailto:technicaladk@gmail.com" class="email">technicaladk@gmail.com</a>
+
+    <main class="container">
+        <!-- Header -->
+        <header class="domain-header">
+            <div class="domain-name">Robotah.com</div>
+            <div class="divider"></div>
+        </header>
+
+        <!-- Main Section -->
+        <section class="sales-info">
+            <h1 class="headline">This name is for sale.</h1>
+
+            <ul class="features-list">
+                <li>Secure Payments</li>
+                <li>Trusted Partners</li>
+                <li>Fast Domain Transfer</li>
+            </ul>
+        </section>
+
+        <!-- Call to Action -->
+        <button class="cta-button" id="openModalBtn">Contact Owner</button>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <a href="mailto:mail-technicaladk@gmail.com" class="footer-email">mail-technicaladk@gmail.com</a>
+    </footer>
+
+    <!-- Contact Form Modal -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Inquire Now</h2>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
             </div>
-            <a href="mailto:technicaladk@gmail.com" class="cta-button">
-                <i class="fas fa-paper-plane"></i> Send Inquiry
-            </a>
-        </div>
-        
-        <div class="footer">
-            <p>© 2023 Robotah.com. All rights reserved.</p>
+            
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="I am interested in purchasing Robotah.com..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Inquiry</button>
+            </form>
         </div>
     </div>
+
+    <!-- Minimal JavaScript for Modal Interaction -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('contactModal');
+            const openBtn = document.getElementById('openModalBtn');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            // Open modal
+            openBtn.addEventListener('click', () => {
+                modal.classList.add('active');
+            });
+
+            // Close modal via X button
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+
+            // Close modal when clicking outside content
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            // Prevent default form submission for demo
+            const form = document.querySelector('form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('.submit-btn');
+                const originalText = btn.textContent;
+                
+                btn.textContent = 'Message Sent!';
+                btn.style.backgroundColor = '#4CAF50';
+                btn.style.color = '#fff';
+
+                setTimeout(() => {
+                    modal.classList.remove('active');
+                    form.reset();
+                    btn.textContent = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '';
+                }, 1500);
+            });
+        });
+    </script>
+
 </body>
 </html>
