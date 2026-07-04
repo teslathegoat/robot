@@ -3,464 +3,679 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotah.com - Premium Domain For Sale</title>
-    
-    <!-- Using Inter for clean, modern sans-serif typography -->
+    <title>Robotah — The Future of AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
     <style>
-        /* CSS Reset & Variables */
-        :root {
-            --bg-color: #000000;
-            --text-primary: #ffffff;
-            --text-secondary: #888888;
-            --border-color: #333333;
-            --input-bg: #111111;
-            --accent-hover: #ffffff;
-            --transition-speed: 0.3s;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* Prevent scrolling on main body, content is centered */
+            background: #030014;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Subtle Background Gradient */
-        body::before {
-            content: '';
+        /* ── Animated Background Orbs ── */
+        .orb {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 70%);
-            z-index: -1;
+            border-radius: 50%;
+            filter: blur(100px);
+            will-change: transform;
+        }
+        .orb-1 {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(99,102,241,0.25), transparent 70%);
+            top: -300px; left: -200px;
+            animation: drift 20s ease-in-out infinite;
+        }
+        .orb-2 {
+            width: 550px; height: 550px;
+            background: radial-gradient(circle, rgba(168,85,247,0.2), transparent 70%);
+            top: 40%; right: -200px;
+            animation: drift 26s ease-in-out infinite reverse;
+        }
+        .orb-3 {
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%);
+            bottom: -150px; left: 25%;
+            animation: drift 22s ease-in-out infinite;
+            animation-delay: -8s;
+        }
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25%  { transform: translate(40px, -30px) scale(1.06); }
+            50%  { transform: translate(-25px, 25px) scale(0.94); }
+            75%  { transform: translate(30px, 15px) scale(1.03); }
+        }
+
+        /* ── Subtle Grid ── */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 64px 64px;
+        }
+
+        /* ── Stars ── */
+        .star {
+            position: absolute;
+            width: 1px; height: 1px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--dur) ease-in-out infinite;
+            animation-delay: var(--delay);
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ── Glassmorphism ── */
+        .glass {
+            background: rgba(255,255,255,0.025);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .glass-md {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* ── Robot Animations ── */
+        .robot-float {
+            animation: robotHover 6s ease-in-out infinite;
+        }
+        @keyframes robotHover {
+            0%, 100% { transform: rotateY(-6deg) rotateX(2deg) translateY(0); }
+            50%      { transform: rotateY(-6deg) rotateX(2deg) translateY(-10px); }
+        }
+        .visor-pulse { animation: visorGlow 3s ease-in-out infinite; }
+        @keyframes visorGlow {
+            0%, 100% { opacity: 0.75; }
+            50%      { opacity: 1; }
+        }
+        .core-pulse {
+            animation: coreGlow 3s ease-in-out infinite;
+            transform-origin: center;
+        }
+        @keyframes coreGlow {
+            0%, 100% { opacity: 0.65; transform: scale(1); }
+            50%      { opacity: 1; transform: scale(1.1); }
+        }
+        .aura-breathe { animation: auraPulse 5s ease-in-out infinite; }
+        @keyframes auraPulse {
+            0%, 100% { opacity: 0.12; transform: translate(-50%,-50%) scale(1); }
+            50%      { opacity: 0.22; transform: translate(-50%,-50%) scale(1.05); }
+        }
+
+        /* ── Scan Line ── */
+        .scan-line {
+            position: absolute;
+            left: 15%; right: 15%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(129,140,248,0.4), transparent);
+            animation: scanDown 5s ease-in-out infinite;
             pointer-events: none;
         }
-
-        /* Layout Container */
-        .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            text-align: center;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            animation: fadeIn 1.2s ease-out;
+        @keyframes scanDown {
+            0%   { top: 5%; opacity: 0; }
+            8%   { opacity: 1; }
+            92%  { opacity: 1; }
+            100% { top: 95%; opacity: 0; }
         }
 
-        /* Header / Domain Name */
-        .domain-header {
-            margin-bottom: 2rem;
-            width: 100%;
-        }
-
-        .domain-name {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .divider {
-            width: 60px;
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 0 auto;
-        }
-
-        /* Main Section */
-        .sales-info {
-            margin-bottom: 3rem;
-        }
-
-        .headline {
-            font-size: 1.25rem;
-            font-weight: 400;
-            color: var(--text-primary);
-            margin-bottom: 2.5rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        /* Bullet Points */
-        .features-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-bottom: 3rem;
-            align-items: center;
-        }
-
-        .features-list li {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .features-list li::before {
-            content: '✓';
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        /* Call to Action Button */
-        .cta-button {
-            background-color: var(--text-primary);
-            color: var(--bg-color);
-            border: none;
-            padding: 1rem 3rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 50px; /* Rounded button */
-            cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.2s ease;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            background-color: #e0e0e0;
-        }
-
-        .cta-button:active {
-            transform: translateY(0);
-        }
-
-        /* Footer */
-        footer {
-            padding: 2rem;
-            width: 100%;
-            text-align: center;
-            border-top: 1px solid #111;
-            background-color: #000;
-        }
-
-        .footer-email {
-            display: block;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-email:hover {
-            color: var(--text-primary);
-        }
-
-        /* Modal (Popup) Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* ── Particles ── */
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            border-radius: 50%;
+            background: #818cf8;
+            animation: particleRise var(--dur) linear infinite;
+            animation-delay: var(--delay);
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 1000;
+        }
+        @keyframes particleRise {
+            0%   { transform: translateY(0) translateX(0); opacity: 0; }
+            15%  { opacity: 0.8; }
+            85%  { opacity: 0.6; }
+            100% { transform: translateY(-220px) translateX(var(--dx)); opacity: 0; }
         }
 
-        .modal-overlay.active {
+        /* ── Reveal on Scroll ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+                        transform 0.9s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.visible {
             opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background-color: #0a0a0a;
-            border: 1px solid var(--border-color);
-            padding: 2.5rem;
-            width: 90%;
-            max-width: 450px;
-            border-radius: 8px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-content {
             transform: translateY(0);
         }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
+        /* ── Feature Cards ── */
+        .feature-card {
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+                        border-color 0.4s ease,
+                        background 0.4s ease,
+                        box-shadow 0.4s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(99,102,241,0.25);
+            background: rgba(255,255,255,0.055);
+            box-shadow: 0 20px 60px -20px rgba(99,102,241,0.15);
         }
 
-        .modal-title {
-            font-size: 1.25rem;
-            font-weight: 600;
+        /* ── Button Glow ── */
+        .btn-primary {
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            z-index: -1;
+            opacity: 0;
+            filter: blur(14px);
+            transition: opacity 0.3s ease;
+        }
+        .btn-primary:hover::after { opacity: 0.55; }
+        .btn-primary:hover { transform: translateY(-1px); }
+        .btn-primary:active { transform: translateY(0); }
+
+        /* ── Input Glow ── */
+        .input-field {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: rgba(99,102,241,0.45);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1), 0 0 30px rgba(99,102,241,0.06);
         }
 
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: color 0.2s;
+        /* ── Success Animation ── */
+        .success-enter {
+            animation: successIn 0.65s cubic-bezier(0.16,1,0.3,1) forwards;
+        }
+        @keyframes successIn {
+            from { opacity: 0; transform: translateY(16px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .close-btn:hover {
-            color: var(--text-primary);
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #030014; }
+        ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.25); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.4); }
+
+        /* ── Gradient Text ── */
+        .gradient-text {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 40%, #818cf8 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 1.25rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            border-color: #555;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--text-primary);
-            color: var(--bg-color);
-            border: none;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            background-color: #dcdcdc;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 480px) {
-            .modal-content {
-                padding: 1.5rem;
-            }
+        /* ── Divider ── */
+        .glow-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.2), rgba(168,85,247,0.2), transparent);
         }
     </style>
 </head>
-<body>
 
-    <main class="container">
-        <!-- Header -->
-        <header class="domain-header">
-            <div class="domain-name">Robotah.com</div>
-            <div class="divider"></div>
-        </header>
+<body class="font-sans text-white overflow-x-hidden">
 
-        <!-- Main Section -->
-        <section class="sales-info">
-            <h1 class="headline">This name is for sale.</h1>
-
-            <ul class="features-list">
-                <li>Secure Payments</li>
-                <li>Trusted Partners</li>
-                <li>Fast Domain Transfer</li>
-            </ul>
-        </section>
-
-        <!-- Call to Action -->
-        <button class="cta-button" id="openModalBtn">Contact Owner</button>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <a href="mailto:technicaladk@gmail.com" class="footer-email">technicaladk@gmail.com</a>
-    </footer>
-
-    <!-- Contact Form Modal -->
-    <div class="modal-overlay" id="contactModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Inquire Now</h2>
-                <button class="close-btn" id="closeModalBtn">&times;</button>
-            </div>
-            
-            <!-- 
-                 IMPORTANT: 
-                 This form uses Formspree to send emails without a backend server.
-                 The 'action' URL handles the submission.
-            -->
-            <form 
-                action="https://formspree.io/f/xzzbdwdq" 
-                method="POST"
-                id="contactForm"
-            >
-                <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="I am interested in purchasing Robotah.com..." required></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn" id="submitBtn">Send Inquiry</button>
-            </form>
-        </div>
+    <!-- ═══════════ BACKGROUND LAYER ═══════════ -->
+    <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grid-bg absolute inset-0"></div>
+        <div id="star-field" class="absolute inset-0"></div>
     </div>
 
-    <!-- JavaScript for Modal Interaction & Form Handling -->
+    <!-- ═══════════ NAVIGATION ═══════════ -->
+    <nav class="fixed top-0 inset-x-0 z-50 glass" style="height:64px">
+        <div class="max-w-6xl mx-auto px-6 h-full flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/30 transition-shadow">
+                    <span class="iconify text-white text-[15px]" data-icon="lucide:bot"></span>
+                </div>
+                <span class="text-[17px] font-semibold tracking-[-0.02em]">Robotah</span>
+            </a>
+            <!-- Right -->
+            <div class="flex items-center gap-3">
+                <a href="#features" class="hidden sm:inline-flex text-[13px] text-white/40 hover:text-white/70 transition-colors px-3 py-1.5">Features</a>
+                <a href="#" class="hidden sm:inline-flex text-[13px] text-white/40 hover:text-white/70 transition-colors px-3 py-1.5">Blog</a>
+                <div class="w-px h-4 bg-white/10 hidden sm:block"></div>
+                <a href="#" class="w-8 h-8 rounded-lg glass-md flex items-center justify-center hover:bg-white/[0.07] transition-colors" aria-label="Twitter">
+                    <span class="iconify text-white/50 text-[14px]" data-icon="lucide:twitter"></span>
+                </a>
+                <a href="#" class="w-8 h-8 rounded-lg glass-md flex items-center justify-center hover:bg-white/[0.07] transition-colors" aria-label="GitHub">
+                    <span class="iconify text-white/50 text-[14px]" data-icon="lucide:github"></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════ HERO SECTION ═══════════ -->
+    <section class="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
+
+        <!-- Robot -->
+        <div class="relative mb-6 reveal" id="robot-reveal" style="transition-delay:0.1s">
+            <!-- Aura -->
+            <div class="aura-breathe absolute top-1/2 left-1/2 w-[320px] h-[320px] md:w-[420px] md:h-[420px] rounded-full pointer-events-none"
+                 style="background:radial-gradient(circle,rgba(99,102,241,0.18) 0%,rgba(168,85,247,0.08) 45%,transparent 72%)"></div>
+
+            <!-- Particles -->
+            <div class="particle" style="left:8%;bottom:18%;--dur:4.2s;--delay:0s;--dx:15px"></div>
+            <div class="particle" style="left:88%;bottom:25%;--dur:5.5s;--delay:1.2s;--dx:-12px"></div>
+            <div class="particle" style="left:18%;bottom:8%;--dur:6s;--delay:2.5s;--dx:20px"></div>
+            <div class="particle" style="left:75%;bottom:12%;--dur:4.8s;--delay:0.7s;--dx:-18px"></div>
+            <div class="particle" style="left:45%;bottom:4%;--dur:5.2s;--delay:1.8s;--dx:10px"></div>
+            <div class="particle" style="left:30%;bottom:22%;--dur:3.8s;--delay:3.2s;--dx:-8px"></div>
+            <div class="particle" style="left:62%;bottom:6%;--dur:4.5s;--delay:0.3s;--dx:14px"></div>
+            <div class="particle" style="left:52%;bottom:20%;--dur:5.8s;--delay:2s;--dx:-16px"></div>
+
+            <!-- Scan line -->
+            <div class="scan-line"></div>
+
+            <!-- SVG Robot -->
+            <div style="perspective:1000px">
+                <div class="robot-float" style="transform-style:preserve-3d">
+                    <svg class="w-[260px] h-[420px] sm:w-[300px] sm:h-[480px] md:w-[340px] md:h-[540px] lg:w-[370px] lg:h-[580px]" viewBox="0 0 300 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+                                <feGaussianBlur stdDeviation="2.5" result="b"/>
+                                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                            <filter id="glow-md" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="6" result="b"/>
+                                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                            <filter id="glow-lg" x="-80%" y="-80%" width="260%" height="260%">
+                                <feGaussianBlur stdDeviation="12" result="b"/>
+                                <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                            <linearGradient id="gStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#818cf8" stop-opacity="0.35"/>
+                                <stop offset="50%" stop-color="#a78bfa" stop-opacity="0.55"/>
+                                <stop offset="100%" stop-color="#818cf8" stop-opacity="0.28"/>
+                            </linearGradient>
+                            <linearGradient id="gFill" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#6366f1" stop-opacity="0.045"/>
+                                <stop offset="100%" stop-color="#a855f7" stop-opacity="0.02"/>
+                            </linearGradient>
+                            <linearGradient id="gVisor" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#6366f1" stop-opacity="0.5"/>
+                                <stop offset="50%" stop-color="#a855f7" stop-opacity="0.95"/>
+                                <stop offset="100%" stop-color="#6366f1" stop-opacity="0.5"/>
+                            </linearGradient>
+                            <radialGradient id="gCore" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#e0e7ff"/>
+                                <stop offset="30%" stop-color="#c084fc"/>
+                                <stop offset="70%" stop-color="#818cf8"/>
+                                <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                            </radialGradient>
+                        </defs>
+
+                        <!-- ── HEAD ── -->
+                        <rect x="110" y="18" width="80" height="78" rx="22" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1.5" filter="url(#glow)"/>
+                        <!-- Ear pieces -->
+                        <rect x="104" y="42" width="8" height="22" rx="3" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1"/>
+                        <rect x="188" y="42" width="8" height="22" rx="3" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1"/>
+                        <!-- Top ridge -->
+                        <line x1="135" y1="26" x2="165" y2="26" stroke="#818cf8" stroke-opacity="0.25" stroke-width="1" stroke-linecap="round"/>
+                        <!-- Visor -->
+                        <g class="visor-pulse">
+                            <rect x="117" y="43" width="66" height="24" rx="12" fill="url(#gVisor)" filter="url(#glow-md)"/>
+                            <rect x="121" y="48" width="22" height="4" rx="2" fill="#fff" fill-opacity="0.35"/>
+                            <rect x="121" y="55" width="14" height="2.5" rx="1.25" fill="#fff" fill-opacity="0.15"/>
+                        </g>
+                        <!-- Chin -->
+                        <line x1="138" y1="82" x2="162" y2="82" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.8" stroke-linecap="round"/>
+
+                        <!-- ── NECK ── -->
+                        <rect x="136" y="96" width="28" height="20" rx="5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1"/>
+                        <line x1="141" y1="102" x2="159" y2="102" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
+                        <line x1="141" y1="108" x2="159" y2="108" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
+
+                        <!-- ── TORSO ── -->
+                        <path d="M118 116 L182 116 L194 268 L106 268 Z" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1.5" filter="url(#glow)"/>
+                        <!-- Panel lines -->
+                        <line x1="128" y1="142" x2="172" y2="142" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
+                        <line x1="124" y1="222" x2="176" y2="222" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
+                        <line x1="118" y1="245" x2="182" y2="245" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
+                        <!-- Side grooves -->
+                        <line x1="123" y1="148" x2="115" y2="218" stroke="#818cf8" stroke-opacity="0.08" stroke-width="0.5"/>
+                        <line x1="177" y1="148" x2="185" y2="218" stroke="#818cf8" stroke-opacity="0.08" stroke-width="0.5"/>
+                        <!-- Small dots -->
+                        <circle cx="124" cy="160" r="1.5" fill="#818cf8" fill-opacity="0.25"/>
+                        <circle cx="176" cy="160" r="1.5" fill="#818cf8" fill-opacity="0.25"/>
+                        <circle cx="128" cy="202" r="1.2" fill="#818cf8" fill-opacity="0.2"/>
+                        <circle cx="172" cy="202" r="1.2" fill="#818cf8" fill-opacity="0.2"/>
+                        <circle cx="130" cy="235" r="1.2" fill="#818cf8" fill-opacity="0.2"/>
+                        <circle cx="170" cy="235" r="1.2" fill="#818cf8" fill-opacity="0.2"/>
+
+                        <!-- Core -->
+                        <g class="core-pulse">
+                            <circle cx="150" cy="180" r="26" fill="url(#gCore)" filter="url(#glow-lg)" opacity="0.5"/>
+                            <circle cx="150" cy="180" r="16" fill="none" stroke="#a78bfa" stroke-width="1" stroke-opacity="0.5" filter="url(#glow)"/>
+                            <circle cx="150" cy="180" r="7" fill="#c4b5fd" filter="url(#glow-md)" opacity="0.85"/>
+                        </g>
+                        <!-- Core circuit lines -->
+                        <line x1="128" y1="180" x2="124" y2="180" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.5"/>
+                        <line x1="172" y1="180" x2="176" y2="180" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.5"/>
+                        <line x1="150" y1="156" x2="150" y2="150" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.5"/>
+                        <line x1="150" y1="204" x2="150" y2="212" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.5"/>
+
+                        <!-- ── SHOULDERS ── -->
+                        <circle cx="116" cy="119" r="9" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1.2" filter="url(#glow)"/>
+                        <circle cx="116" cy="119" r="3.5" fill="#818cf8" fill-opacity="0.2"/>
+                        <circle cx="184" cy="119" r="9" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1.2" filter="url(#glow)"/>
+                        <circle cx="184" cy="119" r="3.5" fill="#818cf8" fill-opacity="0.2"/>
+
+                        <!-- ── LEFT ARM ── -->
+                        <line x1="112" y1="128" x2="88" y2="196" stroke="url(#gStroke)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
+                        <circle cx="88" cy="196" r="5.5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
+                        <line x1="85" y1="201" x2="70" y2="272" stroke="url(#gStroke)" stroke-width="5.5" stroke-linecap="round" filter="url(#glow)"/>
+                        <!-- Hand -->
+                        <rect x="62" y="270" width="16" height="14" rx="4" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
+                        <line x1="66" y1="276" x2="74" y2="276" stroke="#818cf8" stroke-opacity="0.15" stroke-width="0.5"/>
+
+                        <!-- ── RIGHT ARM ── -->
+                        <line x1="188" y1="128" x2="212" y2="196" stroke="url(#gStroke)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
+                        <circle cx="212" cy="196" r="5.5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
+                        <line x1="215" y1="201" x2="230" y2="272" stroke="url(#gStroke)" stroke-width="5.5" stroke-linecap="round" filter="url(#glow)"/>
+                        <!-- Hand -->
+                        <rect x="222" y="270" width="16" height="14" rx="4" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
+                        <line x1="226" y1="276" x2="234" y2="276" stroke="#818cf8" stroke-opacity="0.15" stroke-width="0.5"/>
+
+                        <!-- ── HIP ── -->
+                        <path d="M126 268 L174 268 L172 284 L128 284 Z" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1"/>
+                        <line x1="135" y1="276" x2="165" y2="276" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
+
+                        <!-- ── LEFT LEG ── -->
+                        <line x1="136" y1="284" x2="124" y2="372" stroke="url(#gStroke)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
+                        <circle cx="124" cy="372" r="5.5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
+                        <line x1="122" y1="378" x2="118" y2="460" stroke="url(#gStroke)" stroke-width="5.5" stroke-linecap="round" filter="url(#glow)"/>
+                        <!-- Foot -->
+                        <path d="M106 458 L130 458 L134 474 L102 474 Z" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
+                        <line x1="110" y1="466" x2="128" y2="466" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
+
+                        <!-- ── RIGHT LEG ── -->
+                        <line x1="164" y1="284" x2="176" y2="372" stroke="url(#gStroke)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
+                        <circle cx="176" cy="372" r="5.5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
+                        <line x1="178" y1="378" x2="182" y2="460" stroke="url(#gStroke)" stroke-width="5.5" stroke-linecap="round" filter="url(#glow)"/>
+                        <!-- Foot -->
+                        <path d="M170 458 L194 458 L198 474 L166 474 Z" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
+                        <line x1="174" y1="466" x2="192" y2="466" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copy -->
+        <div class="text-center max-w-2xl mx-auto reveal" id="hero-copy" style="transition-delay:0.3s">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-md mb-7">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-60"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-400"></span>
+                </span>
+                <span class="text-[11px] font-semibold text-white/50 tracking-[0.08em] uppercase">Coming Soon</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="text-[2.5rem] sm:text-5xl md:text-[3.75rem] lg:text-[4.25rem] font-semibold tracking-[-0.035em] leading-[1.08] mb-6">
+                The Future of AI<br>
+                <span class="gradient-text">is Almost Here</span>
+            </h1>
+
+            <!-- Description -->
+            <p class="text-[15px] sm:text-base md:text-[17px] text-white/35 font-light leading-[1.7] mb-10 max-w-[460px] mx-auto">
+                We're building something extraordinary — a new kind of intelligence that understands, creates, and evolves. Be the first to know when we launch.
+            </p>
+
+            <!-- ── FORM ── -->
+            <div id="form-wrap">
+                <form id="waitlist-form" class="flex flex-col sm:flex-row gap-3 max-w-[440px] mx-auto" novalidate>
+                    <input
+                        type="email"
+                        id="email-input"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                        class="input-field flex-1 px-5 py-3.5 rounded-xl bg-white/[0.035] border border-white/[0.08] text-white text-sm placeholder-white/20 outline-none"
+                        aria-label="Email address"
+                    />
+                    <button
+                        type="submit"
+                        class="btn-primary px-7 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030014]"
+                    >
+                        Join the Waitlist
+                    </button>
+                </form>
+                <p id="error-msg" class="text-red-400/70 text-xs mt-3 hidden text-center sm:text-left sm:ml-[1px]">Please enter a valid email address.</p>
+            </div>
+
+            <!-- ── SUCCESS ── -->
+            <div id="success-msg" class="hidden">
+                <div class="success-enter glass-md inline-flex items-center gap-3.5 px-7 py-4 rounded-2xl max-w-[440px]">
+                    <span class="text-[26px] leading-none">🎉</span>
+                    <span class="text-sm text-white/75 leading-relaxed">Thanks for joining the Robotah waitlist! We'll keep you updated.</span>
+                </div>
+            </div>
+
+            <!-- Social proof & trust -->
+            <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-7">
+                <span class="text-xs text-white/20 flex items-center gap-1.5">
+                    <span class="iconify text-[13px]" data-icon="lucide:users"></span>
+                    2,847 on the waitlist
+                </span>
+                <span class="hidden sm:block w-px h-3 bg-white/10"></span>
+                <span class="text-xs text-white/20 flex items-center gap-1.5">
+                    <span class="iconify text-[13px]" data-icon="lucide:shield-check"></span>
+                    No spam, ever
+                </span>
+                <span class="hidden sm:block w-px h-3 bg-white/10"></span>
+                <span class="text-xs text-white/20 flex items-center gap-1.5">
+                    <span class="iconify text-[13px]" data-icon="lucide:lock"></span>
+                    Privacy first
+                </span>
+            </div>
+        </div>
+
+        <!-- Scroll cue -->
+        <div class="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/15">
+            <span class="text-[10px] tracking-[0.15em] uppercase font-medium">Scroll</span>
+            <div class="w-[18px] h-[30px] rounded-full border border-white/[0.08] flex justify-center pt-2">
+                <div class="w-[3px] h-[6px] rounded-full bg-white/25 animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ GLOW DIVIDER ═══════════ -->
+    <div class="glow-divider relative z-10"></div>
+
+    <!-- ═══════════ FEATURES SECTION ═══════════ -->
+    <section id="features" class="relative z-10 py-28 md:py-36 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-14 reveal">
+                <p class="text-[11px] font-semibold tracking-[0.1em] uppercase text-indigo-400/60 mb-4">Preview</p>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-[-0.03em] mb-4">What We're Building</h2>
+                <p class="text-sm text-white/25 max-w-md mx-auto leading-relaxed">A glimpse into the capabilities that will redefine how you interact with artificial intelligence.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+                <!-- Card 1 -->
+                <div class="feature-card glass rounded-2xl p-7 reveal" style="transition-delay:0.1s">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-500/[0.08] border border-indigo-500/15 flex items-center justify-center mb-5">
+                        <span class="iconify text-indigo-400 text-[20px]" data-icon="lucide:brain"></span>
+                    </div>
+                    <h3 class="text-[15px] font-medium mb-2.5 tracking-[-0.01em]">Advanced Reasoning</h3>
+                    <p class="text-[13px] text-white/25 leading-[1.7]">Neural architectures designed for complex problem-solving, deep analysis, and creative tasks that push the boundaries of what's possible.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="feature-card glass rounded-2xl p-7 reveal" style="transition-delay:0.2s">
+                    <div class="w-11 h-11 rounded-xl bg-purple-500/[0.08] border border-purple-500/15 flex items-center justify-center mb-5">
+                        <span class="iconify text-purple-400 text-[20px]" data-icon="lucide:plug"></span>
+                    </div>
+                    <h3 class="text-[15px] font-medium mb-2.5 tracking-[-0.01em]">Seamless Integration</h3>
+                    <p class="text-[13px] text-white/25 leading-[1.7]">Connect with your existing tools and workflows through our universal API. Built to augment your stack, not replace it.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="feature-card glass rounded-2xl p-7 reveal" style="transition-delay:0.3s">
+                    <div class="w-11 h-11 rounded-xl bg-violet-500/[0.08] border border-violet-500/15 flex items-center justify-center mb-5">
+                        <span class="iconify text-violet-400 text-[20px]" data-icon="lucide:message-square"></span>
+                    </div>
+                    <h3 class="text-[15px] font-medium mb-2.5 tracking-[-0.01em]">Human-Like Interaction</h3>
+                    <p class="text-[13px] text-white/25 leading-[1.7]">Natural conversations that truly understand context, nuance, and intent — like talking to a brilliant colleague.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ GLOW DIVIDER ═══════════ -->
+    <div class="glow-divider relative z-10"></div>
+
+    <!-- ═══════════ CTA BAND ═══════════ -->
+    <section class="relative z-10 py-24 md:py-32 px-6">
+        <div class="max-w-2xl mx-auto text-center reveal">
+            <h2 class="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] mb-4">Don't Miss the Launch</h2>
+            <p class="text-sm text-white/25 mb-8 max-w-sm mx-auto leading-relaxed">Join thousands of developers, creators, and innovators waiting for the next leap in AI.</p>
+            <a href="#" onclick="document.getElementById('email-input').focus();window.scrollTo({top:0,behavior:'smooth'});return false;"
+               class="btn-primary inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400">
+                <span class="iconify text-[15px]" data-icon="lucide:arrow-up"></span>
+                Join the Waitlist
+            </a>
+        </div>
+    </section>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="relative z-10 border-t border-white/[0.04] py-10 px-6">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-5 h-5 rounded-md bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                    <span class="iconify text-white text-[10px]" data-icon="lucide:bot"></span>
+                </div>
+                <span class="text-xs text-white/20">© 2025 Robotah. All rights reserved.</span>
+            </div>
+            <div class="flex items-center gap-5">
+                <a href="#" class="text-[11px] text-white/15 hover:text-white/40 transition-colors">Privacy</a>
+                <a href="#" class="text-[11px] text-white/15 hover:text-white/40 transition-colors">Terms</a>
+                <a href="#" class="text-[11px] text-white/15 hover:text-white/40 transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════ SCRIPTS ═══════════ -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('contactModal');
-            const openBtn = document.getElementById('openModalBtn');
-            const closeBtn = document.getElementById('closeModalBtn');
-            const form = document.getElementById('contactForm');
-            const submitBtn = document.getElementById('submitBtn');
+        // ── Star field ──
+        (function() {
+            const container = document.getElementById('star-field');
+            const count = 90;
+            for (let i = 0; i < count; i++) {
+                const s = document.createElement('div');
+                s.className = 'star';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.top = Math.random() * 100 + '%';
+                s.style.setProperty('--dur', (2.5 + Math.random() * 3) + 's');
+                s.style.setProperty('--delay', (Math.random() * 4) + 's');
+                container.appendChild(s);
+            }
+        })();
 
-            // Open modal
-            openBtn.addEventListener('click', () => {
-                modal.classList.add('active');
+        // ── Scroll reveal ──
+        (function() {
+            const els = document.querySelectorAll('.reveal');
+            const io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+
+            // Trigger hero elements immediately
+            setTimeout(function() {
+                document.getElementById('robot-reveal').classList.add('visible');
+            }, 200);
+            setTimeout(function() {
+                document.getElementById('hero-copy').classList.add('visible');
+            }, 500);
+        })();
+
+        // ── Form handling ──
+        (function() {
+            var form = document.getElementById('waitlist-form');
+            var input = document.getElementById('email-input');
+            var error = document.getElementById('error-msg');
+            var formWrap = document.getElementById('form-wrap');
+            var success = document.getElementById('success-msg');
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var val = input.value.trim();
+
+                if (!emailRegex.test(val)) {
+                    error.classList.remove('hidden');
+                    input.style.borderColor = 'rgba(248,113,113,0.5)';
+                    input.focus();
+                    return;
+                }
+
+                error.classList.add('hidden');
+                input.style.borderColor = '';
+
+                // Transition out form
+                formWrap.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+                formWrap.style.opacity = '0';
+                formWrap.style.transform = 'translateY(-8px)';
+
+                setTimeout(function() {
+                    formWrap.classList.add('hidden');
+                    success.classList.remove('hidden');
+                }, 350);
             });
 
-            // Close modal via X button
-            closeBtn.addEventListener('click', () => {
-                modal.classList.remove('active');
+            input.addEventListener('input', function() {
+                error.classList.add('hidden');
+                input.style.borderColor = '';
             });
+        })();
 
-            // Close modal when clicking outside content
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
+        // ── Smooth scroll for anchor links ──
+        document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+            a.addEventListener('click', function(e) {
+                var target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
-
-            // Handle Form Submission via AJAX (Formspree)
-            async function handleSubmit(event) {
-                event.preventDefault();
-                const data = new FormData(event.target);
-                
-                // Visual feedback - Loading state
-                submitBtn.textContent = 'Sending...';
-                submitBtn.disabled = true;
-                submitBtn.style.opacity = '0.7';
-
-                fetch(event.target.action, {
-                    method: form.method,
-                    body: data,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        // Success state
-                        submitBtn.textContent = 'Message Sent!';
-                        submitBtn.style.backgroundColor = '#4CAF50'; // Green
-                        submitBtn.style.color = '#fff';
-                        
-                        // Reset form and close modal after delay
-                        setTimeout(() => {
-                            modal.classList.remove('active');
-                            form.reset();
-                            // Reset button style
-                            submitBtn.textContent = 'Send Inquiry';
-                            submitBtn.disabled = false;
-                            submitBtn.style.opacity = '1';
-                            submitBtn.style.backgroundColor = '';
-                            submitBtn.style.color = '';
-                        }, 2000);
-                    } else {
-                        // Error handling
-                        response.json().then(data => {
-                            if (Object.hasOwn(data, 'errors')) {
-                                submitBtn.textContent = 'Error: ' + data["errors"].map(error => error["message"]).join(", ");
-                            } else {
-                                submitBtn.textContent = 'Oops! There was a problem submitting your form';
-                            }
-                            // Reset button state after error
-                            setTimeout(() => {
-                                submitBtn.textContent = 'Send Inquiry';
-                                submitBtn.disabled = false;
-                                submitBtn.style.opacity = '1';
-                            }, 3000);
-                        })
-                    }
-                }).catch(error => {
-                    submitBtn.textContent = 'Oops! There was a problem submitting your form';
-                    setTimeout(() => {
-                        submitBtn.textContent = 'Send Inquiry';
-                        submitBtn.disabled = false;
-                        submitBtn.style.opacity = '1';
-                    }, 3000);
-                });
-            }
-
-            form.addEventListener("submit", handleSubmit);
         });
     </script>
-
 </body>
 </html>
