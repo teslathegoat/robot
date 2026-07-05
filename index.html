@@ -1,681 +1,650 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotah — The Future of AI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            background: #030014;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robotah — Something Intelligent is Coming</title>
+  <meta name="description" content="Something intelligent is coming. Robotah is building the next generation of embodied AI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#060610;
+      --cyan:#00d4ff;
+      --blue:#0ea5e9;
+      --purple:#8b5cf6;
+      --glass:rgba(255,255,255,0.03);
+      --gborder:rgba(255,255,255,0.06);
+      --t1:rgba(255,255,255,0.95);
+      --t2:rgba(255,255,255,0.5);
+      --t3:rgba(255,255,255,0.25);
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      color:var(--t1);
+      min-height:100vh;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
 
-        /* ── Animated Background Orbs ── */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            will-change: transform;
-        }
-        .orb-1 {
-            width: 700px; height: 700px;
-            background: radial-gradient(circle, rgba(99,102,241,0.25), transparent 70%);
-            top: -300px; left: -200px;
-            animation: drift 20s ease-in-out infinite;
-        }
-        .orb-2 {
-            width: 550px; height: 550px;
-            background: radial-gradient(circle, rgba(168,85,247,0.2), transparent 70%);
-            top: 40%; right: -200px;
-            animation: drift 26s ease-in-out infinite reverse;
-        }
-        .orb-3 {
-            width: 450px; height: 450px;
-            background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%);
-            bottom: -150px; left: 25%;
-            animation: drift 22s ease-in-out infinite;
-            animation-delay: -8s;
-        }
-        @keyframes drift {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25%  { transform: translate(40px, -30px) scale(1.06); }
-            50%  { transform: translate(-25px, 25px) scale(0.94); }
-            75%  { transform: translate(30px, 15px) scale(1.03); }
-        }
+    /* ═══ BG LAYERS ═══ */
+    .bg-grid{
+      position:fixed;inset:0;z-index:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);
+      background-size:80px 80px;
+    }
+    .bg-radial{
+      position:fixed;inset:0;z-index:0;
+      background:
+        radial-gradient(ellipse 55% 45% at 50% 38%,rgba(0,212,255,0.05),transparent),
+        radial-gradient(ellipse 45% 35% at 50% 38%,rgba(139,92,246,0.035),transparent);
+    }
+    .bg-noise{
+      position:fixed;inset:0;z-index:0;opacity:.25;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+    #particles{position:fixed;inset:0;z-index:1;pointer-events:none}
+    .mouse-light{
+      position:fixed;width:800px;height:800px;border-radius:50%;
+      background:radial-gradient(circle,rgba(0,212,255,0.03),transparent 70%);
+      pointer-events:none;transform:translate(-50%,-50%);
+      z-index:1;will-change:left,top;
+      transition:left .6s cubic-bezier(.23,1,.32,1),top .6s cubic-bezier(.23,1,.32,1);
+    }
+    .scan-line{
+      position:fixed;left:0;width:100%;height:1px;
+      background:linear-gradient(90deg,transparent 5%,rgba(0,212,255,0.12) 50%,transparent 95%);
+      z-index:2;pointer-events:none;
+      animation:scanMove 12s linear infinite;
+    }
+    .vignette{
+      position:fixed;inset:0;z-index:3;pointer-events:none;
+      background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,0.65) 100%);
+    }
 
-        /* ── Subtle Grid ── */
-        .grid-bg {
-            background-image:
-                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-            background-size: 64px 64px;
-        }
+    /* ═══ NAV ═══ */
+    nav{
+      position:fixed;top:0;left:0;right:0;height:64px;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 32px;z-index:100;
+      backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+      background:rgba(6,6,16,0.55);
+      border-bottom:1px solid var(--gborder);
+    }
+    .logo{
+      font-family:'Space Grotesk',sans-serif;
+      font-size:21px;font-weight:700;letter-spacing:-.5px;
+      color:var(--t1);text-decoration:none;
+    }
+    .logo span{color:var(--cyan)}
+    .nav-links{display:flex;gap:28px;align-items:center}
+    .nav-links a{
+      font-size:11px;font-weight:500;color:var(--t2);
+      text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;
+      transition:color .25s;position:relative;
+    }
+    .nav-links a::after{
+      content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+      background:var(--cyan);transition:width .3s ease;
+    }
+    .nav-links a:hover{color:var(--t1)}
+    .nav-links a:hover::after{width:100%}
 
-        /* ── Stars ── */
-        .star {
-            position: absolute;
-            width: 1px; height: 1px;
-            background: #fff;
-            border-radius: 50%;
-            animation: twinkle var(--dur) ease-in-out infinite;
-            animation-delay: var(--delay);
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.15; }
-            50% { opacity: 0.7; }
-        }
+    /* ═══ HERO ═══ */
+    .hero{
+      position:relative;z-index:10;
+      min-height:100vh;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      padding:100px 24px 32px;text-align:center;
+    }
 
-        /* ── Glassmorphism ── */
-        .glass {
-            background: rgba(255,255,255,0.025);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-        .glass-md {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08);
-        }
+    /* Badge */
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 20px;border-radius:100px;
+      background:var(--glass);border:1px solid var(--gborder);
+      backdrop-filter:blur(8px);margin-bottom:36px;
+      opacity:0;animation:fadeUp .8s ease forwards .3s;
+    }
+    .badge-dot{
+      width:5px;height:5px;border-radius:50%;
+      background:var(--cyan);
+      box-shadow:0 0 6px var(--cyan),0 0 18px rgba(0,212,255,.3);
+      animation:pulse 2.5s ease-in-out infinite;
+    }
+    .badge-text{
+      font-size:10px;font-weight:600;color:var(--t2);
+      letter-spacing:2.5px;text-transform:uppercase;
+    }
 
-        /* ── Robot Animations ── */
-        .robot-float {
-            animation: robotHover 6s ease-in-out infinite;
-        }
-        @keyframes robotHover {
-            0%, 100% { transform: rotateY(-6deg) rotateX(2deg) translateY(0); }
-            50%      { transform: rotateY(-6deg) rotateX(2deg) translateY(-10px); }
-        }
-        .visor-pulse { animation: visorGlow 3s ease-in-out infinite; }
-        @keyframes visorGlow {
-            0%, 100% { opacity: 0.75; }
-            50%      { opacity: 1; }
-        }
-        .core-pulse {
-            animation: coreGlow 3s ease-in-out infinite;
-            transform-origin: center;
-        }
-        @keyframes coreGlow {
-            0%, 100% { opacity: 0.65; transform: scale(1); }
-            50%      { opacity: 1; transform: scale(1.1); }
-        }
-        .aura-breathe { animation: auraPulse 5s ease-in-out infinite; }
-        @keyframes auraPulse {
-            0%, 100% { opacity: 0.12; transform: translate(-50%,-50%) scale(1); }
-            50%      { opacity: 0.22; transform: translate(-50%,-50%) scale(1.05); }
-        }
+    /* Headline */
+    .headline{
+      font-family:'Space Grotesk',sans-serif;
+      font-size:clamp(28px,5.5vw,66px);
+      font-weight:700;line-height:1.08;letter-spacing:-2px;
+      margin-bottom:10px;
+      opacity:0;animation:fadeUp .8s ease forwards .5s;
+    }
+    .grad{
+      background:linear-gradient(135deg,var(--cyan) 0%,var(--purple) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .sub-head{
+      font-size:clamp(12px,1.8vw,16px);font-weight:300;
+      color:var(--t3);letter-spacing:5px;text-transform:uppercase;
+      margin-bottom:28px;
+      opacity:0;animation:fadeUp .8s ease forwards .6s;
+    }
 
-        /* ── Scan Line ── */
-        .scan-line {
-            position: absolute;
-            left: 15%; right: 15%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(129,140,248,0.4), transparent);
-            animation: scanDown 5s ease-in-out infinite;
-            pointer-events: none;
-        }
-        @keyframes scanDown {
-            0%   { top: 5%; opacity: 0; }
-            8%   { opacity: 1; }
-            92%  { opacity: 1; }
-            100% { top: 95%; opacity: 0; }
-        }
+    /* Robot Container */
+    .robot-outer{
+      width:100%;max-width:420px;margin:0 auto 32px;
+      opacity:0;animation:fadeUp 1s ease forwards .8s;
+      position:relative;
+    }
+    .robot-parallax{position:relative;transition:transform .15s ease-out}
+    .robot-glow-bg{
+      position:absolute;top:38%;left:50%;
+      transform:translate(-50%,-50%);
+      width:320px;height:320px;border-radius:50%;
+      background:radial-gradient(circle,rgba(0,212,255,.1),rgba(139,92,246,.05),transparent 70%);
+      filter:blur(60px);animation:glowPulse 5s ease-in-out infinite;
+    }
+    .robot-floor{
+      position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
+      width:220px;height:40px;border-radius:50%;
+      background:radial-gradient(ellipse,rgba(0,212,255,.12),transparent 70%);
+      filter:blur(18px);
+    }
+    .robot-float{animation:robotFloat 7s ease-in-out infinite 1.8s}
+    .robot-svg{
+      width:100%;height:auto;display:block;
+      filter:drop-shadow(0 0 50px rgba(0,212,255,.1));
+    }
 
-        /* ── Particles ── */
-        .particle {
-            position: absolute;
-            width: 2px; height: 2px;
-            border-radius: 50%;
-            background: #818cf8;
-            animation: particleRise var(--dur) linear infinite;
-            animation-delay: var(--delay);
-            opacity: 0;
-        }
-        @keyframes particleRise {
-            0%   { transform: translateY(0) translateX(0); opacity: 0; }
-            15%  { opacity: 0.8; }
-            85%  { opacity: 0.6; }
-            100% { transform: translateY(-220px) translateX(var(--dx)); opacity: 0; }
-        }
+    /* Orbits */
+    .orbit{position:absolute;top:42%;left:50%;border-radius:50%;pointer-events:none}
+    .orbit-1{
+      width:310px;height:72px;
+      border:1px solid rgba(0,212,255,.055);
+      transform:translate(-50%,-50%) rotateX(75deg);
+      animation:orbit1 28s linear infinite;
+    }
+    .orbit-2{
+      width:270px;height:62px;
+      border:1px solid rgba(139,92,246,.04);
+      transform:translate(-50%,-50%) rotateX(75deg) rotateY(55deg);
+      animation:orbit2 20s linear infinite;
+    }
+    .orbit-3{
+      width:350px;height:55px;
+      border:1px dashed rgba(0,212,255,.03);
+      transform:translate(-50%,-50%) rotateX(80deg) rotateY(-30deg);
+      animation:orbit3 35s linear infinite reverse;
+    }
+    .odot{
+      position:absolute;width:4px;height:4px;border-radius:50%;
+      background:var(--cyan);box-shadow:0 0 6px var(--cyan),0 0 12px rgba(0,212,255,.3);
+    }
+    .orbit-1 .odot{top:-2px;left:50%}
+    .orbit-2 .odot{bottom:-2px;right:18%;background:var(--purple);box-shadow:0 0 6px var(--purple),0 0 12px rgba(139,92,246,.3)}
+    .orbit-3 .odot{top:-2px;left:25%;width:3px;height:3px;background:rgba(0,212,255,.5);box-shadow:0 0 4px rgba(0,212,255,.3)}
 
-        /* ── Reveal on Scroll ── */
-        .reveal {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
-                        transform 0.9s cubic-bezier(0.16,1,0.3,1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* Floating Data Points */
+    .fdata{
+      position:absolute;font-size:8px;font-weight:500;
+      letter-spacing:1px;text-transform:uppercase;
+      color:rgba(0,212,255,.15);pointer-events:none;
+      font-family:'Inter',monospace;
+    }
+    .fdata-1{top:18%;right:-5%;animation:fdataFade 4s ease-in-out infinite}
+    .fdata-2{bottom:22%;left:-8%;animation:fdataFade 4s ease-in-out infinite 2s}
+    .fdata-line{
+      position:absolute;width:30px;height:1px;
+      background:linear-gradient(90deg,rgba(0,212,255,.1),transparent);
+      pointer-events:none;
+    }
+    .fdata-line-1{top:20%;right:2%}
+    .fdata-line-2{bottom:24%;left:0}
 
-        /* ── Feature Cards ── */
-        .feature-card {
-            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
-                        border-color 0.4s ease,
-                        background 0.4s ease,
-                        box-shadow 0.4s ease;
-        }
-        .feature-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(99,102,241,0.25);
-            background: rgba(255,255,255,0.055);
-            box-shadow: 0 20px 60px -20px rgba(99,102,241,0.15);
-        }
+    /* Teaser */
+    .teaser{
+      max-width:480px;font-size:15px;line-height:1.8;
+      color:var(--t2);font-weight:300;
+      opacity:0;animation:fadeUp .8s ease forwards 1s;
+    }
 
-        /* ── Button Glow ── */
-        .btn-primary {
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: inherit;
-            background: linear-gradient(135deg, #6366f1, #a855f7);
-            z-index: -1;
-            opacity: 0;
-            filter: blur(14px);
-            transition: opacity 0.3s ease;
-        }
-        .btn-primary:hover::after { opacity: 0.55; }
-        .btn-primary:hover { transform: translateY(-1px); }
-        .btn-primary:active { transform: translateY(0); }
+    /* Pills */
+    .features{
+      display:flex;flex-wrap:wrap;justify-content:center;
+      gap:10px;margin-top:32px;
+      opacity:0;animation:fadeUp .8s ease forwards 1.15s;
+    }
+    .pill{
+      display:flex;align-items:center;gap:7px;
+      padding:7px 16px;border-radius:100px;
+      background:var(--glass);border:1px solid var(--gborder);
+      backdrop-filter:blur(8px);transition:all .3s ease;cursor:default;
+    }
+    .pill:hover{
+      background:rgba(255,255,255,.055);
+      border-color:rgba(0,212,255,.15);
+      transform:translateY(-2px);
+      box-shadow:0 4px 20px rgba(0,212,255,.06);
+    }
+    .pill .iconify{color:var(--cyan);font-size:14px;flex-shrink:0}
+    .pill span{font-size:11px;font-weight:500;color:var(--t2);letter-spacing:.5px;white-space:nowrap}
 
-        /* ── Input Glow ── */
-        .input-field {
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .input-field:focus {
-            border-color: rgba(99,102,241,0.45);
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.1), 0 0 30px rgba(99,102,241,0.06);
-        }
+    /* Glass Card */
+    .card-section{
+      position:relative;z-index:10;
+      padding:16px 24px 48px;display:flex;justify-content:center;
+    }
+    .glass-card{
+      background:var(--glass);border:1px solid var(--gborder);
+      backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+      border-radius:16px;padding:22px 28px;
+      display:flex;align-items:center;gap:14px;
+      max-width:440px;width:100%;
+      opacity:0;animation:fadeUp .8s ease forwards 1.3s;
+      transition:border-color .3s;
+    }
+    .glass-card:hover{border-color:rgba(139,92,246,.12)}
+    .glass-card .iconify{color:var(--purple);font-size:22px;flex-shrink:0}
+    .glass-card p{font-size:12px;color:var(--t3);line-height:1.7;font-weight:300}
+    .glass-card p strong{color:var(--t2);font-weight:500}
 
-        /* ── Success Animation ── */
-        .success-enter {
-            animation: successIn 0.65s cubic-bezier(0.16,1,0.3,1) forwards;
-        }
-        @keyframes successIn {
-            from { opacity: 0; transform: translateY(16px) scale(0.96); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
+    /* Footer */
+    footer{
+      position:relative;z-index:10;
+      padding:20px 32px;display:flex;justify-content:space-between;align-items:center;
+      border-top:1px solid var(--gborder);
+    }
+    footer p{font-size:11px;color:var(--t3);letter-spacing:.3px}
+    .socials{display:flex;gap:16px}
+    .socials a{
+      color:var(--t3);transition:all .25s;display:flex;align-items:center;
+    }
+    .socials a:hover{color:var(--cyan);transform:translateY(-1px)}
 
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #030014; }
-        ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.25); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.4); }
+    /* ═══ KEYFRAMES ═══ */
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(24px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    @keyframes glowPulse{
+      0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}
+      50%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}
+    }
+    @keyframes robotFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes orbit1{
+      from{transform:translate(-50%,-50%) rotateX(75deg) rotateZ(0deg)}
+      to{transform:translate(-50%,-50%) rotateX(75deg) rotateZ(360deg)}
+    }
+    @keyframes orbit2{
+      from{transform:translate(-50%,-50%) rotateX(75deg) rotateY(55deg) rotateZ(0deg)}
+      to{transform:translate(-50%,-50%) rotateX(75deg) rotateY(55deg) rotateZ(360deg)}
+    }
+    @keyframes orbit3{
+      from{transform:translate(-50%,-50%) rotateX(80deg) rotateY(-30deg) rotateZ(0deg)}
+      to{transform:translate(-50%,-50%) rotateX(80deg) rotateY(-30deg) rotateZ(360deg)}
+    }
+    @keyframes scanMove{
+      0%{top:-2px;opacity:0}3%{opacity:1}97%{opacity:1}100%{top:100%;opacity:0}
+    }
+    @keyframes eyeFlicker{
+      0%,89%,95%,100%{opacity:1}91%{opacity:.35}93%{opacity:1}94%{opacity:.55}
+    }
+    @keyframes circuitFlow{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
+    @keyframes corePulse{0%,100%{opacity:.55}50%{opacity:1}}
+    @keyframes coreDot{0%,100%{opacity:.75}50%{opacity:1}}
+    @keyframes fdataFade{0%,100%{opacity:.15}50%{opacity:.35}}
+    @keyframes shoulderPulse{0%,100%{opacity:.15}50%{opacity:.35}}
 
-        /* ── Gradient Text ── */
-        .gradient-text {
-            background: linear-gradient(135deg, #818cf8 0%, #c084fc 40%, #818cf8 80%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    .eye-glow{animation:eyeFlicker 7s ease-in-out infinite}
+    .circuit{stroke-dasharray:200;animation:circuitFlow 4s linear infinite}
+    .core-ring{animation:corePulse 3s ease-in-out infinite}
+    .core-dot{animation:coreDot 2s ease-in-out infinite}
+    .shoulder-glow{animation:shoulderPulse 4s ease-in-out infinite}
 
-        /* ── Divider ── */
-        .glow-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.2), rgba(168,85,247,0.2), transparent);
-        }
-    </style>
+    /* ═══ RESPONSIVE ═══ */
+    @media(max-width:640px){
+      nav{padding:0 16px}
+      .nav-links{gap:18px}
+      .nav-links a{font-size:10px;letter-spacing:1px}
+      .hero{padding:80px 20px 24px}
+      .headline{letter-spacing:-1px}
+      .robot-outer{max-width:300px}
+      .orbit-1{width:230px;height:54px}
+      .orbit-2{width:200px;height:48px}
+      .orbit-3{width:260px;height:42px}
+      .fdata{display:none}
+      .fdata-line{display:none}
+      .glass-card{flex-direction:column;text-align:center;padding:18px}
+      footer{flex-direction:column;gap:12px;padding:16px 20px}
+      .features{gap:8px}
+      .pill{padding:6px 12px}
+      .pill span{font-size:10px}
+    }
+    @media(max-width:380px){
+      .nav-links a:not(:last-child){display:none}
+      .headline{font-size:24px;letter-spacing:-.5px}
+      .sub-head{letter-spacing:3px}
+    }
+
+    /* Reduced motion */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+      }
+    }
+  </style>
 </head>
+<body>
 
-<body class="font-sans text-white overflow-x-hidden">
+  <!-- Background Layers -->
+  <div class="bg-grid"></div>
+  <div class="bg-radial"></div>
+  <div class="bg-noise"></div>
+  <canvas id="particles"></canvas>
+  <div class="mouse-light" id="mouseLight"></div>
+  <div class="scan-line"></div>
+  <div class="vignette"></div>
 
-    <!-- ═══════════ BACKGROUND LAYER ═══════════ -->
-    <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="grid-bg absolute inset-0"></div>
-        <div id="star-field" class="absolute inset-0"></div>
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="logo">Robot<span>ah</span></a>
+    <div class="nav-links">
+      <a href="#">About</a>
+      <a href="#">Research</a>
+      <a href="#">Careers</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <main class="hero">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      <span class="badge-text">In Development</span>
     </div>
 
-    <!-- ═══════════ NAVIGATION ═══════════ -->
-    <nav class="fixed top-0 inset-x-0 z-50 glass" style="height:64px">
-        <div class="max-w-6xl mx-auto px-6 h-full flex items-center justify-between">
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-2.5 group">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/30 transition-shadow">
-                    <span class="iconify text-white text-[15px]" data-icon="lucide:bot"></span>
-                </div>
-                <span class="text-[17px] font-semibold tracking-[-0.02em]">Robotah</span>
-            </a>
-            <!-- Right -->
-            <div class="flex items-center gap-3">
-                <a href="#features" class="hidden sm:inline-flex text-[13px] text-white/40 hover:text-white/70 transition-colors px-3 py-1.5">Features</a>
-                <a href="#" class="hidden sm:inline-flex text-[13px] text-white/40 hover:text-white/70 transition-colors px-3 py-1.5">Blog</a>
-                <div class="w-px h-4 bg-white/10 hidden sm:block"></div>
-                <a href="#" class="w-8 h-8 rounded-lg glass-md flex items-center justify-center hover:bg-white/[0.07] transition-colors" aria-label="Twitter">
-                    <span class="iconify text-white/50 text-[14px]" data-icon="lucide:twitter"></span>
-                </a>
-                <a href="#" class="w-8 h-8 rounded-lg glass-md flex items-center justify-center hover:bg-white/[0.07] transition-colors" aria-label="GitHub">
-                    <span class="iconify text-white/50 text-[14px]" data-icon="lucide:github"></span>
-                </a>
-            </div>
+    <h1 class="headline">Something <span class="grad">Intelligent</span><br>is Coming.</h1>
+    <p class="sub-head">The future of embodied AI</p>
+
+    <div class="robot-outer" id="robotOuter">
+      <div class="robot-parallax" id="robotParallax">
+        <div class="robot-glow-bg"></div>
+        <div class="robot-floor"></div>
+
+        <div class="orbit orbit-1"><div class="odot"></div></div>
+        <div class="orbit orbit-2"><div class="odot"></div></div>
+        <div class="orbit orbit-3"><div class="odot"></div></div>
+
+        <div class="fdata fdata-1">NEURAL::CORE</div>
+        <div class="fdata-line fdata-line-1"></div>
+        <div class="fdata fdata-2">SYS::ACTIVE</div>
+        <div class="fdata-line fdata-line-2"></div>
+
+        <div class="robot-float">
+          <svg viewBox="0 0 400 520" class="robot-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="mH" x1=".2" y1="0" x2=".8" y2="1">
+                <stop offset="0%" stop-color="#2a2a48"/><stop offset="45%" stop-color="#1e1e38"/><stop offset="100%" stop-color="#121228"/>
+              </linearGradient>
+              <linearGradient id="mB" x1=".3" y1="0" x2=".7" y2="1">
+                <stop offset="0%" stop-color="#242442"/><stop offset="100%" stop-color="#14142c"/>
+              </linearGradient>
+              <linearGradient id="mHL" x1="0" y1="0" x2=".5" y2="1">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.07)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </linearGradient>
+              <linearGradient id="eG" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#0099dd"/><stop offset="50%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#0099dd"/>
+              </linearGradient>
+              <filter id="gl" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="gl2" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="bg" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="20"/>
+              </filter>
+            </defs>
+
+            <!-- ══ HEAD ══ -->
+            <path d="M158,42 C158,26 172,18 200,18 C228,18 242,26 242,42 L244,140 Q244,165 200,165 Q156,165 156,140Z" fill="url(#mH)" stroke="rgba(255,255,255,0.04)" stroke-width=".5"/>
+            <path d="M162,42 C162,28 174,21 200,21 C218,21 230,25 236,34 L232,72 C228,56 215,48 200,48 C183,48 168,58 164,76Z" fill="url(#mHL)" opacity=".6"/>
+
+            <!-- Head seams -->
+            <line x1="172" y1="40" x2="228" y2="40" stroke="rgba(255,255,255,0.05)" stroke-width=".5"/>
+            <line x1="176" y1="46" x2="224" y2="46" stroke="rgba(255,255,255,0.03)" stroke-width=".5"/>
+            <line x1="200" y1="22" x2="200" y2="162" stroke="rgba(255,255,255,0.02)" stroke-width=".5"/>
+
+            <!-- Ear panels -->
+            <rect x="148" y="78" width="8" height="32" rx="3" fill="url(#mH)" stroke="rgba(255,255,255,0.04)" stroke-width=".5"/>
+            <rect x="244" y="78" width="8" height="32" rx="3" fill="url(#mH)" stroke="rgba(255,255,255,0.04)" stroke-width=".5"/>
+            <rect x="150" y="86" width="4" height="2" rx="1" fill="rgba(139,92,246,0.2)"/>
+            <rect x="246" y="86" width="4" height="2" rx="1" fill="rgba(139,92,246,0.2)"/>
+            <rect x="150" y="96" width="4" height="1" rx=".5" fill="rgba(0,212,255,0.1)"/>
+            <rect x="246" y="96" width="4" height="1" rx=".5" fill="rgba(0,212,255,0.1)"/>
+
+            <!-- ══ EYES ══ -->
+            <rect x="158" y="80" width="34" height="18" rx="7" fill="rgba(0,212,255,0.12)" filter="url(#bg)" class="eye-glow"/>
+            <rect x="208" y="80" width="34" height="18" rx="7" fill="rgba(0,212,255,0.12)" filter="url(#bg)" class="eye-glow"/>
+            <rect x="163" y="84" width="24" height="12" rx="5" fill="rgba(0,0,0,0.4)"/>
+            <rect x="213" y="84" width="24" height="12" rx="5" fill="rgba(0,0,0,0.4)"/>
+            <rect x="165" y="86" width="20" height="8" rx="4" fill="rgba(0,212,255,0.25)" filter="url(#gl2)" class="eye-glow"/>
+            <rect x="215" y="86" width="20" height="8" rx="4" fill="rgba(0,212,255,0.25)" filter="url(#gl2)" class="eye-glow"/>
+            <rect x="165" y="86" width="20" height="8" rx="4" fill="url(#eG)" filter="url(#gl)" class="eye-glow"/>
+            <rect x="215" y="86" width="20" height="8" rx="4" fill="url(#eG)" filter="url(#gl)" class="eye-glow"/>
+            <rect x="172" y="89" width="6" height="2" rx="1" fill="rgba(255,255,255,0.55)" class="eye-glow"/>
+            <rect x="222" y="89" width="6" height="2" rx="1" fill="rgba(255,255,255,0.55)" class="eye-glow"/>
+
+            <!-- ══ FACE ══ -->
+            <line x1="200" y1="98" x2="200" y2="116" stroke="rgba(255,255,255,0.035)" stroke-width=".5"/>
+            <path d="M168,108 Q160,116 164,126" stroke="rgba(255,255,255,0.025)" stroke-width=".5" fill="none"/>
+            <path d="M232,108 Q240,116 236,126" stroke="rgba(255,255,255,0.025)" stroke-width=".5" fill="none"/>
+            <rect x="190" y="128" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.035)"/>
+            <rect x="193" y="134" width="14" height="1.5" rx=".75" fill="rgba(255,255,255,0.02)"/>
+            <path d="M178,150 Q200,158 222,150" stroke="rgba(255,255,255,0.025)" stroke-width=".5" fill="none"/>
+
+            <!-- ══ NECK ══ -->
+            <path d="M184,165 L182,198 Q182,208 200,208 Q218,208 218,198 L216,165" fill="url(#mB)" stroke="rgba(255,255,255,0.035)" stroke-width=".5"/>
+            <ellipse cx="200" cy="178" rx="18" ry="2.5" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width=".5"/>
+            <ellipse cx="200" cy="190" rx="17" ry="2.5" fill="none" stroke="rgba(255,255,255,0.035)" stroke-width=".5"/>
+            <ellipse cx="200" cy="178" rx="13" ry="1.5" fill="none" stroke="rgba(0,212,255,0.07)" stroke-width=".5"/>
+
+            <!-- ══ SHOULDERS & TORSO ══ -->
+            <path d="M182,208 L152,224 C135,232 115,238 98,244 L98,296 C115,290 135,284 152,276 L172,268 L172,418 Q172,440 200,440 Q228,440 228,418 L228,268 L248,276 C265,284 285,290 302,296 L302,244 C285,238 265,232 248,224 L218,208Z" fill="url(#mB)" stroke="rgba(255,255,255,0.035)" stroke-width=".5"/>
+
+            <!-- Torso left highlight -->
+            <path d="M176,218 L176,260 L172,268 L172,418 Q172,434 192,438 L192,260Z" fill="rgba(255,255,255,0.012)"/>
+
+            <!-- Shoulder caps -->
+            <ellipse cx="125" cy="268" rx="18" ry="22" fill="url(#mB)" stroke="rgba(255,255,255,0.04)" stroke-width=".5"/>
+            <ellipse cx="275" cy="268" rx="18" ry="22" fill="url(#mB)" stroke="rgba(255,255,255,0.04)" stroke-width=".5"/>
+            <circle cx="125" cy="265" r="3" fill="rgba(139,92,246,0.18)" filter="url(#gl)" class="shoulder-glow"/>
+            <circle cx="275" cy="265" r="3" fill="rgba(139,92,246,0.18)" filter="url(#gl)" class="shoulder-glow"/>
+
+            <!-- Arm fade hints -->
+            <path d="M98,244 L90,300 Q85,332 88,362" stroke="rgba(255,255,255,0.025)" stroke-width="1" fill="none"/>
+            <path d="M302,244 L310,300 Q315,332 312,362" stroke="rgba(255,255,255,0.025)" stroke-width="1" fill="none"/>
+
+            <!-- ══ CHEST PANEL ══ -->
+            <path d="M182,238 L182,398 Q182,415 200,415 Q218,415 218,398 L218,238Z" fill="rgba(0,0,0,0.2)" stroke="rgba(255,255,255,0.04)" stroke-width=".5"/>
+
+            <!-- Core glow layers -->
+            <circle cx="200" cy="308" r="22" fill="rgba(0,212,255,0.07)" filter="url(#bg)"/>
+            <circle cx="200" cy="308" r="16" fill="none" stroke="rgba(0,212,255,0.14)" stroke-width=".5" filter="url(#gl)" class="core-ring"/>
+            <circle cx="200" cy="308" r="9" fill="none" stroke="rgba(0,212,255,0.22)" stroke-width=".5" filter="url(#gl)" class="core-ring"/>
+            <circle cx="200" cy="308" r="3" fill="#00d4ff" filter="url(#gl)" class="core-dot"/>
+            <circle cx="200" cy="308" r="1.2" fill="rgba(255,255,255,0.85)" class="core-dot"/>
+
+            <!-- Core circuit lines -->
+            <line x1="200" y1="246" x2="200" y2="291" stroke="rgba(0,212,255,0.09)" stroke-width=".5" class="circuit"/>
+            <line x1="200" y1="325" x2="200" y2="398" stroke="rgba(0,212,255,0.09)" stroke-width=".5" class="circuit"/>
+            <line x1="200" y1="308" x2="182" y2="308" stroke="rgba(0,212,255,0.07)" stroke-width=".5"/>
+            <line x1="200" y1="308" x2="218" y2="308" stroke="rgba(0,212,255,0.07)" stroke-width=".5"/>
+
+            <!-- Horizontal chest lines -->
+            <line x1="186" y1="258" x2="214" y2="258" stroke="rgba(255,255,255,0.03)" stroke-width=".5"/>
+            <line x1="186" y1="358" x2="214" y2="358" stroke="rgba(255,255,255,0.03)" stroke-width=".5"/>
+
+            <!-- Side torso seams -->
+            <line x1="172" y1="278" x2="182" y2="278" stroke="rgba(255,255,255,0.025)" stroke-width=".5"/>
+            <line x1="228" y1="278" x2="218" y2="278" stroke="rgba(255,255,255,0.025)" stroke-width=".5"/>
+            <line x1="172" y1="338" x2="182" y2="338" stroke="rgba(255,255,255,0.025)" stroke-width=".5"/>
+            <line x1="228" y1="338" x2="218" y2="338" stroke="rgba(255,255,255,0.025)" stroke-width=".5"/>
+
+            <!-- Abdomen -->
+            <rect x="192" y="378" width="16" height="2" rx="1" fill="rgba(255,255,255,0.025)"/>
+            <rect x="194" y="384" width="12" height="1.5" rx=".75" fill="rgba(255,255,255,0.018)"/>
+          </svg>
         </div>
-    </nav>
+      </div>
+    </div>
 
-    <!-- ═══════════ HERO SECTION ═══════════ -->
-    <section class="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
+    <p class="teaser">
+      We're building a new kind of intelligence — one that thinks, adapts, and exists in the physical world. The next chapter in human-machine convergence is closer than you think.
+    </p>
 
-        <!-- Robot -->
-        <div class="relative mb-6 reveal" id="robot-reveal" style="transition-delay:0.1s">
-            <!-- Aura -->
-            <div class="aura-breathe absolute top-1/2 left-1/2 w-[320px] h-[320px] md:w-[420px] md:h-[420px] rounded-full pointer-events-none"
-                 style="background:radial-gradient(circle,rgba(99,102,241,0.18) 0%,rgba(168,85,247,0.08) 45%,transparent 72%)"></div>
+    <div class="features">
+      <div class="pill">
+        <span class="iconify" data-icon="mdi:brain"></span>
+        <span>Autonomous Reasoning</span>
+      </div>
+      <div class="pill">
+        <span class="iconify" data-icon="mdi:eye-outline"></span>
+        <span>Perception</span>
+      </div>
+      <div class="pill">
+        <span class="iconify" data-icon="mdi:robot-outline"></span>
+        <span>Embodied AI</span>
+      </div>
+      <div class="pill">
+        <span class="iconify" data-icon="mdi:lightning-bolt"></span>
+        <span>Real-Time</span>
+      </div>
+    </div>
+  </main>
 
-            <!-- Particles -->
-            <div class="particle" style="left:8%;bottom:18%;--dur:4.2s;--delay:0s;--dx:15px"></div>
-            <div class="particle" style="left:88%;bottom:25%;--dur:5.5s;--delay:1.2s;--dx:-12px"></div>
-            <div class="particle" style="left:18%;bottom:8%;--dur:6s;--delay:2.5s;--dx:20px"></div>
-            <div class="particle" style="left:75%;bottom:12%;--dur:4.8s;--delay:0.7s;--dx:-18px"></div>
-            <div class="particle" style="left:45%;bottom:4%;--dur:5.2s;--delay:1.8s;--dx:10px"></div>
-            <div class="particle" style="left:30%;bottom:22%;--dur:3.8s;--delay:3.2s;--dx:-8px"></div>
-            <div class="particle" style="left:62%;bottom:6%;--dur:4.5s;--delay:0.3s;--dx:14px"></div>
-            <div class="particle" style="left:52%;bottom:20%;--dur:5.8s;--delay:2s;--dx:-16px"></div>
+  <!-- Glass Card -->
+  <section class="card-section">
+    <div class="glass-card">
+      <span class="iconify" data-icon="mdi:shield-lock-outline"></span>
+      <p><strong>Safety-first design.</strong> Every system we build is grounded in rigorous safety research, aligned with human values, and tested beyond conventional standards.</p>
+    </div>
+  </section>
 
-            <!-- Scan line -->
-            <div class="scan-line"></div>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Robotah. All rights reserved.</p>
+    <div class="socials">
+      <a href="#" aria-label="Twitter"><span class="iconify" data-icon="mdi:twitter" data-width="18"></span></a>
+      <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="mdi:linkedin" data-width="18"></span></a>
+      <a href="#" aria-label="GitHub"><span class="iconify" data-icon="mdi:github" data-width="18"></span></a>
+    </div>
+  </footer>
 
-            <!-- SVG Robot -->
-            <div style="perspective:1000px">
-                <div class="robot-float" style="transform-style:preserve-3d">
-                    <svg class="w-[260px] h-[420px] sm:w-[300px] sm:h-[480px] md:w-[340px] md:h-[540px] lg:w-[370px] lg:h-[580px]" viewBox="0 0 300 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-                                <feGaussianBlur stdDeviation="2.5" result="b"/>
-                                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-                            </filter>
-                            <filter id="glow-md" x="-50%" y="-50%" width="200%" height="200%">
-                                <feGaussianBlur stdDeviation="6" result="b"/>
-                                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-                            </filter>
-                            <filter id="glow-lg" x="-80%" y="-80%" width="260%" height="260%">
-                                <feGaussianBlur stdDeviation="12" result="b"/>
-                                <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-                            </filter>
-                            <linearGradient id="gStroke" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#818cf8" stop-opacity="0.35"/>
-                                <stop offset="50%" stop-color="#a78bfa" stop-opacity="0.55"/>
-                                <stop offset="100%" stop-color="#818cf8" stop-opacity="0.28"/>
-                            </linearGradient>
-                            <linearGradient id="gFill" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#6366f1" stop-opacity="0.045"/>
-                                <stop offset="100%" stop-color="#a855f7" stop-opacity="0.02"/>
-                            </linearGradient>
-                            <linearGradient id="gVisor" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#6366f1" stop-opacity="0.5"/>
-                                <stop offset="50%" stop-color="#a855f7" stop-opacity="0.95"/>
-                                <stop offset="100%" stop-color="#6366f1" stop-opacity="0.5"/>
-                            </linearGradient>
-                            <radialGradient id="gCore" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#e0e7ff"/>
-                                <stop offset="30%" stop-color="#c084fc"/>
-                                <stop offset="70%" stop-color="#818cf8"/>
-                                <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
-                            </radialGradient>
-                        </defs>
+  <script>
+    /* ═══ Particle System ═══ */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const COUNT = 55;
 
-                        <!-- ── HEAD ── -->
-                        <rect x="110" y="18" width="80" height="78" rx="22" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1.5" filter="url(#glow)"/>
-                        <!-- Ear pieces -->
-                        <rect x="104" y="42" width="8" height="22" rx="3" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1"/>
-                        <rect x="188" y="42" width="8" height="22" rx="3" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1"/>
-                        <!-- Top ridge -->
-                        <line x1="135" y1="26" x2="165" y2="26" stroke="#818cf8" stroke-opacity="0.25" stroke-width="1" stroke-linecap="round"/>
-                        <!-- Visor -->
-                        <g class="visor-pulse">
-                            <rect x="117" y="43" width="66" height="24" rx="12" fill="url(#gVisor)" filter="url(#glow-md)"/>
-                            <rect x="121" y="48" width="22" height="4" rx="2" fill="#fff" fill-opacity="0.35"/>
-                            <rect x="121" y="55" width="14" height="2.5" rx="1.25" fill="#fff" fill-opacity="0.15"/>
-                        </g>
-                        <!-- Chin -->
-                        <line x1="138" y1="82" x2="162" y2="82" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.8" stroke-linecap="round"/>
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
 
-                        <!-- ── NECK ── -->
-                        <rect x="136" y="96" width="28" height="20" rx="5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1"/>
-                        <line x1="141" y1="102" x2="159" y2="102" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
-                        <line x1="141" y1="108" x2="159" y2="108" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
+    class P {
+      constructor(init) {
+        this.reset();
+        if (init) this.y = Math.random() * canvas.height;
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + 10;
+        this.s = Math.random() * 1.4 + 0.3;
+        this.vy = -(Math.random() * 0.25 + 0.08);
+        this.vx = (Math.random() - 0.5) * 0.12;
+        this.o = Math.random() * 0.35 + 0.05;
+        this.h = Math.random() > 0.7 ? 270 : 195;
+      }
+      update() {
+        this.y += this.vy;
+        this.x += this.vx;
+        if (this.y < -10) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2);
+        ctx.fillStyle = 'hsla(' + this.h + ',80%,65%,' + this.o + ')';
+        ctx.fill();
+      }
+    }
 
-                        <!-- ── TORSO ── -->
-                        <path d="M118 116 L182 116 L194 268 L106 268 Z" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1.5" filter="url(#glow)"/>
-                        <!-- Panel lines -->
-                        <line x1="128" y1="142" x2="172" y2="142" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
-                        <line x1="124" y1="222" x2="176" y2="222" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
-                        <line x1="118" y1="245" x2="182" y2="245" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
-                        <!-- Side grooves -->
-                        <line x1="123" y1="148" x2="115" y2="218" stroke="#818cf8" stroke-opacity="0.08" stroke-width="0.5"/>
-                        <line x1="177" y1="148" x2="185" y2="218" stroke="#818cf8" stroke-opacity="0.08" stroke-width="0.5"/>
-                        <!-- Small dots -->
-                        <circle cx="124" cy="160" r="1.5" fill="#818cf8" fill-opacity="0.25"/>
-                        <circle cx="176" cy="160" r="1.5" fill="#818cf8" fill-opacity="0.25"/>
-                        <circle cx="128" cy="202" r="1.2" fill="#818cf8" fill-opacity="0.2"/>
-                        <circle cx="172" cy="202" r="1.2" fill="#818cf8" fill-opacity="0.2"/>
-                        <circle cx="130" cy="235" r="1.2" fill="#818cf8" fill-opacity="0.2"/>
-                        <circle cx="170" cy="235" r="1.2" fill="#818cf8" fill-opacity="0.2"/>
+    for (let i = 0; i < COUNT; i++) particles.push(new P(true));
 
-                        <!-- Core -->
-                        <g class="core-pulse">
-                            <circle cx="150" cy="180" r="26" fill="url(#gCore)" filter="url(#glow-lg)" opacity="0.5"/>
-                            <circle cx="150" cy="180" r="16" fill="none" stroke="#a78bfa" stroke-width="1" stroke-opacity="0.5" filter="url(#glow)"/>
-                            <circle cx="150" cy="180" r="7" fill="#c4b5fd" filter="url(#glow-md)" opacity="0.85"/>
-                        </g>
-                        <!-- Core circuit lines -->
-                        <line x1="128" y1="180" x2="124" y2="180" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.5"/>
-                        <line x1="172" y1="180" x2="176" y2="180" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.5"/>
-                        <line x1="150" y1="156" x2="150" y2="150" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.5"/>
-                        <line x1="150" y1="204" x2="150" y2="212" stroke="#818cf8" stroke-opacity="0.18" stroke-width="0.5"/>
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
 
-                        <!-- ── SHOULDERS ── -->
-                        <circle cx="116" cy="119" r="9" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1.2" filter="url(#glow)"/>
-                        <circle cx="116" cy="119" r="3.5" fill="#818cf8" fill-opacity="0.2"/>
-                        <circle cx="184" cy="119" r="9" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1.2" filter="url(#glow)"/>
-                        <circle cx="184" cy="119" r="3.5" fill="#818cf8" fill-opacity="0.2"/>
+    /* ═══ Mouse Light & Parallax ═══ */
+    const ml = document.getElementById('mouseLight');
+    const rp = document.getElementById('robotParallax');
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
 
-                        <!-- ── LEFT ARM ── -->
-                        <line x1="112" y1="128" x2="88" y2="196" stroke="url(#gStroke)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
-                        <circle cx="88" cy="196" r="5.5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
-                        <line x1="85" y1="201" x2="70" y2="272" stroke="url(#gStroke)" stroke-width="5.5" stroke-linecap="round" filter="url(#glow)"/>
-                        <!-- Hand -->
-                        <rect x="62" y="270" width="16" height="14" rx="4" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
-                        <line x1="66" y1="276" x2="74" y2="276" stroke="#818cf8" stroke-opacity="0.15" stroke-width="0.5"/>
+    document.addEventListener('mousemove', function(e) {
+      mx = e.clientX;
+      my = e.clientY;
+      ml.style.left = mx + 'px';
+      ml.style.top = my + 'px';
+    });
 
-                        <!-- ── RIGHT ARM ── -->
-                        <line x1="188" y1="128" x2="212" y2="196" stroke="url(#gStroke)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
-                        <circle cx="212" cy="196" r="5.5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
-                        <line x1="215" y1="201" x2="230" y2="272" stroke="url(#gStroke)" stroke-width="5.5" stroke-linecap="round" filter="url(#glow)"/>
-                        <!-- Hand -->
-                        <rect x="222" y="270" width="16" height="14" rx="4" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
-                        <line x1="226" y1="276" x2="234" y2="276" stroke="#818cf8" stroke-opacity="0.15" stroke-width="0.5"/>
+    function parallax() {
+      if (rp) {
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        const dx = (mx - cx) / cx;
+        const dy = (my - cy) / cy;
+        rp.style.transform = 'translate(' + (dx * 8) + 'px,' + (dy * 5) + 'px)';
+      }
+      requestAnimationFrame(parallax);
+    }
+    parallax();
 
-                        <!-- ── HIP ── -->
-                        <path d="M126 268 L174 268 L172 284 L128 284 Z" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1"/>
-                        <line x1="135" y1="276" x2="165" y2="276" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
-
-                        <!-- ── LEFT LEG ── -->
-                        <line x1="136" y1="284" x2="124" y2="372" stroke="url(#gStroke)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
-                        <circle cx="124" cy="372" r="5.5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
-                        <line x1="122" y1="378" x2="118" y2="460" stroke="url(#gStroke)" stroke-width="5.5" stroke-linecap="round" filter="url(#glow)"/>
-                        <!-- Foot -->
-                        <path d="M106 458 L130 458 L134 474 L102 474 Z" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
-                        <line x1="110" y1="466" x2="128" y2="466" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
-
-                        <!-- ── RIGHT LEG ── -->
-                        <line x1="164" y1="284" x2="176" y2="372" stroke="url(#gStroke)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
-                        <circle cx="176" cy="372" r="5.5" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
-                        <line x1="178" y1="378" x2="182" y2="460" stroke="url(#gStroke)" stroke-width="5.5" stroke-linecap="round" filter="url(#glow)"/>
-                        <!-- Foot -->
-                        <path d="M170 458 L194 458 L198 474 L166 474 Z" fill="url(#gFill)" stroke="url(#gStroke)" stroke-width="1" filter="url(#glow)"/>
-                        <line x1="174" y1="466" x2="192" y2="466" stroke="#818cf8" stroke-opacity="0.12" stroke-width="0.5"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- Copy -->
-        <div class="text-center max-w-2xl mx-auto reveal" id="hero-copy" style="transition-delay:0.3s">
-            <!-- Badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-md mb-7">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-60"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-400"></span>
-                </span>
-                <span class="text-[11px] font-semibold text-white/50 tracking-[0.08em] uppercase">Coming Soon</span>
-            </div>
-
-            <!-- Headline -->
-            <h1 class="text-[2.5rem] sm:text-5xl md:text-[3.75rem] lg:text-[4.25rem] font-semibold tracking-[-0.035em] leading-[1.08] mb-6">
-                The Future of AI<br>
-                <span class="gradient-text">is Almost Here</span>
-            </h1>
-
-            <!-- Description -->
-            <p class="text-[15px] sm:text-base md:text-[17px] text-white/35 font-light leading-[1.7] mb-10 max-w-[460px] mx-auto">
-                We're building something extraordinary — a new kind of intelligence that understands, creates, and evolves. Be the first to know when we launch.
-            </p>
-
-            <!-- ── FORM ── -->
-            <div id="form-wrap">
-                <form id="waitlist-form" class="flex flex-col sm:flex-row gap-3 max-w-[440px] mx-auto" novalidate>
-                    <input
-                        type="email"
-                        id="email-input"
-                        placeholder="Enter your email"
-                        autocomplete="email"
-                        required
-                        class="input-field flex-1 px-5 py-3.5 rounded-xl bg-white/[0.035] border border-white/[0.08] text-white text-sm placeholder-white/20 outline-none"
-                        aria-label="Email address"
-                    />
-                    <button
-                        type="submit"
-                        class="btn-primary px-7 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030014]"
-                    >
-                        Join the Waitlist
-                    </button>
-                </form>
-                <p id="error-msg" class="text-red-400/70 text-xs mt-3 hidden text-center sm:text-left sm:ml-[1px]">Please enter a valid email address.</p>
-            </div>
-
-            <!-- ── SUCCESS ── -->
-            <div id="success-msg" class="hidden">
-                <div class="success-enter glass-md inline-flex items-center gap-3.5 px-7 py-4 rounded-2xl max-w-[440px]">
-                    <span class="text-[26px] leading-none">🎉</span>
-                    <span class="text-sm text-white/75 leading-relaxed">Thanks for joining the Robotah waitlist! We'll keep you updated.</span>
-                </div>
-            </div>
-
-            <!-- Social proof & trust -->
-            <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-7">
-                <span class="text-xs text-white/20 flex items-center gap-1.5">
-                    <span class="iconify text-[13px]" data-icon="lucide:users"></span>
-                    2,847 on the waitlist
-                </span>
-                <span class="hidden sm:block w-px h-3 bg-white/10"></span>
-                <span class="text-xs text-white/20 flex items-center gap-1.5">
-                    <span class="iconify text-[13px]" data-icon="lucide:shield-check"></span>
-                    No spam, ever
-                </span>
-                <span class="hidden sm:block w-px h-3 bg-white/10"></span>
-                <span class="text-xs text-white/20 flex items-center gap-1.5">
-                    <span class="iconify text-[13px]" data-icon="lucide:lock"></span>
-                    Privacy first
-                </span>
-            </div>
-        </div>
-
-        <!-- Scroll cue -->
-        <div class="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/15">
-            <span class="text-[10px] tracking-[0.15em] uppercase font-medium">Scroll</span>
-            <div class="w-[18px] h-[30px] rounded-full border border-white/[0.08] flex justify-center pt-2">
-                <div class="w-[3px] h-[6px] rounded-full bg-white/25 animate-bounce"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════ GLOW DIVIDER ═══════════ -->
-    <div class="glow-divider relative z-10"></div>
-
-    <!-- ═══════════ FEATURES SECTION ═══════════ -->
-    <section id="features" class="relative z-10 py-28 md:py-36 px-6">
-        <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-14 reveal">
-                <p class="text-[11px] font-semibold tracking-[0.1em] uppercase text-indigo-400/60 mb-4">Preview</p>
-                <h2 class="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-[-0.03em] mb-4">What We're Building</h2>
-                <p class="text-sm text-white/25 max-w-md mx-auto leading-relaxed">A glimpse into the capabilities that will redefine how you interact with artificial intelligence.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-                <!-- Card 1 -->
-                <div class="feature-card glass rounded-2xl p-7 reveal" style="transition-delay:0.1s">
-                    <div class="w-11 h-11 rounded-xl bg-indigo-500/[0.08] border border-indigo-500/15 flex items-center justify-center mb-5">
-                        <span class="iconify text-indigo-400 text-[20px]" data-icon="lucide:brain"></span>
-                    </div>
-                    <h3 class="text-[15px] font-medium mb-2.5 tracking-[-0.01em]">Advanced Reasoning</h3>
-                    <p class="text-[13px] text-white/25 leading-[1.7]">Neural architectures designed for complex problem-solving, deep analysis, and creative tasks that push the boundaries of what's possible.</p>
-                </div>
-                <!-- Card 2 -->
-                <div class="feature-card glass rounded-2xl p-7 reveal" style="transition-delay:0.2s">
-                    <div class="w-11 h-11 rounded-xl bg-purple-500/[0.08] border border-purple-500/15 flex items-center justify-center mb-5">
-                        <span class="iconify text-purple-400 text-[20px]" data-icon="lucide:plug"></span>
-                    </div>
-                    <h3 class="text-[15px] font-medium mb-2.5 tracking-[-0.01em]">Seamless Integration</h3>
-                    <p class="text-[13px] text-white/25 leading-[1.7]">Connect with your existing tools and workflows through our universal API. Built to augment your stack, not replace it.</p>
-                </div>
-                <!-- Card 3 -->
-                <div class="feature-card glass rounded-2xl p-7 reveal" style="transition-delay:0.3s">
-                    <div class="w-11 h-11 rounded-xl bg-violet-500/[0.08] border border-violet-500/15 flex items-center justify-center mb-5">
-                        <span class="iconify text-violet-400 text-[20px]" data-icon="lucide:message-square"></span>
-                    </div>
-                    <h3 class="text-[15px] font-medium mb-2.5 tracking-[-0.01em]">Human-Like Interaction</h3>
-                    <p class="text-[13px] text-white/25 leading-[1.7]">Natural conversations that truly understand context, nuance, and intent — like talking to a brilliant colleague.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════ GLOW DIVIDER ═══════════ -->
-    <div class="glow-divider relative z-10"></div>
-
-    <!-- ═══════════ CTA BAND ═══════════ -->
-    <section class="relative z-10 py-24 md:py-32 px-6">
-        <div class="max-w-2xl mx-auto text-center reveal">
-            <h2 class="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] mb-4">Don't Miss the Launch</h2>
-            <p class="text-sm text-white/25 mb-8 max-w-sm mx-auto leading-relaxed">Join thousands of developers, creators, and innovators waiting for the next leap in AI.</p>
-            <a href="#" onclick="document.getElementById('email-input').focus();window.scrollTo({top:0,behavior:'smooth'});return false;"
-               class="btn-primary inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400">
-                <span class="iconify text-[15px]" data-icon="lucide:arrow-up"></span>
-                Join the Waitlist
-            </a>
-        </div>
-    </section>
-
-    <!-- ═══════════ FOOTER ═══════════ -->
-    <footer class="relative z-10 border-t border-white/[0.04] py-10 px-6">
-        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <div class="w-5 h-5 rounded-md bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                    <span class="iconify text-white text-[10px]" data-icon="lucide:bot"></span>
-                </div>
-                <span class="text-xs text-white/20">© 2025 Robotah. All rights reserved.</span>
-            </div>
-            <div class="flex items-center gap-5">
-                <a href="#" class="text-[11px] text-white/15 hover:text-white/40 transition-colors">Privacy</a>
-                <a href="#" class="text-[11px] text-white/15 hover:text-white/40 transition-colors">Terms</a>
-                <a href="#" class="text-[11px] text-white/15 hover:text-white/40 transition-colors">Contact</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ═══════════ SCRIPTS ═══════════ -->
-    <script>
-        // ── Star field ──
-        (function() {
-            const container = document.getElementById('star-field');
-            const count = 90;
-            for (let i = 0; i < count; i++) {
-                const s = document.createElement('div');
-                s.className = 'star';
-                s.style.left = Math.random() * 100 + '%';
-                s.style.top = Math.random() * 100 + '%';
-                s.style.setProperty('--dur', (2.5 + Math.random() * 3) + 's');
-                s.style.setProperty('--delay', (Math.random() * 4) + 's');
-                container.appendChild(s);
-            }
-        })();
-
-        // ── Scroll reveal ──
-        (function() {
-            const els = document.querySelectorAll('.reveal');
-            const io = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-            els.forEach(function(el) { io.observe(el); });
-
-            // Trigger hero elements immediately
-            setTimeout(function() {
-                document.getElementById('robot-reveal').classList.add('visible');
-            }, 200);
-            setTimeout(function() {
-                document.getElementById('hero-copy').classList.add('visible');
-            }, 500);
-        })();
-
-        // ── Form handling ──
-        (function() {
-            var form = document.getElementById('waitlist-form');
-            var input = document.getElementById('email-input');
-            var error = document.getElementById('error-msg');
-            var formWrap = document.getElementById('form-wrap');
-            var success = document.getElementById('success-msg');
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                var val = input.value.trim();
-
-                if (!emailRegex.test(val)) {
-                    error.classList.remove('hidden');
-                    input.style.borderColor = 'rgba(248,113,113,0.5)';
-                    input.focus();
-                    return;
-                }
-
-                error.classList.add('hidden');
-                input.style.borderColor = '';
-
-                // Transition out form
-                formWrap.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
-                formWrap.style.opacity = '0';
-                formWrap.style.transform = 'translateY(-8px)';
-
-                setTimeout(function() {
-                    formWrap.classList.add('hidden');
-                    success.classList.remove('hidden');
-                }, 350);
-            });
-
-            input.addEventListener('input', function() {
-                error.classList.add('hidden');
-                input.style.borderColor = '';
-            });
-        })();
-
-        // ── Smooth scroll for anchor links ──
-        document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-            a.addEventListener('click', function(e) {
-                var target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-    </script>
+    /* ═══ Touch fallback for parallax ═══ */
+    document.addEventListener('touchmove', function(e) {
+      if (e.touches.length) {
+        mx = e.touches[0].clientX;
+        my = e.touches[0].clientY;
+        ml.style.left = mx + 'px';
+        ml.style.top = my + 'px';
+      }
+    }, { passive: true });
+  </script>
 </body>
 </html>
