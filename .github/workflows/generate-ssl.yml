@@ -1,0 +1,42 @@
+name: Generate SSL Certificate
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-certificate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Certbot and Cloudflare plugin
+        run: |
+          sudo apt update
+          sudo apt install -y certbot python3-certbot-dns-cloudflare
+
+      - name: Create Cloudflare credentials file
+        run: |
+          mkdir -p ~/.secrets
+          echo "dns_cloudflare_api_token=${{ secrets.CF_API_TOKEN }}" > ~/.secrets/cloudflare.ini
+          chmod 600 ~/.secrets/cloudflare.ini
+
+      - name: Generate certificate for app.robotah.com
+        run: |
+          sudo certbot certonly \
+            --non-interactive \
+            --agree-tos \
+            --email admin@robotah.com \
+            --dns-cloudflare \
+            --dns-cloudflare-credentials ~/.secrets/cloudflare.ini \
+            -d app.robotah.com
+
+      - name: Prepare Zoom certificate files
+        run: |
+          mkdir zoom-ssl
+          sudo cp /etc/letsencrypt/live/app.robotah.com/fullchain.pem zoom-ssl/
+          sudo cp /etc/letsencrypt/live/app.robotah.com/privkey.pem zoom-ssl/
+
+      - name: Upload certificate files
+        uses: actions/upload-artifact@v4
+        with:
+          name: zoom-ssl
+          path: zoom-ssl/
