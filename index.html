@@ -9,7 +9,7 @@
 <meta name="description" content="Personal research page of Sunil — robot learning, manipulation, tactile perception, and the sim-to-real gap.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600&display=swap" rel="stylesheet">
 <style>
 /* ---------- tokens (grayscale only) ---------- */
 :root{
@@ -52,23 +52,19 @@ nav a:hover{color:var(--ink)}
 .body-p{font:400 .95rem/1.75 var(--sans);color:var(--body);max-width:62ch;margin-top:16px}
 .sec-intro{font:400 .94rem/1.7 var(--sans);color:var(--mut);max-width:56ch;margin-top:22px}
 
-/* ---------- research list ---------- */
-.work-list{margin-top:36px}
-.work{padding:30px 0;border-top:1px solid var(--line)}
+/* ---------- research list (titles only) ---------- */
+.work-list{margin-top:34px}
+.work{display:flex;align-items:baseline;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;
+  padding:22px 0;border-top:1px solid var(--line)}
 .work:last-child{border-bottom:1px solid var(--line)}
-.meta{font:500 .72rem var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.work h2{margin-top:12px}
-.work h2 a{font:600 clamp(1.2rem,2.3vw,1.4rem)/1.35 var(--serif);color:var(--ink);
+.work h2{margin:0}
+.work h2 a{font:600 clamp(1.15rem,2.2vw,1.32rem)/1.4 var(--serif);color:var(--ink);
   text-decoration:none;letter-spacing:-.005em;transition:color .18s}
 .work h2 a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px;
   text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.35)}
-.work-desc{font:400 .92rem/1.7 var(--sans);color:var(--mut);max-width:58ch;margin-top:9px}
-.more{display:inline-flex;align-items:center;gap:8px;margin-top:15px;font:500 .84rem var(--sans);
-  color:var(--mut);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px;
-  transition:color .18s,border-color .18s}
-.more .arr{transition:transform .18s}
-.more:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
-.more:hover .arr{transform:translateX(3px)}
+.rlink{font:500 .84rem var(--sans);color:var(--mut);text-decoration:none;white-space:nowrap;
+  border-bottom:1px solid var(--line);padding-bottom:3px;transition:color .18s,border-color .18s}
+.rlink:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
 
 /* ---------- contact ---------- */
 .facts{margin-top:30px}
@@ -82,45 +78,22 @@ nav a:hover{color:var(--ink)}
   padding-bottom:2px;transition:color .18s,border-color .18s}
 .facts dd a:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
 
-/* ---------- reading page ---------- */
-.paper{padding-top:52px;scroll-margin-top:76px;animation:fadeUp .4s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* ---------- reading page (embedded PDF) ---------- */
+.paper{padding-top:48px}
 .back{display:inline-flex;align-items:center;gap:8px;font:500 .84rem var(--sans);color:var(--mut);
   text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px;
   transition:color .18s,border-color .18s}
 .back .barr{transition:transform .18s}
 .back:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
 .back:hover .barr{transform:translateX(-3px)}
-.paper .meta{margin-top:46px;display:flex;align-items:baseline;gap:10px 16px;flex-wrap:wrap}
-.mspace{flex:1}
-.mode-btn{background:none;border:1px solid var(--line);border-radius:4px;padding:6px 12px;
-  font:500 .76rem var(--sans);color:var(--mut);cursor:pointer;
-  transition:color .18s,border-color .18s,background .18s}
-.mode-btn:hover{color:var(--ink);border-color:rgba(255,255,255,.35)}
-.mode-btn[aria-pressed="true"]{color:var(--ink);border-color:rgba(255,255,255,.4);
-  background:rgba(255,255,255,.04)}
-.paper h1{font:600 clamp(1.75rem,4.4vw,2.3rem)/1.28 var(--serif);letter-spacing:-.012em;
-  color:var(--ink);margin-top:14px;max-width:24ch}
-.abstract{margin-top:32px;border-left:2px solid rgba(255,255,255,.22);
-  background:rgba(255,255,255,.02);border-radius:0 6px 6px 0;padding:20px 26px 22px}
-.abs-text{font:italic 400 1.02rem/1.78 var(--serif);color:var(--body);margin-top:12px}
-.rs h2{font:600 1.24rem/1.4 var(--serif);color:var(--ink);margin-top:42px}
-.rs p{font:400 1.02rem/1.8 var(--serif);color:var(--body);max-width:62ch;margin-top:15px}
-.refs ol{list-style:none;counter-reset:ref;margin-top:16px}
-.refs li{counter-increment:ref;position:relative;font:400 .84rem/1.65 var(--sans);color:var(--mut);
-  padding:10px 0 10px 34px;border-top:1px dashed rgba(255,255,255,.08)}
-.refs li::before{content:"[" counter(ref) "]";position:absolute;left:0;color:var(--faint)}
-.paper .end{margin-top:52px;border-top:1px solid var(--line);padding-top:16px;
-  font:italic 400 .9rem var(--serif);color:var(--faint)}
-.nf-p{font:400 1.02rem/1.8 var(--serif);color:var(--body);margin-top:16px;max-width:56ch}
+.paper h1{font:600 clamp(1.5rem,3.6vw,1.9rem)/1.3 var(--serif);letter-spacing:-.01em;
+  color:var(--ink);margin-top:28px;max-width:30ch}
+.pdf-frame{margin-top:26px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#000}
+.pdf-frame iframe{display:block;width:100%;height:min(82vh,880px);border:0}
+.nf-p{font:400 1.02rem/1.8 var(--serif);color:var(--body);margin-top:20px;max-width:56ch}
 .nf-p a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(255,255,255,.3);
   text-underline-offset:3px}
 .nf-p a:hover{text-decoration-color:rgba(255,255,255,.75)}
-
-/* ---------- embedded PDF viewer ---------- */
-.pdf-frame{margin-top:32px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#000}
-.pdf-frame iframe{display:block;width:100%;height:min(76vh,700px);border:0}
-.pdf-note{margin-top:10px;font:italic 400 .82rem var(--serif);color:var(--faint)}
 
 /* ---------- footer (minimal) ---------- */
 footer{margin-top:96px;border-top:1px solid var(--line)}
@@ -140,12 +113,12 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
   nav a{padding:8px 7px}
   .facts > div{grid-template-columns:118px minmax(0,1fr)}
   .paper h1{max-width:none}
+  .pdf-frame iframe{height:72vh}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
   .reveal{opacity:1}
-  .paper{animation:none}
 }
 </style>
 </head>
@@ -173,15 +146,12 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
       <p class="body-p">I'm a researcher at Robotah, where my week splits between training models
         and watching them fail on real hardware. My background is machine learning; my daily work
         is making clean ideas survive messy physics.</p>
-      <p class="body-p">This page is a plain-language record of that work. Each project below opens
-        as a full-text page — no paywalls, no downloads — and some have a PDF edition you can read
-        right on the site.</p>
+      <p class="body-p">Each paper below opens in the browser — read it right here,
+        nothing to download.</p>
     </section>
 
     <section id="research" class="sec reveal">
       <p class="label">Research</p>
-      <p class="sec-intro">Four current lines of work. Open any of them for the complete text —
-        written to be read, not skimmed.</p>
       <div class="work-list" id="workList"><!-- built from data --></div>
     </section>
 
@@ -218,130 +188,34 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
 
        index.html#/research/ai/read
 
-   Deep links, the back button and refresh all work from this file.
-   To customize: edit the RESEARCH array below and the contact
-   links in the Contact section above.
+   Each entry shows only its title on the homepage; opening it
+   embeds the corresponding PDF directly in the reading page.
+
+   To customize: edit the RESEARCH array below — set `pdf` to the
+   URL of each hosted paper PDF. The URLs here are placeholders.
    ================================================================ */
 "use strict";
 
 const RESEARCH = [
   {
     slug: "ai",
-    field: "Machine Learning",
-    years: "2023–2025",
-    read: 6,
     title: "Small World Models for Real Robots",
-    desc: "World models let a robot rehearse the future before acting in it. I study small, disciplined world models trained on real robot data — what they predict reliably, and where they quietly fail.",
-    // Set `pdf` on any paper to enable the "View as PDF" toggle with an
-    // embedded viewer. The URL below is a placeholder — replace it with
-    // your own paper PDF (any publicly hosted PDF works).
-    pdf: "https://pdfobject.com/pdf/sample.pdf",
-    abstract: "A world model is a learned simulator: show it a state and an action, and it predicts what happens next. For robots the promise is enormous — plan in imagination, act in reality — and so is the disappointment when the imagination drifts. This note summarises my work on deliberately small world models trained on real manipulation data: what they predict reliably, which failures actually matter, and why I now think the goal is not a better simulator but a better-calibrated one.",
-    sections: [
-      { h: "Why small models", ps: [
-        "The glamorous version of this research is a video-generation model that imagines whole episodes in cinematic detail. A robot lab does not get to live in that version. The model has to train overnight on the logs a single robot cell already produces — a few hundred hours of teleoperation and autonomous runs — and run fast enough to sit inside a control loop. Those constraints are not limitations imposed on the research; they are the research.",
-        "Smallness also buys honesty. A compact latent dynamics model cannot hide behind scale: whatever it captures, it captures because the architecture and the data agree. That makes it a good instrument for the question I actually care about — which parts of physical prediction are learnable from ordinary robot data, and which are not."
-      ]},
-      { h: "What the model learns", ps: [
-        "The architecture is unspectacular by design. Images and proprioception are encoded into a small latent; an action-conditioned dynamics model steps that latent forward; light decoders reconstruct what matters — object pose, contact state, whether the gripper is holding anything. Trained overnight on teleoperation logs, it produces short-horizon rollouts that are good enough to rank candidate grasps before the arm commits to one.",
-        "Reliability lives at short horizons. Over one to two seconds the model is genuinely useful: plans chosen by imagined rollouts transfer to the real world far more often than chance, and more often than a vision-only ranking baseline. Past five seconds the rollouts drift into plausible but wrong futures — the familiar compounding error — and I have stopped treating that as a defect to fix and started treating it as a fact to design around."
-      ]},
-      { h: "Calibration over capability", ps: [
-        "The failures that matter cluster at contact. Slip, snap-through, the exact instant a grasp closes — discontinuities the latent smooths over, because the training objective rewards plausibility rather than precision. A model that renders a beautiful video of a failed grasp has failed just as thoroughly as one that renders a stuttering blur. The metric that counts is whether the predicted outcome flips, and at contact events it usually does not.",
-        "The practical output of this line is a calibration layer rather than a bigger model. Rollouts carry confidence estimates derived from disagreement across a small ensemble, and the planner discounts predictions accordingly: where the model is confident, imagination-based planning beats model-free baselines on our tasks; where it is not, the system falls back to reactive control. Knowing what the model does not know turns out to be worth more than knowing slightly more."
-      ]}
-    ],
-    refs: [
-      "Sutton, R. S. (1991). Dyna, an integrated architecture for learning, planning, and reacting. ACM SIGART Bulletin 2.",
-      "Ha, D., and Schmidhuber, J. (2018). World models. arXiv:1803.10122.",
-      "Hafner, D., Pasukonis, J., Ba, J., and Lillicrap, T. (2023). Mastering diverse domains through world models. arXiv:2301.04104.",
-      "Robotah Lab (2024). Teleoperation logging for world-model training. Internal note RT-2024-03."
-    ]
+    pdf: "https://pdfobject.com/pdf/sample.pdf"
   },
   {
     slug: "robotics",
-    field: "Robotics",
-    years: "2022–2025",
-    read: 7,
     title: "Manipulation Without a Perfect Model",
-    desc: "Inserting a connector, opening a jar, seating a part: the tasks that matter most are the ones our models capture worst. I build controllers that treat contact as something to discover, not something to simulate.",
-    abstract: "Contact is where manipulation research goes to be humbled. Simulated contact is discontinuous, stiff and exquisitely sensitive to millimetre-scale geometry errors; real contact is lubricated, compliant and full of surprises. This note describes my approach to contact-rich manipulation: impedance control as the foundation, learned residuals on top of it, and force sensing as the primary evidence that contact has happened. The resulting controllers are boring by design — and they work.",
-    sections: [
-      { h: "The problem with beautiful simulations", ps: [
-        "Most modern manipulation pipelines begin in a physics engine, and the beginning is where the trouble starts. A simulator can render a tabletop scene indistinguishable from a photograph and still get the physics of a peg sliding into a hole badly wrong, because contact forces flip discontinuously with geometry no scan will ever capture perfectly. The gap concentrates exactly at the moments that define the task.",
-        "I stopped trying to make simulation faithful enough and changed the question: what is the smallest amount of model a controller needs in order to insert, twist and hand over reliably? Impedance control — regulating force and compliance rather than tracking position — is nearly seventy years old and remains the most robust answer available. The interesting question is what learning should add around it."
-      ]},
-      { h: "Residuals, not replacements", ps: [
-        "The architecture pairs a classical impedance controller with a learned residual policy that adjusts stiffness, damping and setpoints within hard safety bounds. The residual is trained on real force-torque logs from teleoperated demonstrations — no simulation required — and because the base controller guarantees the stability envelope, exploration is safe and failures are informative rather than expensive.",
-        "What the residual learns is more structured than we expected. It is essentially a library of reactions to force signatures: detect the click of a seated connector and release tension; feel resistance rising in a thread and add a small rotation; sense a part beginning to slip and re-grasp with a bias toward the observed slip direction. The policy never needs to understand the task. It needs good instincts about forces."
-      ]},
-      { h: "Boring controllers, working robots", ps: [
-        "On a benchmark of pegs, connectors and caps with tolerances that would embarrass any simulator, the system completes 87 percent of 1,400 real attempts, against 61 percent for a model-free reinforcement-learning baseline trained on the same hardware budget. More important than the headline is the shape of the failures: when the system fails, it backs off, re-senses and retries. Nothing snaps, and nothing dents.",
-        "The honest limitation is generality. The residual library is task-shaped: it transfers across variants within a task family — different pegs, different caps — but not yet across families. My current bet is that force signatures are the shared vocabulary across families, and that bet is the subject of the next note in this series."
-      ]}
-    ],
-    refs: [
-      "Hogan, N. (1985). Impedance control: an approach to manipulation, Parts I–III. Journal of Dynamic Systems, Measurement, and Control 107.",
-      "Johannink, T., et al. (2019). Residual reinforcement learning for robot control. ICRA.",
-      "Billard, A., and Kragic, D. (2019). Trends and challenges in robot manipulation. Science 364.",
-      "Robotah Lab (2024). Force signatures in assembly tasks. Internal note RT-2024-07."
-    ]
+    pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
   },
   {
     slug: "perception",
-    field: "Perception",
-    years: "2021–2024",
-    read: 6,
     title: "Touch, Taken Seriously",
-    desc: "Vision tells a robot what the world looks like; touch tells it what the world is doing to it. I build tactile perception with the same discipline we apply to images — calibrated, learned, and fused with vision rather than bolted on.",
-    abstract: "A vision system can watch a robot crush a glass; only the tactile sensor knows the glass is already cracking. Tactile hardware has quietly improved — high-resolution skins, event-based arrays — but the perception software around it still treats touch as an afterthought. This note argues for tactile perception as a first-class signal: what modern skins actually measure, what learned touch representations are good for, and how vision and touch should be fused — late, and with an argument.",
-    sections: [
-      { h: "What a skin actually measures", ps: [
-        "Modern tactile arrays report contact at rates and resolutions that would have been science fiction fifteen years ago: dense grids of normal force, shear estimates, contact geometry at sub-millimetre scale. Event-based tactile sensors go further and report changes rather than frames — sparse streams that suit the transients that matter most in manipulation, like the onset of slip.",
-        "The raw signals are also messier than any datasheet admits: thermal drift, hysteresis, calibration that wanders over weeks, sensor-to-sensor variation within the same production batch. The first thing we built was not a model but a calibration harness, because every perception claim made on uncalibrated skin is decoration."
-      ]},
-      { h: "Learning to feel", ps: [
-        "For representations we went self-supervised, on manipulation logs the robots already produce. The training task is deliberately physical — predict the next force signature given the current one — and the resulting features cluster into interpretable event types: make-contact, slide, slip onset, break. No labels, and yet the taxonomy a human would write falls out of the objective.",
-        "The clearest win so far is slip. Detecting the onset of slip tens of milliseconds before load is lost converts grasp failures into grip adjustments, and the thresholds that matter are asymmetric: a missed slip costs a dropped object, while a false alarm costs a moment of extra grip force. Tuning for the false-alarm rate — not the accuracy headline — is what made the module trustworthy enough to leave enabled."
-      ]},
-      { h: "Vision proposes, touch disposes", ps: [
-        "Early fusion of vision and touch is tempting and brittle: entangle the modalities and a miscalibrated skin corrupts the vision features it touches. We fuse late instead, with an arbitration rule that fits manipulation: vision proposes — where the object is, how it is oriented — and touch vetoes — whether contact matches what vision promised.",
-        "Where this is heading connects back to the world-model work on this page: touch is the only ground truth for contact a robot will ever have at decision time. A world model whose contact states are supervised by calibrated skin, rather than inferred from pixels alone, is the model I want planning with — and the experiments for that claim are the next note."
-      ]}
-    ],
-    refs: [
-      "Yuan, W., Dong, S., and Adelson, E. H. (2017). GelSight: high-resolution robot tactile sensors for estimating geometry and force. Sensors 17.",
-      "Lederman, S. J., and Klatzky, R. L. (1987). Hand movements: a window into haptic object recognition. Cognitive Psychology 19.",
-      "Robotah Lab (2023). A calibration harness for tactile arrays. Internal note RT-2023-02."
-    ]
+    pdf: "https://pdfobject.com/pdf/sample.pdf"
   },
   {
     slug: "sim2real",
-    field: "Sim-to-Real",
-    years: "2022–2025",
-    read: 6,
     title: "The Sim-to-Real Gap, Measured Honestly",
-    desc: "Training in simulation is cheap; trusting it in reality is not. I study where the gap actually comes from, which closing tricks survive replication, and how to report the distance without flattering yourself.",
-    abstract: "Every robotics paper with a simulation section contains a sentence about the sim-to-real gap; very few contain a measurement of it. This note is my attempt at the measurement: a decomposition of where the gap comes from, an audit of the standard tricks for closing it, and an argument for reporting the distance as a distribution rather than a single flattering number.",
-    sections: [
-      { h: "Three gaps, not one", ps: [
-        "The phrase 'the sim-to-real gap' hides at least three distinct gaps. There is the dynamics gap — masses, friction, actuator latency — the one everyone names. There is the perception gap between rendered images and what the robot's cameras actually see, which everyone photographs. And there is an evaluation gap almost nobody discusses: simulated success is a checklist, while real success is judged by tired humans with opinions.",
-        "The decomposition matters because the gaps do not respond to the same medicine. We transfer each component in isolation — dynamics-only, perception-only, evaluation-only — and measure how much of the total performance drop each explains. On our manipulation suite the evaluation gap was not the smallest, which was the most useful surprise of the whole project."
-      ]},
-      { h: "Auditing the standard tricks", ps: [
-        "Domain randomisation helps, and the mechanism is humbler than the papers imply: it is a variance hedge, not a bridge. Real-task performance saturates quickly as randomisation breadth grows, and past the saturation point extra breadth mainly costs training time. When system identification is feasible, it beats randomisation; when it is not, randomisation is the hedge you take.",
-        "Two other results from the audit feel worth recording. Privileged distillation — training a teacher with simulator information the robot will never have, then distilling to a deployable student — replicated robustly across every task we tried. And buying more simulation compute did not replicate at all: beyond a modest budget, additional fidelity bought prettier renders and no additional transfer. That negative result stays in the write-up deliberately."
-      ]},
-      { h: "Report the gap, price the gap", ps: [
-        "The reporting change I argue for is small: state the gap as a distribution — median transfer, tail behaviour, worst task — rather than a single number, and separate task difficulty from simulation quality in the metric. A scalar gap lets a weak simulator hide behind a hard task; a distribution does not.",
-        "Underneath the metrics is a stance I keep returning to: the gap is not an enemy to be defeated but a measurement error to be priced in. Calibrated world models, force-signature libraries, honest gap distributions — most of what I work on, from different angles, is the same project of pricing that error instead of pretending it away."
-      ]}
-    ],
-    refs: [
-      "Tobin, J., et al. (2017). Domain randomization for transferring deep neural networks from simulation to the real world. IROS.",
-      "Peng, X. B., Andrychowicz, M., Zaremba, W., and Abbeel, P. (2018). Sim-to-real transfer of robotic control with dynamics randomization. ICRA.",
-      "Robotah Lab (2025). A checklist for reporting sim-to-real transfer. Internal note RT-2025-01."
-    ]
+    pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
   }
 ];
 
@@ -351,7 +225,7 @@ const readEl = document.getElementById("page-read");
 const headEl = document.getElementById("siteHead");
 
 let view = null;            // "home" | "reading"
-let savedScroll = null;     // scroll position before opening an article
+let savedScroll = null;     // scroll position before opening a paper
 let pendingScroll = null;   // section to scroll to after returning home
 
 /* ---------------- helpers ---------------- */
@@ -368,72 +242,32 @@ function scrollToSection(target){
   if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
 }
 
-/* ---------------- research list ---------------- */
+/* ---------------- research list (titles only) ---------------- */
 function buildList(){
   document.getElementById("workList").innerHTML = RESEARCH.map(r => `
     <article class="work">
-      <p class="meta">${r.field} · ${r.years}</p>
       <h2><a href="#/research/${r.slug}/read">${r.title}</a></h2>
-      <p class="work-desc">${r.desc}</p>
-      <a class="more" href="#/research/${r.slug}/read">Read more <span class="arr" aria-hidden="true">→</span></a>
+      <a class="rlink" href="#/research/${r.slug}/read">Read Research →</a>
     </article>`).join("");
 }
 
-/* ---------------- reading page ---------------- */
+/* ---------------- reading page (embedded PDF) ---------------- */
 function renderReading(r){
   readEl.innerHTML = `
     <article class="paper">
       <a class="back" href="#/"><span class="barr" aria-hidden="true">←</span> All research</a>
-      <p class="meta">
-        <span>${r.field} · ${r.years} · ${r.read} min read</span>
-        ${r.pdf ? `<span class="mspace"></span><button class="mode-btn" id="modeBtn" type="button" aria-pressed="false">View as PDF</button>` : ""}
-      </p>
       <h1>${r.title}</h1>
-      <div id="paperText">
-        <div class="abstract">
-          <p class="label">Abstract</p>
-          <p class="abs-text">${r.abstract}</p>
-        </div>
-        ${r.sections.map(s => `
-          <section class="rs">
-            <h2>${s.h}</h2>
-            ${s.ps.map(p => `<p>${p}</p>`).join("")}
-          </section>`).join("")}
-        <section class="rs refs">
-          <h2>References</h2>
-          <ol>${r.refs.map(x => `<li>${x}</li>`).join("")}</ol>
-        </section>
-        <p class="end">— Sunil · robotah.com</p>
+      <div class="pdf-frame">
+        <iframe src="${r.pdf}" title="${r.title} — embedded PDF reader" loading="lazy"></iframe>
       </div>
-      ${r.pdf ? `
-      <div id="paperPdf" hidden>
-        <div class="pdf-frame">
-          <iframe src="${r.pdf}" title="${r.title} — embedded PDF viewer" loading="lazy"></iframe>
-        </div>
-        <p class="pdf-note">The paper renders inline above — nothing to download.
-          If it does not display, your browser may lack an inline PDF viewer.</p>
-      </div>` : ""}
     </article>`;
-
-  /* text ↔ embedded PDF toggle (only when the paper defines a `pdf` URL) */
-  const btn = document.getElementById("modeBtn");
-  if (btn){
-    btn.addEventListener("click", () => {
-      const toPdf = btn.getAttribute("aria-pressed") !== "true";
-      btn.setAttribute("aria-pressed", String(toPdf));
-      btn.textContent = toPdf ? "Read as text" : "View as PDF";
-      document.getElementById("paperText").hidden = toPdf;
-      document.getElementById("paperPdf").hidden = !toPdf;
-      document.querySelector(".paper").scrollIntoView({behavior:"smooth", block:"start"});
-    });
-  }
 }
 function renderNotFound(slug){
   readEl.innerHTML = `
     <article class="paper">
       <a class="back" href="#/"><span class="barr" aria-hidden="true">←</span> All research</a>
-      <h1 style="margin-top:52px">Not found</h1>
-      <p class="nf-p">There is no article at “${slug}”. It may have been renamed — the
+      <h1 style="margin-top:44px">Not found</h1>
+      <p class="nf-p">There is no paper at “${slug}”. The
         <a href="#/">research list</a> has everything currently available.</p>
     </article>`;
 }
