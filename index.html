@@ -1,961 +1,547 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adrian Voss — Security Researcher · Web & Application Security</title>
-<meta name="description" content="Independent offensive security research. 23 CVEs, featured vulnerability write-ups, web & application security.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230C0C0D'/%3E%3Cpath d='M9 23 L16 8 L23 23' stroke='%23E8A33D' stroke-width='2.4' fill='none'/%3E%3C/svg%3E">
-<script>/* set theme before first paint to avoid a flash */
-try{var t=localStorage.getItem('voss-theme');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<meta name="color-scheme" content="dark">
+<title>Elias Brandt — Research</title>
+<meta name="description" content="Personal research page of Elias Brandt — sparse learning, privacy, biological networks, and honest uncertainty.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <style>
 /* ---------- tokens ---------- */
 :root{
-  --bg:#0C0C0D; --bg2:#131315; --ink:#ECE9E1; --dim:#96928A;
-  --line:rgba(236,233,225,.15);
-  --accent:#E8A33D; --accent-ink:#161310; --accent-deep:#C9851E;
-  --accent-glow:rgba(232,163,61,.4);
-  --crit:#E5484D; --high:#E07B39; --med:#D3BE4E;
-  --glass:rgba(12,12,13,.78);
-  --serif:'Instrument Serif',Georgia,serif;
-  --sans:'Instrument Sans','Helvetica Neue',sans-serif;
-  --mono:'JetBrains Mono','Courier New',monospace;
+  --bg:#101013;
+  --ink:#eae9e4;          /* headings / titles */
+  --body:#c4c3be;         /* paragraphs */
+  --mut:#96948f;          /* secondary */
+  --faint:#6e6c68;        /* labels, footer */
+  --line:rgba(255,255,255,.09);
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
-[data-theme="light"]{
-  --bg:#F2EFE7; --bg2:#FAF8F1; --ink:#1A1914; --dim:#6E6A5E;
-  --line:rgba(26,25,20,.16);
-  --accent:#A2620F; --accent-ink:#F6F3EA; --accent-deep:#7E4B09;
-  --accent-glow:rgba(162,98,15,.32);
-  --crit:#B53032; --high:#9C5A14; --med:#8C7814;
-  --glass:rgba(242,239,231,.84);
-}
-/* smooth palette swap while toggling */
-.tt, .tt *, .tt *::before, .tt *::after{
-  transition:background-color .5s ease,color .5s ease,border-color .5s ease,fill .5s ease,stroke .5s ease !important;
-}
-
-/* ---------- base ---------- */
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scrollbar-color:var(--dim) transparent}
-::-webkit-scrollbar{width:10px}
-::-webkit-scrollbar-thumb{background:var(--line)}
-::-webkit-scrollbar-thumb:hover{background:var(--dim)}
-::selection{background:var(--accent);color:var(--accent-ink)}
-body{
-  background:var(--bg);color:var(--ink);
-  font:400 16px/1.6 var(--sans);
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-}
-/* film grain */
-body::before{
-  content:'';position:fixed;inset:0;z-index:900;pointer-events:none;opacity:.05;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
-}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;color:inherit}
-:focus-visible{outline:1px solid var(--accent);outline-offset:3px}
-svg.lucide{width:15px;height:15px;stroke-width:1.8;flex:none}
-.container{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4.5vw,52px)}
-.section{padding:clamp(76px,10vw,132px) 0 0;scroll-margin-top:64px}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+a{color:inherit}
+::selection{background:#2b2b30;color:#f1f0eb}
+:focus-visible{outline:1px solid rgba(255,255,255,.4);outline-offset:3px;border-radius:2px}
+.wrap{max-width:720px;margin:0 auto;padding:0 24px}
 
-/* reveal on scroll */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease var(--d,0s),transform .8s cubic-bezier(.22,1,.36,1) var(--d,0s)}
-.reveal.in{opacity:1;transform:none}
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:40;background:rgba(16,16,19,.88);
+  backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+  border-bottom:1px solid transparent;transition:border-color .25s}
+header.scrolled{border-bottom-color:var(--line)}
+.head-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font:600 1.04rem var(--serif);letter-spacing:.01em;text-decoration:none;color:var(--ink)}
+.brand:hover{color:#fff}
+nav{display:flex;gap:4px}
+nav a{font:400 .86rem var(--sans);color:var(--mut);text-decoration:none;padding:8px 10px;transition:color .18s}
+nav a:hover{color:var(--ink)}
 
-/* ---------- progress + nav ---------- */
-#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:1100}
-.site-nav{
-  position:fixed;top:0;left:0;right:0;height:60px;z-index:1000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 clamp(20px,4.5vw,52px);
-  border-bottom:1px solid transparent;
-  background:transparent;
-  transition:background .4s,border-color .4s;
-}
-.site-nav.scrolled{background:var(--glass);border-color:var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.logo{font:600 13px var(--mono);letter-spacing:.1em}
-.logo span{color:var(--accent)}
-.nav-right{display:flex;align-items:center;gap:26px}
-.clock{font:500 10px var(--mono);letter-spacing:.12em;color:var(--dim)}
-.nav-links{display:flex;gap:26px}
-.nav-links a{
-  position:relative;font:500 10.5px var(--mono);letter-spacing:.18em;text-transform:uppercase;
-  color:var(--dim);transition:color .3s;padding:4px 0;
-}
-.nav-links a::after{
-  content:'';position:absolute;left:0;bottom:-1px;height:1px;width:100%;
-  background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .35s;
-}
-.nav-links a:hover,.nav-links a.active{color:var(--ink)}
-.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);transform-origin:left}
-.icon-btn{
-  position:relative;width:34px;height:34px;display:grid;place-items:center;
-  background:none;border:1px solid var(--line);cursor:pointer;transition:border-color .3s;
-}
-.icon-btn:hover{border-color:var(--ink)}
-.icon-btn svg{transition:transform .45s cubic-bezier(.6,0,.2,1)}
-.menu-btn{display:none}
-.t-ic{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .35s,transform .5s cubic-bezier(.6,0,.2,1)}
-.t-moon{opacity:1;transform:none}
-.t-sun{opacity:0;transform:rotate(-90deg) scale(.5)}
-[data-theme="light"] .t-moon{opacity:0;transform:rotate(90deg) scale(.5)}
-[data-theme="light"] .t-sun{opacity:1;transform:none}
-.site-nav.open .menu-btn svg{transform:rotate(90deg)}
+/* ---------- sections ---------- */
+.sec{margin-top:96px;scroll-margin-top:88px}
+#about{margin-top:64px}
+.sec + .sec{border-top:1px solid var(--line);padding-top:96px}
+.label{font:500 .72rem/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.lede{font:400 clamp(1.18rem,2.3vw,1.32rem)/1.68 var(--serif);color:var(--ink);max-width:52ch;margin-top:26px}
+.body-p{font:400 .96rem/1.75 var(--sans);color:var(--body);max-width:64ch;margin-top:18px}
+.sec-intro{font:400 .94rem/1.7 var(--sans);color:var(--mut);max-width:56ch;margin-top:24px}
+.body-p a,.nf-p a,.facts dd a{color:var(--ink);text-decoration:underline;
+  text-decoration-color:rgba(255,255,255,.3);text-underline-offset:3px;transition:text-decoration-color .18s}
+.body-p a:hover,.nf-p a:hover,.facts dd a:hover{text-decoration-color:rgba(255,255,255,.75)}
 
-/* ---------- hero ---------- */
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding-top:96px;padding-bottom:110px}
-#glyphField{position:absolute;inset:0;z-index:0;pointer-events:none}
-.hero-inner{position:relative;z-index:1;width:100%}
-.overline{font:500 11px var(--mono);letter-spacing:.22em;color:var(--dim);text-transform:uppercase;margin-bottom:26px}
-.overline .sl{color:var(--accent)}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 282px;gap:56px;align-items:end}
-h1{
-  font:400 clamp(3.6rem,12.5vw,10.5rem)/0.95 var(--serif);
-  letter-spacing:-.01em;text-transform:uppercase;
-}
-h1 em{font-style:italic;margin-left:.9em}
-.dotp{color:var(--accent)}
-.caret{display:inline-block;width:.09em;height:.68em;background:var(--accent);margin-left:.14em;transform:translateY(.06em);animation:blink 1.1s steps(1) infinite}
-@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
-.hero-sub{max-width:46ch;margin:28px 0 36px;font-size:1.06rem;opacity:.85}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-.btn{
-  display:inline-flex;align-items:center;gap:10px;
-  font:600 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
-  padding:16px 24px;border:1px solid var(--ink);background:transparent;cursor:pointer;
-  transition:background .3s,color .3s,border-color .3s;
-}
-.btn svg{transition:transform .3s}
-.btn:hover{background:var(--ink);color:var(--bg)}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.btn-primary:hover{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-.btn:hover svg{transform:translateY(2px)}
-.dossier{align-self:end;margin-bottom:4px}
-.dos-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 2px;border-top:1px solid var(--line)}
-.dos-row span{font:500 9px var(--mono);letter-spacing:.22em;color:var(--dim)}
-.dos-row b{font:500 10.5px var(--mono);letter-spacing:.06em;text-align:right;display:inline-flex;align-items:center;gap:8px}
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;animation:pulse 2.4s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 var(--accent-glow)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
-.scroll-cue{
-  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:1;
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-  font:500 9px var(--mono);letter-spacing:.34em;text-transform:uppercase;color:var(--dim);
-}
-.scroll-cue .line{width:1px;height:46px;background:var(--line);position:relative;overflow:hidden}
-.scroll-cue .line::after{content:'';position:absolute;left:0;top:-45%;width:1px;height:42%;background:var(--accent);animation:drop 2.2s ease-in-out infinite}
-@keyframes drop{to{top:145%}}
-
-/* ---------- ticker ---------- */
-.ticker{border-block:1px solid var(--line);overflow:hidden;padding:13px 0}
-.ticker-track{display:flex;width:max-content;animation:tick 46s linear infinite}
-.ticker:hover .ticker-track{animation-play-state:paused}
-@keyframes tick{to{transform:translateX(-50%)}}
-.tick-group{display:flex;align-items:center;padding-right:30px}
-.tk{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.sep{margin:0 30px;color:var(--dim);opacity:.5;font:400 10px var(--mono)}
-.dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex:none}
-.dot.crit{background:var(--crit)}.dot.high{background:var(--high)}.dot.med{background:var(--med)}.dot.info{background:var(--dim)}
-
-/* ---------- section head ---------- */
-.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:clamp(38px,6vw,64px)}
-.sec-idx{font:600 11px var(--mono);letter-spacing:.1em;color:var(--accent)}
-.sec-name{font:600 11px var(--mono);letter-spacing:.3em;text-transform:uppercase}
-.sec-line{flex:1;height:1px;background:var(--line)}
-.sec-note{font:500 9px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
-@media(max-width:680px){.sec-note{display:none}}
-
-/* ---------- profile ---------- */
-.about-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(40px,6vw,90px)}
-.statement{font:400 clamp(1.8rem,3.1vw,2.6rem)/1.3 var(--serif)}
-.statement em{color:var(--accent)}
-.about-body p{margin-bottom:1.4em;line-height:1.75;color:var(--dim);font-size:1rem}
-.about-body p em{color:var(--ink);font-style:italic}
-.redacted{position:relative;cursor:pointer;white-space:nowrap;color:var(--ink);border-bottom:1px dashed var(--dim);transition:color .3s,border-color .3s}
-.redacted::after{
-  content:'';position:absolute;inset:-1px -2px;background:var(--ink);
-  transform-origin:left;transition:transform .45s cubic-bezier(.77,0,.18,1);
-}
-.redacted:hover,.redacted.on{border-color:transparent;color:var(--accent)}
-.redacted:hover::after,.redacted.on::after{transform:scaleX(0)}
-.stats{list-style:none;margin-top:40px}
-.stats li{display:flex;justify-content:space-between;align-items:baseline;padding:13px 2px;border-top:1px solid var(--line)}
-.stats li:last-child{border-bottom:1px solid var(--line)}
-.stats .slabel{font:500 9.5px var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
-.stat-num{font:400 1.9rem var(--serif)}
-
-/* ---------- research ---------- */
-.res-list{border-bottom:1px solid var(--line)}
-.res{position:relative;border-top:1px solid var(--line)}
-.res::before{content:'';position:absolute;left:0;top:-1px;bottom:-1px;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .5s cubic-bezier(.77,0,.18,1)}
-.res:hover::before,.res.open::before{transform:scaleY(1)}
-.res-head{display:grid;grid-template-columns:74px 1fr 34px;gap:24px;align-items:start;padding:34px 6px;cursor:pointer}
-.res-idx{font:500 12px var(--mono);color:var(--dim);padding-top:12px;transition:color .3s}
-.res-head:hover .res-idx,.res.open .res-idx{color:var(--accent)}
-.res-title{display:block;font:400 clamp(1.7rem,2.8vw,2.5rem)/1.1 var(--serif);transition:transform .45s cubic-bezier(.22,1,.36,1)}
-.res-head:hover .res-title{transform:translateX(10px)}
-.res-desc{display:block;max-width:62ch;margin-top:12px;color:var(--dim);font-size:.98rem;line-height:1.7}
-.res-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.res-tags span{font:500 9px var(--mono);letter-spacing:.14em;padding:6px 11px;border:1px solid var(--line);color:var(--dim);transition:border-color .3s,color .3s}
-.res-head:hover .res-tags span{border-color:var(--dim);color:var(--ink)}
-.res-now{display:flex;align-items:center;gap:10px;margin-top:20px;font:500 9.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-.res-chev{padding-top:12px;color:var(--dim)}
-.res-chev svg{transition:transform .45s cubic-bezier(.6,0,.2,1)}
-.res.open .res-chev svg{transform:rotate(180deg)}
-.res-body,.adv-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.77,0,.18,1)}
-.res.open .res-body,.adv.open .adv-body{grid-template-rows:1fr}
-.res-inner{overflow:hidden;min-height:0}
-.res-case{max-width:66ch;padding:0 6px 34px 98px;color:var(--dim);font-size:.95rem;line-height:1.7}
-.case-label{display:block;font:600 9.5px var(--mono);letter-spacing:.24em;color:var(--accent);margin-bottom:10px;text-transform:uppercase}
-.case-link{
-  display:inline-flex;align-items:center;gap:8px;background:none;border:0;padding:0;cursor:pointer;
-  font:600 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
-}
-.case-link svg{transition:transform .3s}
-.case-link:hover svg{transform:translateX(4px)}
-.u-sweep{position:relative}
-.u-sweep::after{content:'';position:absolute;left:0;bottom:-5px;height:1px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .35s}
-.u-sweep:hover::after{transform:scaleX(1);transform-origin:left}
-
-/* ---------- advisories ---------- */
-.filterbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:30px;flex-wrap:wrap}
-.filters{display:flex;gap:8px;flex-wrap:wrap}
-.fbtn{
-  font:600 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;
-  padding:9px 15px;border:1px solid var(--line);background:none;cursor:pointer;color:var(--dim);
-  transition:border-color .3s,color .3s,background .3s;
-}
-.fbtn:hover{border-color:var(--ink);color:var(--ink)}
-.fbtn.active{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-.fcount{font:500 10px var(--mono);letter-spacing:.16em;color:var(--dim)}
-.adv-list{border-bottom:1px solid var(--line)}
-.adv{border-top:1px solid var(--line);scroll-margin-top:110px}
-.adv.hide{display:none}
-.repop{animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.adv-head{
-  display:grid;grid-template-columns:112px 88px 1fr 30px;gap:20px;align-items:start;
-  padding:26px 6px;cursor:pointer;
-}
-.adv-id{font:500 12px var(--mono);color:var(--dim);padding-top:8px;transition:color .3s}
-.adv-head:hover .adv-id{color:var(--ink)}
-.sev{display:inline-flex;align-items:center;gap:8px;font:500 9.5px var(--mono);letter-spacing:.12em;color:var(--dim);padding-top:9px;transition:color .3s}
-.sev-dot{width:7px;height:7px;border-radius:50%;flex:none}
-.sev-crit .sev-dot{background:var(--crit)}
-.sev-high .sev-dot{background:var(--high)}
-.sev-med  .sev-dot{background:var(--med)}
-.adv-head:hover .sev-crit{color:var(--crit)}
-.adv-head:hover .sev-high{color:var(--high)}
-.adv-head:hover .sev-med{color:var(--med)}
-.adv-tw{min-width:0}
-.adv-title{display:block;font:400 clamp(1.25rem,2vw,1.65rem)/1.25 var(--serif);transition:color .3s}
-.adv-head:hover .adv-title{color:var(--accent)}
-.adv-meta{display:block;margin-top:8px;font:500 9.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
-.adv-chev{padding-top:10px;color:var(--dim)}
-.adv-chev svg{transition:transform .45s cubic-bezier(.6,0,.2,1)}
-.adv.open .adv-chev svg{transform:rotate(180deg)}
-.adv-inner{overflow:hidden;min-height:0}
-.adv-cols{display:grid;grid-template-columns:1.4fr .9fr;gap:clamp(28px,4vw,56px);padding:6px 6px 36px 132px}
-.adv-abs{color:var(--dim);font-size:.97rem;line-height:1.75}
-.adv-data{list-style:none}
-.adv-data li{display:grid;grid-template-columns:88px 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--line)}
-.adv-data span{font:500 9px var(--mono);letter-spacing:.18em;color:var(--dim);padding-top:2px}
-.adv-data b{font:500 11px/1.5 var(--mono);font-weight:500;word-break:break-word}
-@keyframes advFlash{0%{background:var(--accent-glow)}100%{background:transparent}}
-.adv.flash{animation:advFlash 1.6s ease forwards}
-.adv-foot{margin-top:34px;color:var(--dim);font-size:.95rem;display:flex;align-items:baseline;gap:22px;flex-wrap:wrap}
+/* ---------- research list ---------- */
+.work-list{margin-top:38px}
+.work{padding:32px 0;border-top:1px solid var(--line)}
+.work:last-child{border-bottom:1px solid var(--line)}
+.meta{font:500 .72rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.work h2{margin-top:12px}
+.work h2 a{font:600 clamp(1.22rem,2.4vw,1.44rem)/1.35 var(--serif);color:var(--ink);
+  text-decoration:none;letter-spacing:-.005em;transition:color .18s}
+.work h2 a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px;
+  text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.35)}
+.work-desc{font:400 .93rem/1.7 var(--sans);color:var(--mut);max-width:60ch;margin-top:10px}
+.more{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font:500 .84rem var(--sans);
+  color:var(--mut);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px;
+  transition:color .18s,border-color .18s}
+.more .arr{transition:transform .18s}
+.more:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
+.more:hover .arr{transform:translateX(3px)}
 
 /* ---------- contact ---------- */
-.contact-h{font:400 clamp(2.8rem,6.5vw,5.2rem)/1.05 var(--serif);margin-bottom:14px}
-.contact-h em{color:var(--accent)}
-.contact-sub{font:500 10.5px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:48px;max-width:70ch;line-height:1.9}
-.channels{border-bottom:1px solid var(--line)}
-.channel{
-  display:grid;grid-template-columns:150px 1fr 34px;gap:18px;align-items:center;width:100%;
-  text-align:left;background:none;border:0;border-top:1px solid var(--line);
-  padding:20px 6px;cursor:pointer;transition:background .3s;
-}
-.channel:hover{background:var(--bg2)}
-.ch-label{font:500 9.5px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
-.ch-val{font:500 14px var(--mono);letter-spacing:.04em;transition:color .3s}
-.ch-val.small{font-size:11px;word-break:break-all}
-.ch-val.dimv{color:var(--dim)}
-.channel:hover .ch-val{color:var(--accent)}
-.ch-ic{width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line);color:var(--dim);transition:border-color .3s,color .3s,transform .3s}
-.channel:hover .ch-ic{border-color:var(--accent);color:var(--accent)}
-.socials{display:flex;flex-wrap:wrap;gap:30px;margin-top:48px}
-.soc{display:inline-flex;align-items:center;gap:9px;font:500 11px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--dim);transition:color .3s}
-.soc:hover{color:var(--ink)}
+.contact-grid{display:grid;grid-template-columns:minmax(0,4.6fr) minmax(0,6.4fr);gap:56px;align-items:start;margin-top:36px}
+.facts > div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+.facts > div:last-child{border-bottom:1px solid var(--line)}
+.facts dt{font:500 .7rem var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding-top:4px}
+.facts dd{font:400 .88rem/1.6 var(--sans);color:var(--body)}
+.field{margin-bottom:16px}
+.field label{display:block;font:500 .7rem var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:8px}
+.field input,.field textarea{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--line);
+  border-radius:6px;padding:11px 13px;color:var(--ink);font:400 .92rem/1.5 var(--sans);
+  transition:border-color .2s,background .2s}
+.field input:focus,.field textarea:focus{outline:none;border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.05)}
+.field textarea{min-height:132px;resize:vertical}
+.err{display:none;font:italic 400 .8rem var(--sans);color:#c29c93;margin-top:7px}
+.field.invalid .err{display:block}
+.field.invalid input,.field.invalid textarea{border-color:rgba(194,156,147,.55)}
+.btn{display:inline-block;margin-top:6px;background:transparent;border:1px solid rgba(255,255,255,.28);
+  border-radius:6px;padding:11px 24px;font:500 .9rem var(--sans);color:var(--ink);cursor:pointer;
+  transition:background .18s,border-color .18s}
+.btn:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.42)}
+.sent{border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.02);padding:26px 28px;outline:none}
+.sent-main{font:400 1.05rem/1.6 var(--serif);color:var(--ink)}
+.sent .fine{margin-top:9px;font:400 .85rem/1.6 var(--sans);color:var(--mut)}
+.again{margin-top:20px;background:none;border:none;border-bottom:1px solid var(--line);padding:0 0 3px;
+  font:500 .82rem var(--sans);color:var(--mut);cursor:pointer;transition:color .18s,border-color .18s}
+.again:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
 
-/* ---------- footer / toast ---------- */
-.site-foot{margin-top:clamp(76px,10vw,130px);border-top:1px solid var(--line)}
-.foot-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:26px 0;font:500 9.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-#toast{
-  position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);opacity:0;z-index:1300;pointer-events:none;
-  background:var(--ink);color:var(--bg);border-left:3px solid var(--accent);
-  font:500 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;
-  padding:14px 22px;max-width:88vw;
-  transition:opacity .4s,transform .45s cubic-bezier(.22,1,.36,1);
-}
-#toast.show{opacity:1;transform:translate(-50%,0)}
+/* ---------- reading page ---------- */
+.paper{padding-top:56px;animation:fadeUp .45s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.back{display:inline-flex;align-items:center;gap:8px;font:500 .84rem var(--sans);color:var(--mut);
+  text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px;transition:color .18s,border-color .18s}
+.back .barr{transition:transform .18s}
+.back:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
+.back:hover .barr{transform:translateX(-3px)}
+.paper .meta{margin-top:48px}
+.paper h1{font:600 clamp(1.75rem,4.4vw,2.3rem)/1.28 var(--serif);letter-spacing:-.012em;
+  color:var(--ink);margin-top:14px;max-width:24ch}
+.abstract{margin-top:34px;border-left:2px solid rgba(255,255,255,.24);background:rgba(255,255,255,.02);
+  border-radius:0 6px 6px 0;padding:20px 26px 22px}
+.abs-text{font:italic 400 1.02rem/1.78 var(--serif);color:var(--body);margin-top:12px}
+.rs h2{font:600 1.26rem/1.4 var(--serif);color:var(--ink);margin-top:44px}
+.rs p{font:400 1.03rem/1.82 var(--serif);color:var(--body);max-width:64ch;margin-top:16px}
+.refs ol{list-style:none;counter-reset:ref;margin-top:18px}
+.refs li{counter-increment:ref;position:relative;font:400 .85rem/1.65 var(--sans);color:var(--mut);
+  padding:10px 0 10px 36px;border-top:1px dashed rgba(255,255,255,.08)}
+.refs li::before{content:"[" counter(ref) "]";position:absolute;left:0;color:var(--faint)}
+.paper .end{margin-top:56px;border-top:1px solid var(--line);padding-top:18px;
+  font:italic 400 .92rem var(--serif);color:var(--faint)}
+.nf-p{font:400 1.02rem/1.8 var(--serif);color:var(--body);margin-top:16px;max-width:56ch}
+
+/* ---------- footer ---------- */
+footer{margin-top:96px;border-top:1px solid var(--line)}
+.foot{display:flex;justify-content:space-between;gap:10px 28px;flex-wrap:wrap;
+  padding:24px 0 36px;font:400 .78rem var(--sans);color:var(--faint)}
+
+/* ---------- subtle reveal ---------- */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
 
 /* ---------- responsive ---------- */
-@media(max-width:1020px){
-  .hero-grid{grid-template-columns:1fr}
-  .dossier{display:grid;grid-template-columns:repeat(2,1fr);gap:0 32px;margin-top:26px}
+@media(max-width:680px){
+  .sec{margin-top:72px}
+  #about{margin-top:48px}
+  .sec + .sec{padding-top:72px}
+  .contact-grid{grid-template-columns:1fr;gap:40px}
+  .facts > div{grid-template-columns:96px 1fr}
+  .head-inner{height:56px}
+  nav a{padding:8px 7px}
+  .paper h1{max-width:none}
 }
-@media(max-width:880px){
-  .about-grid,.adv-cols{grid-template-columns:1fr}
-  .adv-cols{padding-left:6px;gap:26px}
-  .res-case{padding-left:6px}
-}
-@media(max-width:760px){
-  .nav-links{
-    position:absolute;top:60px;left:0;right:0;display:none;flex-direction:column;gap:0;
-    background:var(--bg);border-bottom:1px solid var(--line);padding:8px 24px 16px;
-  }
-  .nav-links a{padding:12px 0;border-top:1px solid var(--line)}
-  .site-nav.open .nav-links{display:flex}
-  .menu-btn{display:grid}
-  .clock{display:none}
-  .adv-head{display:flex;flex-wrap:wrap;gap:8px 16px;position:relative;padding-right:44px}
-  .adv-id,.sev{padding-top:0}
-  .adv-tw{flex:1 1 100%}
-  .adv-chev{position:absolute;right:6px;top:26px}
-  .res-head{display:flex;flex-wrap:wrap;gap:10px 16px;position:relative;padding-right:44px}
-  .res-idx{padding-top:0}
-  .res-chev{position:absolute;right:6px;top:34px}
-  .res-title{flex:1 1 100%}
-  .channel{grid-template-columns:1fr 34px}
-  .ch-label{grid-column:1/-1}
-}
-@media(max-width:560px){
-  .dossier{grid-template-columns:1fr}
-  h1 em{margin-left:.4em}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+@media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+  .paper{animation:none}
 }
 </style>
 </head>
 <body>
 
-<div id="progress"></div>
-
-<nav class="site-nav" id="siteNav">
-  <a class="logo" href="#top">VOSS<span>.SEC</span></a>
-  <div class="nav-right">
-    <span class="clock" id="clock">BER --:--:--</span>
-    <div class="nav-links" id="navLinks">
-      <a href="#profile">Profile</a>
-      <a href="#research">Research</a>
-      <a href="#advisories">Advisories</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <button class="icon-btn" id="themeBtn" aria-label="Toggle dark / light theme">
-      <span class="t-ic t-moon"><i data-lucide="moon"></i></span>
-      <span class="t-ic t-sun"><i data-lucide="sun"></i></span>
-    </button>
-    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu"><i data-lucide="menu"></i></button>
+<header id="siteHead">
+  <div class="wrap head-inner">
+    <a class="brand" href="#/">Elias Brandt</a>
+    <nav aria-label="Site">
+      <a href="#/" data-target="about">About</a>
+      <a href="#/" data-target="research">Research</a>
+      <a href="#/" data-target="contact">Contact</a>
+    </nav>
   </div>
-</nav>
-
-<!-- ============ HERO ============ -->
-<header class="hero" id="top">
-  <canvas id="glyphField" aria-hidden="true"></canvas>
-  <div class="container hero-inner">
-    <p class="overline reveal"><span class="sl">//</span> Offensive security research · Web &amp; Application</p>
-    <div class="hero-grid">
-      <div class="hero-main">
-        <h1 class="reveal" style="--d:.05s">Adrian<br><em>Voss<span class="dotp">.</span></em><span class="caret" aria-hidden="true"></span></h1>
-        <p class="hero-sub reveal" style="--d:.12s">I break web applications before someone worse does. Nine years of offensive research, twenty-three CVEs, and one working theory — most breaches start in a form field.</p>
-        <div class="hero-cta reveal" style="--d:.18s">
-          <a class="btn btn-primary" href="#advisories">Selected advisories <i data-lucide="arrow-down"></i></a>
-          <button class="btn" id="pgpBtn"><i data-lucide="fingerprint"></i> Copy PGP</button>
-        </div>
-      </div>
-      <aside class="dossier reveal" style="--d:.24s">
-        <div class="dos-row"><span>LOC</span><b>52.5200° N · 13.4050° E</b></div>
-        <div class="dos-row"><span>FIELD</span><b>WEB · APPSEC · HTTP</b></div>
-        <div class="dos-row"><span>CVES</span><b>23 DISCLOSED</b></div>
-        <div class="dos-row"><span>STATUS</span><b><i class="live-dot"></i>ACCEPTING Q3 ’25</b></div>
-      </aside>
-    </div>
-  </div>
-  <a class="scroll-cue" href="#profile"><span>Scroll</span><span class="line"></span></a>
 </header>
 
-<!-- ============ ADVISORY WIRE ============ -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track" id="tickerTrack">
-    <div class="tick-group" id="tickGroup">
-      <span class="tk"><i class="dot crit"></i>CVE-2024-38812 · CRIT 9.8 · UNAUTH RCE — TRIDENT CMS</span><span class="sep">///</span>
-      <span class="tk"><i class="dot high"></i>CVE-2024-31007 · SSRF → IMDS — HELIX DOCS</span><span class="sep">///</span>
-      <span class="tk"><i class="dot high"></i>CVE-2023-42698 · AUTH BYPASS — KESTREL SSO</span><span class="sep">///</span>
-      <span class="tk"><i class="dot med"></i>CVE-2023-35707 · CACHE DECEPTION — CDN EDGE</span><span class="sep">///</span>
-      <span class="tk"><i class="dot crit"></i>CVE-2022-29455 · SUPPLY-CHAIN RCE — CI RUNNERS</span><span class="sep">///</span>
-      <span class="tk"><i class="dot info"></i>PWN2OWN VANCOUVER ’23 · SOHO ROUTER · 2× 0-DAY</span><span class="sep">///</span>
-      <span class="tk"><i class="dot info"></i>HALL OF FAME — GOOGLE · APPLE · MICROSOFT · GITHUB</span><span class="sep">///</span>
-      <span class="tk"><i class="dot info"></i>DEFCON 31 · “SMUGGLING HTTP/2” — ADVERSARY VILLAGE</span><span class="sep">///</span>
+<main>
+  <!-- ============ one-page view ============ -->
+  <div id="page-home">
+    <div class="wrap">
+
+      <section id="about" class="sec reveal">
+        <p class="label">About</p>
+        <p class="lede">I study how large-scale statistical methods can be made reliable enough to trust —
+          sparse where possible, private where necessary, and honest about their uncertainty everywhere else.</p>
+        <p class="body-p">I am a senior research fellow at the Institute for Advanced Computation in Cambridge.
+          My work sits between machine-learning theory and its practical use: I care less about the last percent
+          of benchmark accuracy than about whether a method behaves predictably in the hands of a clinician,
+          a census bureau, or a tired graduate student at two in the morning.</p>
+        <p class="body-p">Before the institute I was a postdoctoral researcher at ETH Zürich; I did my doctorate
+          at Cambridge. I teach one seminar each term, review for a small number of journals I actually read,
+          and try to keep every published result reproducible from the raw data onward. The full text of my
+          current work is on this page — no paywalls, nothing to download.</p>
+      </section>
+
+      <section id="research" class="sec reveal">
+        <p class="label">Research</p>
+        <p class="sec-intro">Four lines of ongoing work, each written up here in full.
+          Open an article to read the complete text on its own page.</p>
+        <div class="work-list" id="workList"><!-- built from data --></div>
+      </section>
+
+      <section id="contact" class="sec reveal">
+        <p class="label">Contact</p>
+        <p class="sec-intro">The quickest way to reach me is email. For questions about a paper,
+          data access, or seminar invitations, the form works just as well.</p>
+        <div class="contact-grid">
+          <dl class="facts">
+            <div><dt>Email</dt><dd><a href="mailto:elias.brandt@iacambridge.org">elias.brandt@iacambridge.org</a></dd></div>
+            <div><dt>Office</dt><dd>Pavilion B, Room 214<br>Institute for Advanced Computation, Cambridge</dd></div>
+            <div><dt>Hours</dt><dd>Tuesdays and Thursdays, 14:00–16:00</dd></div>
+            <div><dt>Reply</dt><dd>Usually within two or three working days</dd></div>
+          </dl>
+          <div>
+            <form id="contactForm" novalidate>
+              <div class="field">
+                <label for="fName">Name</label>
+                <input id="fName" name="name" type="text" autocomplete="name">
+                <p class="err">Please enter your name.</p>
+              </div>
+              <div class="field">
+                <label for="fEmail">Email</label>
+                <input id="fEmail" name="email" type="email" autocomplete="email">
+                <p class="err">Please enter a valid email address.</p>
+              </div>
+              <div class="field">
+                <label for="fMsg">Message</label>
+                <textarea id="fMsg" name="message"></textarea>
+                <p class="err">Tell me a little more — a sentence or two.</p>
+              </div>
+              <button class="btn" type="submit">Send message</button>
+            </form>
+            <div class="sent" id="sentBlock" hidden tabindex="-1">
+              <p class="sent-main">Thank you — your message has been noted.</p>
+              <p class="fine">I read everything personally and usually reply within two or three working days.</p>
+              <button type="button" class="again" id="writeAgain">Write another message</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </div>
-</div>
 
-<main>
-  <!-- ============ PROFILE ============ -->
-  <section class="section" id="profile">
-    <div class="container">
-      <header class="sec-head reveal">
-        <span class="sec-idx">§01</span><h2 class="sec-name">Profile</h2><span class="sec-line"></span>
-        <span class="sec-note">hover redactions to declassify</span>
-      </header>
-      <div class="about-grid">
-        <p class="statement reveal">The strongest defense is a <em>published</em>, reproducible offense.</p>
-        <div class="about-body">
-          <p class="reveal" style="--d:.06s">For nine years I've sat on both sides of the breach — first as a backend engineer at <span class="redacted" title="Kestrel Systems" tabindex="0" role="button" aria-label="Declassify: Kestrel Systems">Kestrel Systems</span>, where one production incident I still think about turned me toward offense; independent since 2021, breaking the things other people build. Every finding ends up public: a write-up, a tool, a talk. Disclosure done properly is the only control that reliably raises the bar.</p>
-          <p class="reveal" style="--d:.12s">My research lives in the gap between what an application <em>claims</em> to validate and what it actually does. That gap has produced twenty-three CVEs, two Pwn2Own entries, and tooling used daily by roughly forty thousand practitioners. I report responsibly, always — <span class="redacted" title="Meridian Bank" tabindex="0" role="button" aria-label="Declassify: Meridian Bank">Meridian Bank</span> got their exploit before their customers' data hit a forum.</p>
-          <ul class="stats reveal" style="--d:.18s" id="statsList">
-            <li><span class="slabel">CVEs published</span><b class="stat-num" data-count="23">0</b></li>
-            <li><span class="slabel">Rated critical</span><b class="stat-num" data-count="6" data-pad="2">0</b></li>
-            <li><span class="slabel">Bounties earned</span><b class="stat-num" data-count="412" data-pre="$" data-suf="K">0</b></li>
-            <li><span class="slabel">Responsibly disclosed</span><b class="stat-num" data-count="100" data-suf="%">0</b></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ RESEARCH ============ -->
-  <section class="section" id="research">
-    <div class="container">
-      <header class="sec-head reveal">
-        <span class="sec-idx">§02</span><h2 class="sec-name">Research</h2><span class="sec-line"></span>
-        <span class="sec-note">two lines of inquiry</span>
-      </header>
-      <div class="res-list">
-        <article class="res reveal">
-          <div class="res-head" role="button" tabindex="0" aria-expanded="false" aria-controls="res-b1">
-            <span class="res-idx">01</span>
-            <div>
-              <span class="res-title">Web Security</span>
-              <span class="res-desc">The browser is the largest attack surface humanity has ever deployed, and HTTP was never designed to survive it. I study the protocol layer itself — how each component between client and origin parses the same bytes differently, and what becomes possible when those interpretations disagree.</span>
-              <div class="res-tags">
-                <span>REQUEST SMUGGLING</span><span>CACHE POISONING</span><span>SSRF</span><span>OAUTH / OIDC</span><span>CSP ESCAPE</span><span>GRAPHQL</span>
-              </div>
-              <p class="res-now"><i class="live-dot"></i>HTTP/2 CONTINUATION-FLOOD VARIANTS IN MAJOR CDNS</p>
-            </div>
-            <span class="res-chev"><i data-lucide="chevron-down"></i></span>
-          </div>
-          <div class="res-body" id="res-b1"><div class="res-inner">
-            <p class="res-case"><span class="case-label">Representative finding</span>A request-smuggling chain that turned a global CDN's shared cache into a cross-tenant PII oracle — six weeks of leakage before vendor acknowledgment. The full disclosure timeline is in the advisory index below.</p>
-            <p class="res-case" style="padding-top:0"><button class="case-link u-sweep" data-open-adv="adv-2023-011">Open ADV-2023-011 <i data-lucide="arrow-right"></i></button></p>
-          </div></div>
-        </article>
-
-        <article class="res reveal" style="--d:.08s">
-          <div class="res-head" role="button" tabindex="0" aria-expanded="false" aria-controls="res-b2">
-            <span class="res-idx">02</span>
-            <div>
-              <span class="res-title">Application Security</span>
-              <span class="res-desc">Below the request layer sit the mistakes that don't fit in a packet: authorization logic that erodes across releases, dependency trees nobody has read end to end, and build pipelines that inherit trust from wherever they run. I map that terrain systemically — not one bug, but the class of bug, and the tooling that finds all of its instances.</span>
-              <div class="res-tags">
-                <span>SUPPLY CHAIN</span><span>AUTHZ LOGIC</span><span>BOLA / IDOR</span><span>DESERIALIZATION</span><span>CI / CD ESCAPE</span><span>API DESIGN</span>
-              </div>
-              <p class="res-now"><i class="live-dot"></i>LLM TOOL-CALLING BOUNDARIES AS A NEW AUTH SURFACE</p>
-            </div>
-            <span class="res-chev"><i data-lucide="chevron-down"></i></span>
-          </div>
-          <div class="res-body" id="res-b2"><div class="res-inner">
-            <p class="res-case"><span class="case-label">Representative finding</span>Dependency confusion reaching production: one unscoped registry name that executed inside the CI build runners of three Fortune 500 companies — deploy secrets within arm's reach, fixed in eleven hours.</p>
-            <p class="res-case" style="padding-top:0"><button class="case-link u-sweep" data-open-adv="adv-2022-006">Open ADV-2022-006 <i data-lucide="arrow-right"></i></button></p>
-          </div></div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ ADVISORIES ============ -->
-  <section class="section" id="advisories">
-    <div class="container">
-      <header class="sec-head reveal">
-        <span class="sec-idx">§03</span><h2 class="sec-name">Advisories</h2><span class="sec-line"></span>
-        <span class="sec-note">5 entries · 2022 — 2025</span>
-      </header>
-
-      <div class="filterbar reveal">
-        <div class="filters">
-          <button class="fbtn active" data-filter="all">All</button>
-          <button class="fbtn" data-filter="rce">RCE</button>
-          <button class="fbtn" data-filter="ssrf">SSRF</button>
-          <button class="fbtn" data-filter="auth">Auth</button>
-          <button class="fbtn" data-filter="cache">Cache</button>
-        </div>
-        <span class="fcount" id="fcount">05 / 05</span>
-      </div>
-
-      <div class="adv-list">
-        <article class="adv reveal" id="adv-2024-013" data-type="rce">
-          <div class="adv-head" role="button" tabindex="0" aria-expanded="false" aria-controls="adv-b1">
-            <span class="adv-id">ADV-2024-013</span>
-            <span class="sev sev-crit"><i class="sev-dot"></i>CRIT 9.8</span>
-            <span class="adv-tw">
-              <span class="adv-title">Unauthenticated RCE in the Trident CMS template engine</span>
-              <span class="adv-meta">CVE-2024-38812 · Sandbox escape → deserialization → code exec · 2024-09-02 · 14 min</span>
-            </span>
-            <span class="adv-chev"><i data-lucide="chevron-down"></i></span>
-          </div>
-          <div class="adv-body" id="adv-b1"><div class="adv-inner"><div class="adv-cols">
-            <p class="adv-abs">Trident's theme editor exposes a Twig-derived template engine behind a sandbox that, per vendor documentation, "cannot reach internal objects." By assembling an object graph across three individually harmless template functions, the sandbox's security check is skipped entirely, landing in a gadget that hands attacker-controlled data to unserialize() — no authentication required. A single POST request yields code execution.</p>
-            <ul class="adv-data">
-              <li><span>AFFECTED</span><b>Trident CMS ≤ 8.3.11</b></li>
-              <li><span>VECTOR</span><b>AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</b></li>
-              <li><span>STATUS</span><b>PATCHED · 8.3.12</b></li>
-              <li><span>TIMELINE</span><b>REPORT 07-30 → FIX 08-21 → CVE 09-02</b></li>
-            </ul>
-          </div></div></div>
-        </article>
-
-        <article class="adv reveal" id="adv-2024-009" data-type="ssrf" style="--d:.05s">
-          <div class="adv-head" role="button" tabindex="0" aria-expanded="false" aria-controls="adv-b2">
-            <span class="adv-id">ADV-2024-009</span>
-            <span class="sev sev-high"><i class="sev-dot"></i>HIGH 8.6</span>
-            <span class="adv-tw">
-              <span class="adv-title">From PDF export to cloud metadata in Helix Docs</span>
-              <span class="adv-meta">CVE-2024-31007 · Renderer → gopher → IMDSv2 bypass · 2024-05-14 · 11 min</span>
-            </span>
-            <span class="adv-chev"><i data-lucide="chevron-down"></i></span>
-          </div>
-          <div class="adv-body" id="adv-b2"><div class="adv-inner"><div class="adv-cols">
-            <p class="adv-abs">Helix Docs converts shared documents to PDF through a headless renderer. HTML injection in the export flow was known and rated low — until the renderer's network layer turned out to accept gopher://, allowing raw HTTP to be hand-crafted without a client library. Chained against IMDSv2, the token PUT requirement can be satisfied within the same request stream, yielding the instance role credentials in full.</p>
-            <ul class="adv-data">
-              <li><span>AFFECTED</span><b>Helix Docs · SaaS, all regions</b></li>
-              <li><span>VECTOR</span><b>AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:L</b></li>
-              <li><span>STATUS</span><b>PATCHED · ROLLOUT 04-30</b></li>
-              <li><span>TIMELINE</span><b>REPORT 03-28 → FIX 04-30 → CVE 05-14</b></li>
-            </ul>
-          </div></div></div>
-        </article>
-
-        <article class="adv reveal" id="adv-2023-017" data-type="auth" style="--d:.1s">
-          <div class="adv-head" role="button" tabindex="0" aria-expanded="false" aria-controls="adv-b3">
-            <span class="adv-id">ADV-2023-017</span>
-            <span class="sev sev-high"><i class="sev-dot"></i>HIGH 8.1</span>
-            <span class="adv-tw">
-              <span class="adv-title">JWT audience confusion in Kestrel SSO — one token, every tenant</span>
-              <span class="adv-meta">CVE-2023-42698 · AUD claim unvalidated → cross-tenant impersonation · 2023-11-20 · 9 min</span>
-            </span>
-            <span class="adv-chev"><i data-lucide="chevron-down"></i></span>
-          </div>
-          <div class="adv-body" id="adv-b3"><div class="adv-inner"><div class="adv-cols">
-            <p class="adv-abs">Kestrel's SSO verifies signature and expiry but treats the aud claim as advisory. A token minted for a low-trust marketing tenant, replayed against the admin console callback with a tweaked path, validates cleanly — and every downstream identity is derived from the token's sub. One self-registered account became a skeleton key for the entire fleet.</p>
-            <ul class="adv-data">
-              <li><span>AFFECTED</span><b>Kestrel SSO ≤ 4.19</b></li>
-              <li><span>VECTOR</span><b>AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N</b></li>
-              <li><span>STATUS</span><b>PATCHED · 4.20</b></li>
-              <li><span>TIMELINE</span><b>REPORT 09-11 → FIX 10-19 → CVE 11-20</b></li>
-            </ul>
-          </div></div></div>
-        </article>
-
-        <article class="adv reveal" id="adv-2023-011" data-type="cache" style="--d:.15s">
-          <div class="adv-head" role="button" tabindex="0" aria-expanded="false" aria-controls="adv-b4">
-            <span class="adv-id">ADV-2023-011</span>
-            <span class="sev sev-med"><i class="sev-dot"></i>MED 6.5</span>
-            <span class="adv-tw">
-              <span class="adv-title">Web cache deception at the CDN edge — cross-tenant PII leakage</span>
-              <span class="adv-meta">CVE-2023-35707 · Path confusion → cacheable 200 → PII oracle · 2023-06-08 · 12 min</span>
-            </span>
-            <span class="adv-chev"><i data-lucide="chevron-down"></i></span>
-          </div>
-          <div class="adv-body" id="adv-b4"><div class="adv-inner"><div class="adv-cols">
-            <p class="adv-abs">A CDN routing rule treats /account and /account.js as equivalent; the origin does not. Appending a static extension to authenticated endpoints caused the CDN to cache personalized responses under public keys. Six weeks of passive measurement confirmed repeatable leakage of account data across tenants. The vendor declined the first report; a delegated, self-terminating proof changed their mind.</p>
-            <ul class="adv-data">
-              <li><span>AFFECTED</span><b>CDN edge · major provider</b></li>
-              <li><span>VECTOR</span><b>AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N</b></li>
-              <li><span>STATUS</span><b>PATCHED · ROUTING FIX</b></li>
-              <li><span>TIMELINE</span><b>REPORT 04-02 → PROVEN 05-30 → CVE 06-08</b></li>
-            </ul>
-          </div></div></div>
-        </article>
-
-        <article class="adv reveal" id="adv-2022-006" data-type="rce" style="--d:.2s">
-          <div class="adv-head" role="button" tabindex="0" aria-expanded="false" aria-controls="adv-b5">
-            <span class="adv-id">ADV-2022-006</span>
-            <span class="sev sev-crit"><i class="sev-dot"></i>CRIT 9.1</span>
-            <span class="adv-tw">
-              <span class="adv-title">Dependency confusion to production — internal registry takeover</span>
-              <span class="adv-meta">CVE-2022-29455 · Namespace squat → postinstall hook → build runner · 2022-03-17 · 16 min</span>
-            </span>
-            <span class="adv-chev"><i data-lucide="chevron-down"></i></span>
-          </div>
-          <div class="adv-body" id="adv-b5"><div class="adv-inner"><div class="adv-cols">
-            <p class="adv-abs">Three internal packages at a Fortune 100 were resolvable by name from the public registry — no scope prefix, no allowlist. I registered placeholders with a benign postinstall script that proved, conclusively, it executed inside CI build runners holding deploy secrets. The script printed its environment to build logs and nothing left the pipe. Coordinated fix took eleven hours; the class of bug took the industry a year.</p>
-            <ul class="adv-data">
-              <li><span>AFFECTED</span><b>npm + private registry hybrid</b></li>
-              <li><span>VECTOR</span><b>AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H</b></li>
-              <li><span>STATUS</span><b>MITIGATED · ALLOWLIST</b></li>
-              <li><span>TIMELINE</span><b>REPORT 03-14 → FIX 03-14 · 11H → CVE 03-17</b></li>
-            </ul>
-          </div></div></div>
-        </article>
-      </div>
-
-      <p class="adv-foot reveal">The deeper archive — 23 CVEs, tooling, unpublished notes — is access-controlled.
-        <button class="case-link u-sweep" id="vaultBtn">Request access <i data-lucide="arrow-right"></i></button>
-      </p>
-    </div>
-  </section>
-
-  <!-- ============ CONTACT ============ -->
-  <section class="section" id="contact">
-    <div class="container">
-      <header class="sec-head reveal">
-        <span class="sec-idx">§04</span><h2 class="sec-name">Contact</h2><span class="sec-line"></span>
-        <span class="sec-note">response &lt; 48h · pgp preferred</span>
-      </header>
-      <h3 class="contact-h reveal">Open a <em>channel</em>.</h3>
-      <p class="contact-sub reveal" style="--d:.06s">Security finding, engagement or talk invite — everything routes to the same inbox. Click a row to copy.</p>
-      <div class="channels">
-        <button class="channel reveal" style="--d:.08s"
-          data-copy="adrian@vosslabs.io" data-msg="Email copied — plaintext. Encrypt if sensible.">
-          <span class="ch-label">Email</span>
-          <span class="ch-val">adrian@vosslabs.io</span>
-          <span class="ch-ic"><i data-lucide="copy"></i></span>
-        </button>
-        <button class="channel reveal" style="--d:.12s"
-          data-copy="3F2A 9C1D 88E4 07B6 D2C1 55F0 A9E3 1B47 C6D8 90EF" data-msg="Fingerprint copied — verify before trusting.">
-          <span class="ch-label">PGP · RSA-4096</span>
-          <span class="ch-val small">3F2A 9C1D 88E4 07B6 D2C1 55F0 A9E3 1B47 C6D8 90EF</span>
-          <span class="ch-ic"><i data-lucide="copy"></i></span>
-        </button>
-        <button class="channel reveal" style="--d:.16s"
-          data-msg="Signal handle shared after first email — opsec, not paranoia.">
-          <span class="ch-label">Signal</span>
-          <span class="ch-val dimv">ON REQUEST</span>
-          <span class="ch-ic"><i data-lucide="lock"></i></span>
-        </button>
-      </div>
-      <div class="socials reveal" style="--d:.2s">
-        <a class="soc u-sweep" href="https://github.com" target="_blank" rel="noopener"><i data-lucide="github"></i>GitHub</a>
-        <a class="soc u-sweep" href="https://hackerone.com" target="_blank" rel="noopener"><i data-lucide="bug"></i>HackerOne</a>
-        <a class="soc u-sweep" href="https://x.com" target="_blank" rel="noopener"><i data-lucide="at-sign"></i>X / Twitter</a>
-        <a class="soc u-sweep" href="https://defcon.org" target="_blank" rel="noopener"><i data-lucide="mic"></i>Talks</a>
-      </div>
-    </div>
-  </section>
+  <!-- ============ dedicated reading page ============ -->
+  <div id="page-read" class="wrap" hidden></div>
 </main>
 
-<footer class="site-foot">
-  <div class="container foot-inner">
-    <span>© 2025 Adrian Voss</span>
-    <span>No cookies · No trackers · No logs</span>
-    <span>Hand-built · Static · v3.2.1</span>
+<footer>
+  <div class="wrap foot">
+    <span>© 2025 Elias Brandt · Cambridge</span>
+    <span>All texts are open and may be shared with attribution.</span>
   </div>
 </footer>
 
-<div id="toast" role="status" aria-live="polite"></div>
-
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
-lucide.createIcons();
-const root = document.documentElement;
+/* ================================================================
+   Elias Brandt — personal research site (single file, no build step)
 
-/* ============ toast + clipboard ============ */
-let toastTimer;
-function toast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>t.classList.remove('show'), 2600);
-}
-async function copyText(text, msg){
-  try{ await navigator.clipboard.writeText(text); }
-  catch(e){
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
-    document.body.appendChild(ta); ta.select();
-    try{ document.execCommand('copy'); }catch(_){}
-    ta.remove();
+   Routing: reading pages live at hash routes that mirror the
+   /research/{slug}/read path pattern, e.g.
+
+       index.html#/research/ai/read
+
+   Deep links, the back button and refresh all work from this file.
+   ================================================================ */
+"use strict";
+
+const RESEARCH = [
+  {
+    slug: "ai",
+    field: "Machine Learning",
+    years: "2023–2025",
+    read: 6,
+    title: "Sparse Methods in Large-Scale Learning",
+    desc: "Over-parameterised models dominate modern practice, yet most of their parameters contribute little at inference. This line of work develops principled sparsification — pruning with error certificates and training with structural priors — and asks when each is the honest choice.",
+    abstract: "Modern models are larger than they need to be. Across four projects since 2023 I have studied when a model's parameters can be removed — with a certificate bounding the damage — and when sparsity must be built in from the first step of training. The short answer: pruning after training works better than its reputation, training for sparsity works differently than its folklore suggests, and the two produce subnetworks that are useful in complementary regimes.",
+    sections: [
+      { h: "Motivation", ps: [
+        "A model that is convenient to publish is not always a model that is convenient to run. Over the past three years I have kept returning to the same practical friction: systems trained at scale are too large for the clinics, survey bureaus and research groups that are supposed to use them, and the standard response — prune aggressively and hope — offers no guarantee about what will break.",
+        "Sparsity, done carelessly, is just noise with fewer parameters. My interest is in sparsity with a paper trail: a certificate, however modest, that states what the removal cost, measured on data the practitioner can inspect. This line of work asks two questions. When can parameters be removed after training, with bounded damage? And when must sparsity be built in from the first step instead?"
+      ]},
+      { h: "Approach", ps: [
+        "The first strand is post-hoc pruning with validation-bounded error. Parameters are ranked by a calibration criterion computed on a held-out split, then removed in order until the projected increase in held-out loss approaches a budget ε. Because the criterion is computed rather than guessed, the procedure carries a simple probabilistic certificate: with probability 1−δ, the pruned model's held-out loss exceeds the dense model's by no more than ε. The certificate is conservative, but it is honest — and in practice the bound is loose by a factor we can estimate and report.",
+        "The second strand trains for structure from the start: group penalties over attention heads and convolutional channels, relaxed so that optimisation stays stable, with the sparsity pattern fixed partway through training. The point is not that one strand is better. The two produce different objects: pruning removes the parameters a trained model depends on least; structural priors grow a model around a shape chosen in advance."
+      ]},
+      { h: "Findings", ps: [
+        "Post-hoc pruning is better than its reputation. Across language, tabular and vision benchmarks, calibrated one-shot pruning removes 70–90 percent of parameters at under one percent relative loss increase — and the certificate held in every setting we tested, including two where we expected it to fail.",
+        "Trained sparsity is different rather than better. Subnetworks grown around a structural prior degrade more gracefully under distribution shift and survive fine-tuning on new tasks; pruned subnetworks are more accurate on the distribution they were calibrated for and more brittle outside it. For deployment on shifting data, the slower, stranger method is the one I would bet on.",
+        "One piece of folklore did not survive contact with replication. The lottery-ticket effect — that early-training masks are special — turned out, in our hands, to be mostly a property of the pruning criterion rather than the initialisation. The mask matters; the magic ticket does not. I keep the negative result in the write-up deliberately: it is the kind of thing that is easier to report on a personal page than in a proceedings-length paper."
+      ]}
+    ],
+    refs: [
+      "Brandt, E. (2024). Validation-bounded pruning for large models. Working Note WN-2024-02, Institute for Advanced Computation.",
+      "Frankle, J., and Carbin, M. (2019). The lottery ticket hypothesis: finding sparse, trainable neural networks. ICLR.",
+      "Hoefler, T., Alistarh, D., Ben-Nun, T., Dryden, N., and Püschel, A. (2021). Sparsity in deep learning. JMLR 22.",
+      "Brandt, E., and Keller, M. (2023). Structural priors and behaviour under distribution shift. Working Note WN-2023-05."
+    ]
+  },
+  {
+    slug: "privacy",
+    field: "Statistics & Privacy",
+    years: "2022–2025",
+    read: 5,
+    title: "The Statistical Cost of Privacy",
+    desc: "Differential privacy protects people in data, and its cost is usually quoted as a slogan rather than a number. I study precisely when the protection is expensive, when it is nearly free, and what that means for statistics offices and hospitals.",
+    abstract: "Differential privacy is now the standard answer to a hard question: how much can be learned from a dataset while protecting every person in it? The standard answer has a price, and the price is usually quoted as a slogan rather than a number. Across three projects I have tried to state the price precisely — and found that for many of the statistics institutions actually need, privacy costs far less than the folklore suggests.",
+    sections: [
+      { h: "Motivation", ps: [
+        "Statistical agencies, hospitals and researchers increasingly hold data they cannot look at freely. Differential privacy offers a principled compromise: publish statistics computed with calibrated noise so that no individual's presence in the data is detectable. What the literature offers in return is mostly worst-case bounds — the maximum price of privacy, not the usual one.",
+        "Worst-case bounds are the right tool for cryptography and the wrong one for statistics. An agency deciding whether a privacy-protected release is fit for publication needs the typical price for its particular questions — median income, category counts, rates of a condition — not a bound driven by adversarial datasets that will never occur."
+      ]},
+      { h: "Approach", ps: [
+        "I work in the minimax framework: for a given statistic and privacy level, compare the best achievable accuracy with and without the privacy constraint, and study the ratio between the two. The interesting quantity is not the worst case but the geometry — which statistical questions sit near the expensive boundary and which sit comfortably far from it. Most of my recent work maps that geometry for the summaries that actually appear in official statistics."
+      ]},
+      { h: "Findings", ps: [
+        "For a surprisingly large family — robust summaries such as medians and trimmed means, counts over coarse categories, rates of common conditions — privacy costs a small constant factor. The noise that protects individuals barely moves the confidence interval, provided the question is asked at a sensible resolution.",
+        "The expense concentrates where the question is fine-grained. Estimating a separate value for each individual, or for very small subgroups, makes the price quadratic — and that price is real, not an artifact of current methods. The practical lesson I draw is uncomfortable but useful: coarsen the question, never the protection. Almost every disastrous privacy deployment I have reviewed made the opposite trade.",
+        "A note on composition, since it decides real budgets: privacy losses add across releases, and my results suggest budgeting rules of thumb that are simpler than the current literature implies. I am assembling them into a short practical guide for statistics offices — the kind of document a personal page is a good place to draft in public."
+      ]}
+    ],
+    refs: [
+      "Dwork, C., McSherry, F., Nissim, K., and Smith, A. (2006). Calibrating noise to sensitivity in private data analysis. TCC.",
+      "Wasserman, L., and Zhou, S. (2010). A statistical framework for differential privacy. JASA 105.",
+      "Brandt, E. (2023). Nearly free privacy for robust statistics. Working Note WN-2023-08.",
+      "Kifer, D., Smith, A., and Thakurta, A. (2012). Private convex empirical risk minimization and high-dimensional regression. COLT."
+    ]
+  },
+  {
+    slug: "networks",
+    field: "Computational Biology",
+    years: "2021–2024",
+    read: 7,
+    title: "What Networks Tell Us — and When They Lie",
+    desc: "Protein-interaction networks, metabolic maps, co-expression graphs — biology is full of networks, and network analysis is full of confident conclusions. My work models how these networks are measured before interpreting how they are shaped, and reports which conclusions survive.",
+    abstract: "Biology is rich in networks and poorer in careful measurements of them. My work in this area asks a sober question: which conclusions drawn from network topology — hubs, centrality, modules — survive once the way these networks are measured is taken into account? Fewer than the review articles suggest, but more than none.",
+    sections: [
+      { h: "Motivation", ps: [
+        "Protein-interaction networks are measured, not observed. Assays have detection limits, bait proteins recur, and the edges that are easiest to find are not the edges that matter most. Yet the standard analyses — hub identification, centrality ranking, module detection — mostly proceed as if the measured graph were the biological one.",
+        "The consequences are not hypothetical. Some of the most-cited claims in network biology — about the essentiality of hubs, the universality of scale-free structure — rest on measurements whose biases were understood at the time and underweighted afterwards. I wanted to know how much of the standard story survives a disciplined correction."
+      ]},
+      { h: "Approach", ps: [
+        "The method is unglamorous and, I think, correct: write down a measurement model first. Each assay is described by detection and error rates — which interactions it can see, which it systematically misses — and inferences are drawn from the measured graph through that model rather than directly. Where the model cannot be estimated, we say so and analyse the direction of the bias instead. Negative controls from deliberately incomplete datasets anchor the estimates."
+      ]},
+      { h: "Findings", ps: [
+        "A large share of textbook hubness is assay artifact. When detection rates are modelled honestly, the degree distribution flattens substantially, and several celebrated topological laws weaken from laws into correlations with wide scatter.",
+        "Function prediction from topology survives — modestly. After correction, neighbourhood-based annotation of uncharacterised proteins improves measurably: the signal was real, just inflated. Comparative claims made within a single platform remain the most trustworthy statements in the field; cross-platform comparisons without a measurement model remain the least.",
+        "I hold this line of work slightly apart from the others on this page. It taught me more about measurement than about biology, and that lesson now runs through everything else I do: before interpreting a structure, model the instrument that produced it."
+      ]}
+    ],
+    refs: [
+      "Barabási, A.-L., and Oltvai, Z. N. (2004). Network biology: understanding the cell's functional organization. Nature Reviews Genetics 5.",
+      "Gillis, J., and Pavlidis, P. (2011). The role of indirect connections in gene networks in predicting function. Bioinformatics 27.",
+      "Huttlin, E. L., et al. (2021). The BioPlex network: a systematic exploration of the human interactome. Cell 184.",
+      "Brandt, E. (2022). Measurement models for interaction networks. Working Note WN-2022-04."
+    ]
+  },
+  {
+    slug: "inference",
+    field: "Methodology",
+    years: "2020–2025",
+    read: 6,
+    title: "Calmer Uncertainty for Scientific Pipelines",
+    desc: "A modern analysis chains simulation, preprocessing and a learned model, then reports a point estimate as if none of the machinery were uncertain. I build cheap intervals that propagate through the whole pipeline — and document how often the conclusions change.",
+    abstract: "A modern scientific analysis is a pipeline: a simulation feeds a preprocessing script feeds a learned model feeds a headline number. Each stage adds uncertainty; the published result usually reports none of it. This project builds cheap, honest intervals that propagate through the machinery — and documents what changes when they are used.",
+    sections: [
+      { h: "Motivation", ps: [
+        "The failure mode I keep encountering is not dishonesty but architecture. Pipelines are built to produce point estimates, and uncertainty is appended at the end, computed for the final stage alone. The simulation's discretisation, the preprocessing choices, the learned model's own variability — all of it is silently treated as certain. The result is an interval that describes the last inch of the analysis and ignores the mile before it."
+      ]},
+      { h: "Approach", ps: [
+        "The interventions are deliberately cheap, because expensive honesty does not get adopted. Conformal methods attach distribution-free intervals at stage boundaries; ensembles of preprocessing variants propagate choices rather than collapsing them; and a short reporting standard — three sentences long — makes the propagated uncertainty visible in the final claim. None of this requires new theory. It requires agreeing that the interval belongs to the pipeline, not to its final stage."
+      ]},
+      { h: "Findings", ps: [
+        "We re-analysed forty published results whose raw stages were available. With uncertainty propagated through the full pipeline, roughly one in five calibrated intervals crosses the null — conclusions that the original, final-stage-only intervals had ruled out become genuinely uncertain. The effect concentrates, predictably, in results whose pipelines were longest.",
+        "The cost is minutes of computation and one extra paragraph of prose. That asymmetry — small price, frequent change of conclusion — is the entire argument. I have reduced the reporting standard to an index card and now include it with every manuscript I submit; a plain-text copy is available on request, along with the reanalysis code.",
+        "This is the oldest of the four projects and the one I would keep if I could keep only one. Everything else I work on — sparsity, privacy, measurement — is, in the end, a bet that science works better when its uncertainty is legible."
+      ]}
+    ],
+    refs: [
+      "Vovk, V., Gammerman, A., and Shafer, G. (2005). Algorithmic Learning in a Random World. Springer.",
+      "Angelopoulos, A. N., and Bates, S. (2023). Conformal prediction: a gentle introduction. Foundations and Trends in ML 16.",
+      "Ioannidis, J. P. A. (2005). Why most published research findings are false. PLoS Medicine 2.",
+      "Brandt, E. (2021). Interval propagation through learned stages. Working Note WN-2021-03."
+    ]
   }
-  if(msg) toast(msg);
+];
+
+/* ---------------- state & elements ---------------- */
+const homeEl  = document.getElementById("page-home");
+const readEl  = document.getElementById("page-read");
+const headEl  = document.getElementById("siteHead");
+
+let view = null;            // "home" | "reading"
+let savedScroll = null;     // scroll position before opening an article
+let pendingScroll = null;   // section to scroll to after returning home
+
+/* ---------------- helpers ---------------- */
+function jumpTo(y){
+  const html = document.documentElement;
+  const prev = html.style.scrollBehavior;
+  html.style.scrollBehavior = "auto";
+  window.scrollTo(0, y);
+  html.style.scrollBehavior = prev;
+}
+function scrollToSection(target){
+  if (!target){ window.scrollTo({top:0, behavior:"smooth"}); return; }
+  const el = document.getElementById(target);
+  if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
 }
 
-/* ============ theme toggle ============ */
-const themeBtn = document.getElementById('themeBtn');
-themeBtn.addEventListener('click', ()=>{
-  root.classList.add('tt');
-  const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-  root.dataset.theme = next;
-  try{ localStorage.setItem('voss-theme', next); }catch(e){}
-  GlyphField.refresh();
-  setTimeout(()=>root.classList.remove('tt'), 600);
+/* ---------------- research list ---------------- */
+function buildList(){
+  document.getElementById("workList").innerHTML = RESEARCH.map(r => `
+    <article class="work">
+      <p class="meta">${r.field} · ${r.years}</p>
+      <h2><a href="#/research/${r.slug}/read">${r.title}</a></h2>
+      <p class="work-desc">${r.desc}</p>
+      <a class="more" href="#/research/${r.slug}/read">Read more <span class="arr" aria-hidden="true">→</span></a>
+    </article>`).join("");
+}
+
+/* ---------------- reading page ---------------- */
+function renderReading(r){
+  readEl.innerHTML = `
+    <article class="paper">
+      <a class="back" href="#/"><span class="barr" aria-hidden="true">←</span> All research</a>
+      <p class="meta">${r.field} · ${r.years} · ${r.read} min read</p>
+      <h1>${r.title}</h1>
+      <div class="abstract">
+        <p class="label">Abstract</p>
+        <p class="abs-text">${r.abstract}</p>
+      </div>
+      ${r.sections.map(s => `
+        <section class="rs">
+          <h2>${s.h}</h2>
+          ${s.ps.map(p => `<p>${p}</p>`).join("")}
+        </section>`).join("")}
+      <section class="rs refs">
+        <h2>References</h2>
+        <ol>${r.refs.map(x => `<li>${x}</li>`).join("")}</ol>
+      </section>
+      <p class="end">— Elias Brandt, Cambridge</p>
+    </article>`;
+}
+function renderNotFound(slug){
+  readEl.innerHTML = `
+    <article class="paper">
+      <a class="back" href="#/"><span class="barr" aria-hidden="true">←</span> All research</a>
+      <h1 style="margin-top:52px">Not found</h1>
+      <p class="nf-p">There is no article at “${slug}”. It may have been renamed — the
+        <a href="#/">research list</a> has everything currently available.</p>
+    </article>`;
+}
+
+/* ---------------- router ---------------- */
+function route(){
+  const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  if (parts[0] === "research" && parts[1]){
+    const r = RESEARCH.find(x => x.slug === parts[1]);
+    if (r && parts[2] === "read"){ showReading(r); return; }
+    if (r){ location.replace("#/research/" + r.slug + "/read"); return; }
+    showReading(null, parts[1]); return;
+  }
+  showHome();
+}
+function showReading(r, badSlug){
+  if (view === "home") savedScroll = window.scrollY;
+  view = "reading";
+  if (r){ renderReading(r); document.title = r.title + " — Elias Brandt"; }
+  else  { renderNotFound(badSlug || ""); document.title = "Not found — Elias Brandt"; }
+  homeEl.hidden = true;
+  readEl.hidden = false;
+  jumpTo(0);
+}
+function showHome(){
+  const wasReading = (view === "reading");
+  view = "home";
+  document.title = "Elias Brandt — Research";
+  readEl.hidden = true;
+  homeEl.hidden = false;
+  if (pendingScroll != null){
+    const t = pendingScroll; pendingScroll = null;
+    requestAnimationFrame(() => scrollToSection(t));
+  } else if (wasReading && savedScroll != null){
+    jumpTo(savedScroll);
+    savedScroll = null;
+  }
+}
+window.addEventListener("hashchange", route);
+
+/* ---------------- navigation ---------------- */
+document.querySelectorAll("nav a").forEach(a => {
+  a.addEventListener("click", e => {
+    const target = a.dataset.target;
+    if (view === "reading"){ pendingScroll = target; location.hash = "#/"; }
+    else { e.preventDefault(); scrollToSection(target); }
+  });
+});
+document.querySelector(".brand").addEventListener("click", e => {
+  if (view === "reading"){ pendingScroll = null; savedScroll = null; location.hash = "#/"; }
+  else { e.preventDefault(); window.scrollTo({top:0, behavior:"smooth"}); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && view === "reading") location.hash = "#/";
 });
 
-/* ============ nav: scroll state, progress, clock, mobile menu ============ */
-const nav = document.getElementById('siteNav');
-const prog = document.getElementById('progress');
-let progTick = false;
-function onScroll(){
-  nav.classList.toggle('scrolled', scrollY > 10);
-  const h = document.documentElement.scrollHeight - innerHeight;
-  prog.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
-}
-addEventListener('scroll', ()=>{
-  if(progTick) return; progTick = true;
-  requestAnimationFrame(()=>{ onScroll(); progTick = false; });
+/* ---------------- quiet touches ---------------- */
+/* hairline under the header once the page scrolls */
+window.addEventListener("scroll", () => {
+  headEl.classList.toggle("scrolled", window.scrollY > 6);
 }, {passive:true});
-onScroll();
 
-const clockEl = document.getElementById('clock');
-function tickClock(){
-  let s;
-  try{ s = new Date().toLocaleTimeString('en-GB',{timeZone:'Europe/Berlin',hour12:false}); }
-  catch(e){ s = new Date().toLocaleTimeString('en-GB',{hour12:false}); }
-  clockEl.textContent = 'BER ' + s;
-}
-tickClock(); setInterval(tickClock, 1000);
+/* gentle reveal of each section */
+const io = new IntersectionObserver(entries => entries.forEach(en => {
+  if (en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+}), {threshold:.08, rootMargin:"0px 0px -24px"});
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-const menuBtn = document.getElementById('menuBtn');
-menuBtn.addEventListener('click', ()=>nav.classList.toggle('open'));
-document.querySelectorAll('#navLinks a').forEach(a=>
-  a.addEventListener('click', ()=>nav.classList.remove('open')));
+/* ---------------- contact form ---------------- */
+const form = document.getElementById("contactForm");
+const sent = document.getElementById("sentBlock");
 
-/* active section highlight */
-const navAs = [...document.querySelectorAll('#navLinks a')];
-const secObs = new IntersectionObserver(es=>{
-  es.forEach(en=>{
-    if(en.isIntersecting){
-      const id = '#' + en.target.id;
-      navAs.forEach(a=>a.classList.toggle('active', a.getAttribute('href') === id));
-    }
-  });
-},{rootMargin:'-35% 0px -60% 0px'});
-['profile','research','advisories','contact'].forEach(id=>{
-  const el = document.getElementById(id); if(el) secObs.observe(el);
-});
-
-/* ============ ticker: duplicate for seamless loop ============ */
-const track = document.getElementById('tickerTrack');
-track.appendChild(document.getElementById('tickGroup').cloneNode(true));
-
-/* ============ scroll reveal ============ */
-const revObs = new IntersectionObserver(es=>{
-  es.forEach(en=>{
-    if(en.isIntersecting){ en.target.classList.add('in'); revObs.unobserve(en.target); }
-  });
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
-
-/* ============ count-up stats ============ */
-function countUp(el){
-  const end = +el.dataset.count, pad = +(el.dataset.pad||0);
-  const pre = el.dataset.pre||'', suf = el.dataset.suf||'';
-  const t0 = performance.now(), dur = 1400;
-  (function step(t){
-    const p = Math.min(1,(t-t0)/dur), e = 1-Math.pow(1-p,3);
-    let v = Math.round(end*e).toString();
-    if(pad) v = v.padStart(pad,'0');
-    el.textContent = pre+v+suf;
-    if(p<1) requestAnimationFrame(step);
-  })(t0);
-}
-const stats = document.getElementById('statsList');
-const statObs = new IntersectionObserver(es=>{
-  if(es[0].isIntersecting){
-    stats.querySelectorAll('.stat-num').forEach(countUp);
-    statObs.disconnect();
-  }
-},{threshold:.4});
-if(stats) statObs.observe(stats);
-
-/* ============ redactions: hover / tap to declassify ============ */
-document.querySelectorAll('.redacted').forEach(r=>{
-  const t = ()=>r.classList.toggle('on');
-  r.addEventListener('click', t);
-  r.addEventListener('keydown', e=>{
-    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); t(); }
-  });
-});
-
-/* ============ expandable rows (research + advisories) ============ */
-function wireToggle(sel){
-  document.querySelectorAll(sel).forEach(row=>{
-    const head = row.querySelector('[role="button"]');
-    const set = v=>{
-      row.classList.toggle('open', v);
-      head.setAttribute('aria-expanded', v);
-    };
-    head.addEventListener('click', ()=>set(!row.classList.contains('open')));
-    head.addEventListener('keydown', e=>{
-      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); set(!row.classList.contains('open')); }
-    });
-  });
-}
-wireToggle('.res');
-wireToggle('.adv');
-
-/* research case links → open + scroll to the advisory */
-document.querySelectorAll('[data-open-adv]').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    const el = document.getElementById(b.dataset.openAdv);
-    if(!el) return;
-    el.classList.add('open');
-    el.querySelector('.adv-head').setAttribute('aria-expanded','true');
-    setTimeout(()=>el.scrollIntoView({behavior:'smooth', block:'center'}), 60);
-    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
-  });
-});
-
-/* ============ advisory filters ============ */
-const fbtns = document.querySelectorAll('.fbtn');
-const advs = [...document.querySelectorAll('.adv')];
-const fcount = document.getElementById('fcount');
-const pad2 = n => String(n).padStart(2,'0');
-fbtns.forEach(b=>b.addEventListener('click', ()=>{
-  fbtns.forEach(x=>x.classList.toggle('active', x===b));
-  const f = b.dataset.filter; let n = 0;
-  advs.forEach(a=>{
-    const show = f==='all' || a.dataset.type===f;
-    a.classList.toggle('hide', !show);
-    if(show){
-      n++;
-      a.classList.remove('repop'); void a.offsetWidth; a.classList.add('repop');
-    }
-  });
-  fcount.textContent = pad2(n)+' / '+pad2(advs.length);
-}));
-
-/* vault request → real feedback */
-document.getElementById('vaultBtn').addEventListener('click', ()=>
-  toast('The vault is invite-only — email first, then we talk.'));
-
-/* ============ contact channels ============ */
-document.querySelectorAll('.channel').forEach(c=>{
-  c.addEventListener('click', ()=>{
-    if(c.dataset.copy) copyText(c.dataset.copy);
-    toast(c.dataset.msg || 'Copied');
-  });
-});
-document.getElementById('pgpBtn').addEventListener('click', ()=>
-  copyText('3F2A 9C1D 88E4 07B6 D2C1 55F0 A9E3 1B47 C6D8 90EF','PGP fingerprint copied — verify before trusting.'));
-
-/* ============ hero glyph field (decrypt-on-proximity) ============ */
-const GlyphField = (function(){
-  const cv = document.getElementById('glyphField');
-  const hero = document.getElementById('top');
-  const ctx = cv.getContext('2d');
-  const CH = '0123456789ABCDEF#%&*+/:<>?=[]';
-  /* keep in sync with CSS tokens */
-  const PAL = {
-    dark :{bg:'#0C0C0D', br:[236,233,225], ac:[232,163,61]},
-    light:{bg:'#F2EFE7', br:[26,25,19],   ac:[162,98,15]}
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const name  = form.elements.name,
+        email = form.elements.email,
+        msg   = form.elements.message;
+  let first = null;
+  const flag = (el, bad) => {
+    el.closest(".field").classList.toggle("invalid", bad);
+    if (bad && !first) first = el;
   };
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const dpr = ()=>Math.min(devicePixelRatio||1, 2);
-  let W,H,cell,cells=[],base,ready=false;
-  let px=-1e4, py=-1e4, tx=-1e4, ty=-1e4, wt=0;
+  flag(name,  name.value.trim().length < 2);
+  flag(email, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()));
+  flag(msg,   msg.value.trim().length < 10);
+  if (first){ first.focus(); return; }
+  form.hidden = true;
+  sent.hidden = false;
+  sent.focus();
+});
+form.querySelectorAll("input,textarea").forEach(el => {
+  el.addEventListener("input", () => el.closest(".field").classList.remove("invalid"));
+});
+document.getElementById("writeAgain").addEventListener("click", () => {
+  sent.hidden = true;
+  form.hidden = false;
+  form.reset();
+  form.elements.name.focus();
+});
 
-  const cur = ()=>PAL[root.dataset.theme==='light' ? 'light' : 'dark'];
-
-  function build(){
-    const r = hero.getBoundingClientRect(), d = dpr();
-    W = Math.max(1, Math.floor(r.width*d));
-    H = Math.max(1, Math.floor(r.height*d));
-    cv.width = W; cv.height = H;
-    cv.style.width = r.width+'px'; cv.style.height = r.height+'px';
-    cell = 22*d;
-    const cols = Math.ceil(W/cell), rows = Math.ceil(H/cell);
-    cells = [];
-    for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){
-      const c = CH[(Math.random()*CH.length)|0];
-      cells.push({x:i*cell+cell/2, y:j*cell+cell/2, c, o:c, e:0});
-    }
-    const p = cur();
-    base = document.createElement('canvas'); base.width=W; base.height=H;
-    const b = base.getContext('2d');
-    b.font = Math.round(cell*0.46)+'px "JetBrains Mono",monospace';
-    b.textAlign='center'; b.textBaseline='middle';
-    b.fillStyle = 'rgba('+p.br[0]+','+p.br[1]+','+p.br[2]+',0.15)';
-    cells.forEach(c=>b.fillText(c.c, c.x, c.y));
-    ready = true;
-    if(reduced){ ctx.drawImage(base,0,0); }
-  }
-
-  function mixColor(p, t){
-    const r = Math.round(p.br[0]+(p.ac[0]-p.br[0])*t);
-    const g = Math.round(p.br[1]+(p.ac[1]-p.br[1])*t);
-    const b = Math.round(p.br[2]+(p.ac[2]-p.br[2])*t);
-    return 'rgba('+r+','+g+','+b+','+(0.15+t*0.8).toFixed(3)+')';
-  }
-
-  let visible = true;
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(en=>{visible = en[0].isIntersecting;},{threshold:0}).observe(cv);
-  }
-
-  function frame(){
-    if(!ready || !visible){ requestAnimationFrame(frame); return; }
-    const p = cur(), d = dpr();
-    const R = 150*d, R2 = R*R;
-    px += (tx-px)*0.16; py += (ty-py)*0.16;
-    wt += 0.006;
-    /* autonomous drift so the field stays alive without a mouse */
-    const wx = W*0.5 + Math.cos(wt*1.3)*W*0.38;
-    const wy = H*0.5 + Math.sin(wt*2.1)*H*0.32;
-
-    ctx.clearRect(0,0,W,H);
-    ctx.drawImage(base,0,0);
-    ctx.font = Math.round(cell*0.46)+'px "JetBrains Mono",monospace';
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-
-    if(Math.random()<0.06){
-      const c = cells[(Math.random()*cells.length)|0];
-      c.e = Math.max(c.e, 0.55+Math.random()*0.3);
-    }
-    for(let k=0;k<cells.length;k++){
-      const c = cells[k];
-      let tg = 0, dx, dy, d2;
-      dx = c.x-px; dy = c.y-py; d2 = dx*dx+dy*dy;
-      if(d2<R2) tg = 1-d2/R2;
-      dx = c.x-wx; dy = c.y-wy; d2 = dx*dx+dy*dy;
-      const rr = R2*2.2;
-      if(d2<rr) tg = Math.max(tg, (1-d2/rr)*0.42);
-      c.e = Math.max(c.e*0.9, tg);
-      if(c.e <= 0.02) continue;
-      /* scramble while hot, settle back when cool */
-      if(c.e>0.35 && Math.random()<0.22) c.c = CH[(Math.random()*CH.length)|0];
-      else if(c.e<0.1 && Math.random()<0.35) c.c = c.o;
-      ctx.fillStyle = p.bg;
-      ctx.fillRect(c.x-cell*0.6, c.y-cell*0.6, cell*1.2, cell*1.2);
-      ctx.fillStyle = mixColor(p, c.e);
-      ctx.fillText(c.c, c.x, c.y);
-    }
-    requestAnimationFrame(frame);
-  }
-
-  addEventListener('pointermove', e=>{
-    const r = hero.getBoundingClientRect(), d = dpr();
-    if(e.clientY<r.top-80 || e.clientY>r.bottom+80 || e.clientX<r.left-80 || e.clientX>r.right+80){
-      tx = -1e4; ty = -1e4;
-    }else{
-      tx = (e.clientX-r.left)*d;
-      ty = (e.clientY-r.top)*d;
-    }
-  }, {passive:true});
-
-  let rz;
-  addEventListener('resize', ()=>{ clearTimeout(rz); rz = setTimeout(build, 150); });
-
-  build();
-  if(!reduced) frame();
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(build);
-
-  return { refresh: build };
-})();
+/* ---------------- init ---------------- */
+buildList();
+route();
 </script>
 </body>
 </html>
