@@ -1,1160 +1,198 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elias Mercer — Security Researcher · Web &amp; AppSec</title>
-<meta name="description" content="Portfolio of Elias Mercer — offensive security researcher focused on web and application security. Featured CVE write-ups, technical articles, responsible disclosure.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230D0C0A'/%3E%3Cpath d='M16 18 L32 32 L16 46' fill='none' stroke='%23FF5A2B' stroke-width='6'/%3E%3Crect x='36' y='42' width='12' height='7' fill='%23EBE7DD'/%3E%3C/svg%3E">
-<script>
-/* Apply saved theme before first paint (no flash) + flag JS availability */
-(function(){
-  document.documentElement.classList.add('js');
-  try{
-    var t = localStorage.getItem('em-theme');
-    if(!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', t);
-  }catch(e){ document.documentElement.setAttribute('data-theme','dark'); }
-})();
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300..700&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest" defer></script>
+<title>Security Researcher | Software Security &amp; Vulnerability Analysis</title>
+<meta name="description" content="Portfolio of a cybersecurity researcher focused on web application security, software security, and vulnerability analysis.">
+<meta name="theme-color" content="#0a0c0b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0c0b'/%3E%3Cpath d='M18 20l14 12-14 12' fill='none' stroke='%233ecf8e' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='36' y='41' width='14' height='5' rx='1' fill='%233ecf8e'/%3E%3C/svg%3E">
 <style>
-/* ============ design tokens ============ */
+/* ---------- base ---------- */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
 :root{
-  --serif:'Instrument Serif',Georgia,serif;
-  --sans:'Space Grotesk','Helvetica Neue',sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,monospace;
-  --tx:100%; --ty:32px; /* theme-wipe origin */
+  --bg:#0a0c0b;            /* black / charcoal */
+  --text:#e7eae6;
+  --body:#b7bfb8;
+  --muted:#8d968e;
+  --faint:#6e7871;
+  --line:#1c221f;          /* hairlines */
+  --accent:#3ecf8e;        /* subtle green — change to #22d3ee for cyan */
+  --accent-dim:rgba(62,207,142,.14);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,Menlo,monospace;
 }
-html[data-theme="dark"]{
-  color-scheme:dark;
-  --bg:#0D0C0A; --bg-rgb:13,12,10;
-  --panel:#151411;
-  --ink:#EBE7DD; --mut:#9C968A;
-  --line:rgba(235,231,221,.14);
-  --acc:#FF5A2B; --acc-rgb:255,90,43;
-  --dot:rgba(235,231,221,.09);
-  --term:#0B0A08; --term-line:rgba(235,231,221,.12);
-  --term-ink:#C8C3B7; --term-dim:#7B766C;
-  --shadow:0 24px 60px rgba(0,0,0,.5);
-  --sev-c:#E5484D; --sev-h:#E8862D; --sev-m:#D4A72C; --sev-l:#9C968A;
-  --grain:.045;
-}
-html[data-theme="light"]{
-  color-scheme:light;
-  --bg:#F4F1E9; --bg-rgb:244,241,233;
-  --panel:#FCFAF3;
-  --ink:#1B1914; --mut:#6F695C;
-  --line:rgba(27,25,20,.16);
-  --acc:#CE400C; --acc-rgb:206,64,12;
-  --dot:rgba(27,25,20,.12);
-  --term:#12110E; --term-line:rgba(235,231,221,.12);
-  --term-ink:#C8C3B7; --term-dim:#7B766C;
-  --shadow:0 24px 60px rgba(27,25,20,.16);
-  --sev-c:#BF2F2F; --sev-h:#AE5410; --sev-m:#8C7013; --sev-l:#6F695C;
-  --grain:.05;
-}
-/* ============ base ============ */
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;background:var(--bg)}
-html[data-theme="dark"]{transition:background-color .35s}
-body{
-  font-family:var(--sans);font-size:16px;font-weight:400;
-  background:var(--bg);color:var(--ink);
-  transition:background-color .35s ease,color .35s ease;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-  overflow-x:hidden;
-}
-body.lock{overflow:hidden}
-::selection{background:var(--acc);color:#0D0C0A}
-:focus-visible{outline:1.5px solid var(--acc);outline-offset:3px}
+
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:#07130d}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2{text-wrap:balance}
 ::-webkit-scrollbar{width:10px}
 ::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--line)}
-a{color:inherit}
-button{font:inherit;color:inherit}
-.mono{font-family:var(--mono)}
-.container{width:min(1180px,100%);margin-inline:auto;padding-inline:clamp(20px,4.5vw,46px)}
-/* film grain — one quiet texture layer over everything */
-body::after{
-  content:"";position:fixed;inset:0;z-index:450;pointer-events:none;opacity:var(--grain);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
-}
-/* ============ reveal system ============ */
-.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--rd,0)*95ms)}
-.js .reveal.in{opacity:1;transform:none}
-.js .reveal.h1x{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-  html{scroll-behavior:auto}
-}
-/* ============ theme wipe (View Transitions) ============ */
-::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
-::view-transition-new(root){animation:vtWipe .55s cubic-bezier(.4,0,.2,1) forwards}
-@keyframes vtWipe{
-  from{clip-path:circle(0px at var(--tx) var(--ty))}
-  to{clip-path:circle(150vmax at var(--tx) var(--ty))}
-}
-/* ============ progress + skip ============ */
-.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:600;pointer-events:none}
-.progress span{display:block;height:100%;width:100%;background:var(--acc);transform:scaleX(0);transform-origin:left}
-.skip{position:fixed;top:-60px;left:16px;z-index:700;background:var(--ink);color:var(--bg);padding:10px 16px;font:500 11px var(--mono);letter-spacing:.1em;text-decoration:none;transition:top .25s}
-.skip:focus{top:12px}
-/* ============ nav ============ */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:500;height:64px;
-  display:flex;align-items:center;
-  border-bottom:1px solid var(--line);
-  background:rgba(var(--bg-rgb),.82);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-  animation:navIn .7s ease both;
-}
-@keyframes navIn{from{transform:translateY(-100%)}to{transform:none}}
-.nav-in{display:flex;align-items:center;justify-content:space-between;gap:24px;width:min(1180px,100%);margin-inline:auto;padding-inline:clamp(20px,4.5vw,46px)}
-.logo{font:500 13px var(--mono);letter-spacing:.05em;text-decoration:none;display:flex;align-items:center}
-.logo .lg-c{color:var(--acc);animation:blink 1.15s steps(1) infinite;margin-left:1px}
+::-webkit-scrollbar-thumb{background:#232a26}
+::-webkit-scrollbar-thumb:hover{background:#2e3631}
+
+.container{width:100%;max-width:840px;margin:0 auto;padding:0 24px}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;border-bottom:1px solid transparent;transition:background-color .3s ease,border-color .3s ease}
+.nav.scrolled{background:rgba(10,12,11,.85);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--accent);text-decoration:none;transition:color .25s ease}
+.brand:hover{color:#6fe6b1}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{position:relative;display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:6px 0;transition:color .25s ease}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:2px;width:100%;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+
+/* ---------- hero ---------- */
+.hero{min-height:100vh;min-height:100svh;display:flex;align-items:center}
+.hero-prompt{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--muted);margin-bottom:22px}
+.hero-prompt .dollar{color:var(--accent)}
+.hero-title{font-size:clamp(2.4rem,6.5vw,4.2rem);line-height:1.1;letter-spacing:-.02em;font-weight:700}
+.caret{display:inline-block;width:.5ch;height:.82em;margin-left:.14em;background:var(--accent);animation:blink 1.15s step-end infinite}
 @keyframes blink{0%,55%{opacity:1}56%,100%{opacity:0}}
-.nav-links{display:flex;gap:30px}
-.n-link{font:500 11px var(--mono);letter-spacing:.13em;text-decoration:none;color:var(--mut);position:relative;display:flex;gap:7px;transition:color .25s;padding:4px 0}
-.n-link .n-num{color:var(--acc);opacity:.75}
-.n-link::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:100%;background:var(--acc);transform:scaleX(0);transform-origin:right;transition:transform .3s cubic-bezier(.22,1,.36,1)}
-.n-link:hover{color:var(--ink)}
-.n-link:hover::after,.n-link.active::after{transform:scaleX(1);transform-origin:left}
-.n-link.active{color:var(--ink)}
-.nav-right{display:flex;gap:10px;align-items:center}
-.sq-btn{width:36px;height:36px;border:1px solid var(--line);background:none;cursor:pointer;display:grid;place-items:center;position:relative;transition:background .25s,color .25s,border-color .25s}
-.sq-btn:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.sq-btn svg{width:15px;height:15px}
-.theme-btn svg{position:absolute;transition:opacity .3s,transform .45s cubic-bezier(.22,1,.36,1)}
-html[data-theme="dark"] .theme-btn .ic-moon{opacity:0;transform:rotate(90deg) scale(.4)}
-html[data-theme="dark"] .theme-btn .ic-sun{opacity:1;transform:none}
-html[data-theme="light"] .theme-btn .ic-sun{opacity:0;transform:rotate(-90deg) scale(.4)}
-html[data-theme="light"] .theme-btn .ic-moon{opacity:1;transform:none}
-#menuBtn{display:none}
-/* ============ menu overlay ============ */
-.menu-overlay{position:fixed;inset:0;z-index:640;background:var(--bg);display:flex;flex-direction:column;padding-inline:clamp(20px,6vw,46px);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
-.menu-overlay.open{opacity:1;visibility:visible}
-.menu-top{height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
-.menu-links{flex:1;display:flex;flex-direction:column;justify-content:center}
-.m-link{font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,9vw,4.2rem);line-height:1.1;text-decoration:none;display:flex;align-items:baseline;gap:20px;padding:16px 0;border-bottom:1px solid var(--line);color:var(--ink);opacity:0;transform:translateY(26px);transition:opacity .5s,transform .5s cubic-bezier(.22,1,.36,1),color .25s,padding-left .25s}
-.menu-overlay.open .m-link{opacity:1;transform:none;transition-delay:calc(.08s + var(--i)*.06s),calc(.08s + var(--i)*.06s),0s,0s}
-.m-link .m-num{font:500 12px var(--mono);color:var(--acc)}
-.m-link:hover{color:var(--acc);padding-left:14px}
-.menu-foot{padding:24px 0 30px;font:400 11px var(--mono);letter-spacing:.1em;color:var(--mut);display:flex;flex-wrap:wrap;gap:8px 26px}
-.menu-foot a{text-decoration:none;transition:color .25s}
-.menu-foot a:hover{color:var(--acc)}
-/* ============ hero ============ */
-.hero{min-height:100vh;min-height:100svh;display:flex;padding-top:64px;position:relative}
-.hero::before{ /* faint blueprint dot field, fading downward */
-  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background-image:radial-gradient(var(--dot) 1px,transparent 1.4px);
-  background-size:26px 26px;
-  -webkit-mask-image:radial-gradient(120% 90% at 55% 10%,#000 30%,transparent 78%);
-  mask-image:radial-gradient(120% 90% at 55% 10%,#000 30%,transparent 78%);
+.hero-line{display:block;margin-top:16px;font-size:clamp(1.05rem,2.4vw,1.3rem);font-weight:400;letter-spacing:.01em;color:var(--muted);line-height:1.5}
+.pipe{color:var(--accent);margin-right:10px;font-weight:500}
+.scroll-cue{display:inline-flex;align-items:center;gap:10px;margin-top:clamp(44px,9vh,88px);font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s ease}
+.scroll-cue .arrow{display:inline-block;animation:bob 2.4s ease-in-out infinite}
+.scroll-cue:hover{color:var(--accent)}
+@keyframes bob{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
+
+/* ---------- sections ---------- */
+.sec{padding:96px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.sec-num{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--accent)}
+.sec-head h2{font-size:clamp(1.55rem,3.5vw,2.05rem);font-weight:600;letter-spacing:-.015em}
+.sec-rule{flex:1;height:1px;background:var(--line)}
+
+.about p{max-width:64ch;color:var(--body);font-size:1.03rem;margin-bottom:20px}
+.about p:last-child{margin-bottom:0}
+.hl{color:var(--text);font-weight:500}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line)}
+.foot-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:26px 0;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+/* ---------- reveal on scroll ---------- */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease var(--d,0s),transform .7s ease var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:560px){
+  .nav-links{gap:20px}
+  .sec{padding:72px 0}
 }
-.hero-frame{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;padding-bottom:10px}
-.mark{position:absolute;font:400 14px var(--mono);color:var(--mut);opacity:.7;pointer-events:none}
-.mark.tl{top:14px;left:0}.mark.tr{top:14px;right:0}.mark.bl{bottom:8px;left:0}.mark.br{bottom:8px;right:0}
-.side-tag{position:absolute;top:50%;right:12px;writing-mode:vertical-rl;transform:translateY(-50%);font:500 10px var(--mono);letter-spacing:.32em;color:var(--mut);text-transform:uppercase;pointer-events:none}
-@media(max-width:1240px){.side-tag{display:none}}
-.hero-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 26px;padding:22px 0;border-bottom:1px solid var(--line);font:500 10.5px var(--mono);letter-spacing:.15em;color:var(--mut);text-transform:uppercase}
-.hm-live{color:var(--ink);display:flex;align-items:center;gap:10px}
-.dot{width:7px;height:7px;background:var(--acc);border-radius:1px;display:inline-block;flex:none}
-.dot.pulse{position:relative}
-.dot.pulse::after{content:"";position:absolute;inset:-4px;border:1px solid var(--acc);border-radius:2px;animation:ping 2.2s ease-out infinite}
-@keyframes ping{0%{transform:scale(.45);opacity:.9}75%{transform:scale(1.5);opacity:0}100%{opacity:0}}
-.hero-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 0 44px}
-h1{font-family:var(--serif);font-weight:400;font-size:clamp(3.4rem,11.5vw,8.2rem);line-height:.94;letter-spacing:-.015em}
-.h-mask{display:block;overflow:hidden;padding-bottom:.06em}
-.h-in{display:block;transform:translateY(115%);transition:transform .9s cubic-bezier(.22,1,.36,1)}
-.h-in.ital{font-style:italic}
-.js h1.reveal.in .h-in{transform:none}
-.js h1.reveal.in .h-mask:nth-child(2) .h-in{transition-delay:.12s}
-.type-line{margin-top:26px;font:400 14px var(--mono);color:var(--mut);display:flex;align-items:center;gap:12px}
-.t-prompt{color:var(--acc);font-weight:500}
-#typed{color:var(--ink);font-weight:500;letter-spacing:.02em}
-.t-caret{width:9px;height:17px;background:var(--acc);animation:blink 1.05s steps(1) infinite;flex:none}
-.intro{max-width:62ch;margin-top:38px;font-weight:300;font-size:clamp(1.02rem,1.6vw,1.16rem);line-height:1.78}
-.i-key{font-weight:500}
-.hint{margin-top:16px;font:400 10.5px var(--mono);letter-spacing:.14em;color:var(--mut);text-transform:uppercase}
-/* declassification interaction */
-.redacted{position:relative;display:inline-block;cursor:pointer;white-space:normal}
-.r-text{transition:color .35s}
-.r-bar{position:absolute;inset:-2px -5px;background:var(--ink);transform-origin:left;transition:transform .5s cubic-bezier(.77,0,.18,1) .08s;pointer-events:none}
-.redacted:hover .r-bar,.redacted:focus .r-bar,.redacted.un .r-bar{transform:scaleX(0);transform-origin:right}
-.redacted:hover .r-text,.redacted:focus .r-text,.redacted.un .r-text{color:var(--acc)}
-/* stat strip */
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.stat{padding:20px 24px 22px 0}
-.stat:not(:first-child){border-left:1px solid var(--line);padding-left:24px}
-.s-num{display:block;font:500 clamp(1.7rem,3.4vw,2.3rem)/1.1 var(--mono);letter-spacing:-.02em;transition:color .3s}
-.stat:hover .s-num{color:var(--acc)}
-.s-l{display:block;margin-top:7px;font:500 9.5px var(--mono);letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
-@media(max-width:760px){
-  .hero-stats{grid-template-columns:1fr 1fr}
-  .stat:nth-child(3){border-left:0;padding-left:0}
-  .stat:nth-child(n+3){border-top:1px solid var(--line)}
-  .stat{padding-right:12px}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
 }
-/* telemetry bar */
-.status-bar{display:flex;flex-wrap:wrap;gap:6px 30px;padding:15px 0 20px;font:400 11px var(--mono);letter-spacing:.08em}
-.sb-cell{display:flex;align-items:center;gap:10px;white-space:nowrap}
-.sb-l{color:var(--mut);letter-spacing:.14em;font-size:9.5px}
-.sb-v{color:var(--ink);display:flex;align-items:center;gap:9px}
-.sb-cue{color:var(--ink);text-decoration:none}
-.sb-cue .sb-v{color:var(--acc)}
-.sb-cue svg{width:12px;height:12px;animation:nudge 1.8s ease-in-out infinite}
-@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
-.sb-cue:hover .sb-v{color:var(--ink)}
-/* ============ sections ============ */
-.section{padding-top:clamp(86px,12vh,132px);scroll-margin-top:86px}
-#contact{padding-bottom:clamp(70px,10vh,110px)}
-.kicker{display:flex;justify-content:space-between;align-items:baseline;gap:20px;font:500 11px var(--mono);letter-spacing:.17em;color:var(--mut);text-transform:uppercase;margin-bottom:28px}
-.k-num{color:var(--acc)}
-.sec-head{border-bottom:1px solid var(--line);padding-bottom:38px}
-h2{font-family:var(--serif);font-weight:400;font-size:clamp(2.1rem,4.6vw,3.5rem);line-height:1.06;letter-spacing:-.01em;max-width:24ch}
-h2 em{font-style:italic;color:var(--acc)}
-/* ============ research focus ============ */
-.domains{display:grid;grid-template-columns:1fr 1fr;gap:0 72px;position:relative;margin-top:60px}
-.domains::before{content:"";position:absolute;left:50%;top:6px;bottom:6px;width:1px;background:var(--line)}
-.domain-2{margin-top:84px}
-.d-top{display:flex;align-items:baseline;gap:16px;margin-bottom:20px}
-.d-num{font:500 12px var(--mono);color:var(--acc);letter-spacing:.1em}
-.domain h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.7rem,2.6vw,2.15rem);letter-spacing:-.01em}
-.domain .d-p{color:var(--mut);font-weight:300;line-height:1.75;font-size:.98rem;max-width:46ch}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-.chip{font:500 10px var(--mono);letter-spacing:.1em;border:1px solid var(--line);padding:7px 12px;color:var(--mut);transition:background .25s,color .25s,border-color .25s;cursor:default;user-select:none}
-.chip:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.chip.sm{padding:5px 9px;font-size:9.5px}
-.now{margin-top:28px;font:400 11px var(--mono);letter-spacing:.06em;color:var(--mut);display:flex;align-items:center;gap:11px}
-.now b{color:var(--ink);font-weight:500}
-@media(max-width:820px){
-  .domains{grid-template-columns:1fr;gap:0}
-  .domains::before{display:none}
-  .domain-2{margin-top:64px}
-}
-/* ============ disclosures (write-ups) ============ */
-.wp-list{margin-top:4px;border-bottom:1px solid var(--line)}
-.wp-row{position:relative;border-bottom:1px solid var(--line);transition:opacity .35s,background .35s}
-.wp-list:hover .wp-row:not(:hover):not(.open){opacity:.42}
-.wp-row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--acc);transform:scaleY(0);transform-origin:top;transition:transform .35s cubic-bezier(.22,1,.36,1)}
-.wp-row:hover::before,.wp-row.open::before{transform:scaleY(1)}
-.wp-row.open{background:var(--panel)}
-.wp-head{display:grid;grid-template-columns:56px 1fr auto;gap:10px 26px;width:100%;background:none;border:0;text-align:left;padding:30px 8px;cursor:pointer;align-items:start;transition:background .35s}
-.wp-num{font:500 12px var(--mono);color:var(--mut);padding-top:7px;letter-spacing:.08em;transition:color .25s}
-.wp-row:hover .wp-num{color:var(--acc)}
-.wp-meta{display:flex;align-items:center;gap:14px;margin-bottom:13px;flex-wrap:wrap}
-.wp-id{font:500 11px var(--mono);letter-spacing:.1em;color:var(--mut);transition:color .25s}
-.wp-row:hover .wp-id{color:var(--ink)}
-.sev{display:inline-flex;align-items:center;gap:7px;font:500 9.5px var(--mono);letter-spacing:.16em;padding:5px 10px;border:1px solid var(--line)}
-.sev::before{content:"";width:5px;height:5px;background:currentColor;border-radius:1px}
-.sev-c{color:var(--sev-c);border-color:color-mix(in srgb,currentColor 42%,transparent)}
-.sev-h{color:var(--sev-h);border-color:color-mix(in srgb,currentColor 42%,transparent)}
-.sev-m{color:var(--sev-m);border-color:color-mix(in srgb,currentColor 42%,transparent)}
-.sev-l{color:var(--sev-l);border-color:color-mix(in srgb,currentColor 42%,transparent)}
-.wp-title{font-family:var(--serif);font-weight:400;font-size:clamp(1.35rem,2.6vw,1.85rem);line-height:1.16;letter-spacing:-.01em;transition:transform .35s cubic-bezier(.22,1,.36,1),color .3s}
-.wp-row:hover .wp-title{transform:translateX(9px);color:var(--acc)}
-.wp-abs{color:var(--mut);font-weight:300;font-size:.92rem;line-height:1.65;max-width:58ch;margin-top:11px}
-.wp-side{display:flex;flex-direction:column;align-items:flex-end;gap:9px;padding-top:7px;font:400 11px var(--mono);letter-spacing:.08em;color:var(--mut);white-space:nowrap}
-.wp-arrow{opacity:0;transform:translate(-6px,6px);transition:opacity .3s,transform .3s,color .3s;color:var(--acc)}
-.wp-arrow svg{width:15px;height:15px}
-.wp-row:hover .wp-arrow{opacity:1;transform:none}
-.wp-row.open .wp-arrow{opacity:1;transform:rotate(90deg)}
-.wp-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1)}
-.wp-row.open .wp-body{grid-template-rows:1fr}
-.wp-body-in{overflow:hidden;min-height:0}
-.wp-detail{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:44px;padding:8px 8px 42px 82px;opacity:0;transform:translateY(10px);transition:opacity .45s .08s,transform .45s .08s}
-.wp-row.open .wp-detail{opacity:1;transform:none}
-.d-label{display:block;font:500 9.5px var(--mono);letter-spacing:.2em;color:var(--mut);text-transform:uppercase;margin-bottom:14px}
-.dtext{font-weight:300;font-size:.94rem;line-height:1.75}
-.wp-facts{margin-top:24px;border-top:1px solid var(--line)}
-.wp-facts>div{display:flex;justify-content:space-between;gap:16px;padding:9px 2px;border-bottom:1px solid var(--line);font-family:var(--mono)}
-.wp-facts dt{font-size:9.5px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase;padding-top:2px}
-.wp-facts dd{font-size:11.5px;text-align:right}
-.wp-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
-/* terminal windows — dark in both themes, like a real console */
-.term{background:var(--term);border:1px solid var(--term-line)}
-.term-h{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid var(--term-line)}
-.tdot{width:8px;height:8px;border-radius:50%;flex:none}
-.term-t{font:500 9.5px var(--mono);letter-spacing:.18em;color:var(--term-dim);margin-left:8px;text-transform:uppercase}
-.term-b{padding:16px 16px 18px;font:400 11.5px/1.75 var(--mono)}
-.term-b span{display:block;white-space:pre-wrap;word-break:break-word;color:var(--term-ink)}
-.tl-c{color:var(--acc)}
-.tl-d{color:var(--term-dim)}
-.tl-o{color:#8FBF6A}
-.tl-w{color:#D4A72C}
-.list-note{margin-top:20px;font:400 10.5px var(--mono);letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
-@media(max-width:860px){
-  .wp-head{grid-template-columns:1fr;gap:14px}
-  .wp-num{padding-top:0}
-  .wp-side{flex-direction:row;align-items:center;gap:16px;padding-top:0}
-  .wp-detail{grid-template-columns:1fr;gap:32px;padding-left:8px}
-}
-/* ============ floating PoC preview ============ */
-.wp-preview{position:fixed;top:0;left:0;width:330px;z-index:480;pointer-events:none;opacity:0}
-.wp-preview.on .pv-in{opacity:1;transform:none}
-.pv-in{opacity:0;transform:translateY(10px) scale(.97);transition:opacity .25s,transform .25s cubic-bezier(.22,1,.36,1);background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);will-change:transform}
-.pv-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line);font:500 9.5px var(--mono);letter-spacing:.18em;color:var(--mut);text-transform:uppercase}
-.pv-head .sev{letter-spacing:.14em}
-.pv-foot{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;font:400 9.5px var(--mono);letter-spacing:.14em;color:var(--mut);text-transform:uppercase}
-.pv-term .term-b{font-size:10.5px;padding:13px 14px 15px}
-@media(hover:none){.wp-preview{display:none}}
-/* ============ writing ============ */
-.art-list{margin-top:6px;border-top:1px solid var(--line)}
-.art-row{display:grid;grid-template-columns:92px 1fr auto;gap:26px;align-items:center;padding:24px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:opacity .35s,background .35s}
-.art-row:hover{background:var(--panel)}
-.art-list:hover .art-row:not(:hover){opacity:.42}
-.a-date{font:500 11px var(--mono);letter-spacing:.1em;color:var(--mut);transition:color .25s;padding-top:2px}
-.art-row:hover .a-date{color:var(--acc)}
-.a-mid{display:flex;flex-direction:column;gap:8px;min-width:0}
-.a-title{font-family:var(--serif);font-weight:400;font-size:clamp(1.2rem,2.2vw,1.5rem);line-height:1.2;letter-spacing:-.005em;
-  background:linear-gradient(var(--acc),var(--acc)) left calc(100% - 2px)/0% 1px no-repeat;
-  transition:background-size .4s cubic-bezier(.22,1,.36,1)}
-.art-row:hover .a-title{background-size:100% 1px}
-.a-tags{display:flex;gap:14px;align-items:center}
-.a-tag{font:500 9px var(--mono);letter-spacing:.18em;border:1px solid var(--line);padding:4px 8px;color:var(--mut)}
-.a-time{font:400 10px var(--mono);letter-spacing:.14em;color:var(--mut);text-transform:uppercase}
-.a-arrow{color:var(--acc);opacity:0;transform:translate(-6px,6px);transition:.3s}
-.a-arrow svg{width:16px;height:16px}
-.art-row:hover .a-arrow{opacity:1;transform:none}
-.art-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.4,0,.2,1)}
-.art-more-in{overflow:hidden;min-height:0;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
-.expanded .art-more{grid-template-rows:1fr}
-.expanded .art-more-in{opacity:1;transform:none;transition-delay:.15s}
-.more-btn{margin-top:34px;display:inline-flex;align-items:center;gap:12px;font:500 11px var(--mono);letter-spacing:.18em;border:1px solid var(--line);background:none;padding:15px 24px;cursor:pointer;text-transform:uppercase;transition:background .25s,color .25s,border-color .25s}
-.more-btn svg{width:14px;height:14px;transition:transform .35s cubic-bezier(.22,1,.36,1)}
-.more-btn.on svg{transform:rotate(45deg)}
-.more-btn:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-@media(max-width:640px){
-  .art-row{grid-template-columns:1fr auto;gap:8px 16px;padding:22px 4px}
-  .a-date{grid-column:1/-1;padding-top:0}
-}
-/* ============ contact ============ */
-.c-lead{max-width:58ch;margin-top:30px;color:var(--mut);font-weight:300;line-height:1.78;font-size:1.02rem}
-.c-lead .r-text{color:var(--ink)}
-.email-block{margin-top:54px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
-.email-big{font:500 clamp(1.15rem,3vw,1.65rem) var(--mono);letter-spacing:-.01em;text-decoration:none;
-  background:linear-gradient(var(--acc),var(--acc)) left calc(100% - 3px)/0% 1.5px no-repeat;
-  transition:background-size .4s cubic-bezier(.22,1,.36,1),color .3s}
-.email-big:hover{background-size:100% 1.5px;color:var(--acc)}
-.copy-btn{width:46px;height:46px;border:1px solid var(--line);background:none;cursor:pointer;display:grid;place-items:center;transition:background .25s,color .25s,border-color .25s;flex:none}
-.copy-btn.sm{width:36px;height:36px}
-.copy-btn svg{width:16px;height:16px}
-.copy-btn:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.copy-btn .ic-done{display:none}
-.copy-btn.did .ic-copy{display:none}
-.copy-btn.did .ic-done{display:block}
-.pgp-row{margin-top:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;font:400 12px var(--mono);letter-spacing:.05em;color:var(--mut)}
-.pgp-row .pg-l{display:flex;align-items:center;gap:10px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase}
-.pgp-row svg{width:14px;height:14px;color:var(--acc)}
-.fp{color:var(--ink);letter-spacing:.08em}
-.socials{margin-top:64px;border-top:1px solid var(--line)}
-.soc{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:19px 6px;border-bottom:1px solid var(--line);text-decoration:none;transition:padding-left .3s cubic-bezier(.22,1,.36,1),background .3s}
-.soc:hover{padding-left:16px;background:var(--panel)}
-.s-l{display:flex;align-items:center;gap:14px;font:500 12px var(--mono);letter-spacing:.16em;transition:color .25s}
-.s-l svg{width:15px;height:15px;color:var(--mut);transition:color .25s}
-.soc:hover .s-l,.soc:hover .s-l svg{color:var(--acc)}
-.s-h{display:flex;align-items:center;gap:10px;font:400 11px var(--mono);letter-spacing:.08em;color:var(--mut);transition:color .25s}
-.s-h svg{width:13px;height:13px;opacity:0;transform:translate(-5px,5px);transition:.3s;color:var(--acc)}
-.soc:hover .s-h{color:var(--ink)}
-.soc:hover .s-h svg{opacity:1;transform:none}
-.avail{margin-top:46px;display:flex;align-items:center;gap:12px;font:400 10.5px var(--mono);letter-spacing:.14em;color:var(--mut);text-transform:uppercase;flex-wrap:wrap}
-/* ============ footer ============ */
-.footer{border-top:1px solid var(--line)}
-.foot-in{display:flex;justify-content:space-between;align-items:center;gap:14px 28px;flex-wrap:wrap;padding:26px 0;font:400 10px var(--mono);letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
-.top-btn{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);background:none;padding:10px 16px;cursor:pointer;font:500 10px var(--mono);letter-spacing:.16em;color:var(--mut);transition:.25s}
-.top-btn svg{width:12px;height:12px}
-.top-btn:hover{background:var(--acc);border-color:var(--acc);color:#0D0C0A}
-/* ============ modal ============ */
-.modal{position:fixed;inset:0;z-index:660;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
-.modal.open{opacity:1;visibility:visible}
-.modal-back{position:absolute;inset:0;background:rgba(var(--bg-rgb),.62);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
-.modal-panel{position:relative;width:min(680px,100%);max-height:min(84vh,780px);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);transform:translateY(22px) scale(.98);transition:transform .4s cubic-bezier(.22,1,.36,1)}
-.modal.open .modal-panel{transform:none}
-.modal-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 22px;border-bottom:1px solid var(--line);font:500 10px var(--mono);letter-spacing:.18em;color:var(--mut);text-transform:uppercase;flex:none}
-.modal-body{padding:30px 30px 34px;overflow-y:auto}
-.modal-body h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,3.4vw,2.2rem);line-height:1.15;letter-spacing:-.01em;margin-bottom:22px;padding-right:8px}
-.modal-body p{font-weight:300;font-size:.97rem;line-height:1.8;margin-bottom:16px;max-width:60ch}
-.modal-body p:last-child{margin-bottom:0}
-.modal-foot{padding:14px 22px;border-top:1px solid var(--line);font:400 9.5px var(--mono);letter-spacing:.2em;color:var(--mut);text-transform:uppercase;flex:none}
-/* ============ toasts ============ */
-.toast-wrap{position:fixed;bottom:22px;right:22px;z-index:700;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-.toast{display:flex;align-items:center;gap:11px;background:var(--ink);color:var(--bg);font:500 11px var(--mono);letter-spacing:.08em;padding:13px 18px;border-left:2px solid var(--acc);max-width:min(330px,calc(100vw - 44px));opacity:0;transform:translateY(14px);transition:opacity .35s,transform .35s cubic-bezier(.22,1,.36,1)}
-.toast.show{opacity:1;transform:none}
-.toast svg{width:14px;height:14px;color:var(--acc);flex:none}
 </style>
 </head>
 <body>
 
-<div class="progress"><span id="progressBar"></span></div>
-<a class="skip" href="#focus">SKIP TO CONTENT</a>
-
-<!-- ================= NAV ================= -->
-<nav class="nav">
-  <div class="nav-in">
-    <a class="logo" href="#top">e_mercer<span class="lg-c">_</span></a>
-    <div class="nav-links" id="navLinks">
-      <a class="n-link" href="#focus"><span class="n-num">01</span>FOCUS</a>
-      <a class="n-link" href="#disclosures"><span class="n-num">02</span>DISCLOSURES</a>
-      <a class="n-link" href="#writing"><span class="n-num">03</span>WRITING</a>
-      <a class="n-link" href="#contact"><span class="n-num">04</span>CONTACT</a>
-    </div>
-    <div class="nav-right">
-      <button class="sq-btn theme-btn" id="themeBtn" aria-label="Switch theme">
-        <i data-lucide="sun" class="ic-sun"></i>
-        <i data-lucide="moon" class="ic-moon"></i>
-      </button>
-      <button class="sq-btn" id="menuBtn" aria-label="Open menu"><i data-lucide="menu"></i></button>
-    </div>
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="container nav-inner">
+    <a class="brand" href="#top" aria-label="Back to top">&gt;_</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#writeups">Writeups</a></li>
+    </ul>
   </div>
 </nav>
 
-<!-- mobile menu overlay -->
-<div class="menu-overlay" id="menuOverlay" aria-hidden="true">
-  <div class="menu-top">
-    <span class="logo">e_mercer<span class="lg-c">_</span></span>
-    <button class="sq-btn" id="menuClose" aria-label="Close menu"><i data-lucide="x"></i></button>
-  </div>
-  <div class="menu-links">
-    <a class="m-link" style="--i:1" href="#focus"><span class="m-num">01</span>Research Focus</a>
-    <a class="m-link" style="--i:2" href="#disclosures"><span class="m-num">02</span>Disclosures</a>
-    <a class="m-link" style="--i:3" href="#writing"><span class="m-num">03</span>Writing</a>
-    <a class="m-link" style="--i:4" href="#contact"><span class="m-num">04</span>Contact</a>
-  </div>
-  <div class="menu-foot">
-    <a href="mailto:hello@eliasmercer.dev">hello@eliasmercer.dev</a>
-    <a href="https://github.com/eliasmercer" target="_blank" rel="noopener">GITHUB</a>
-    <a href="https://hackerone.com/mercer" target="_blank" rel="noopener">HACKERONE</a>
-  </div>
-</div>
-
-<!-- ================= HERO ================= -->
-<header class="hero" id="top">
-  <div class="hero-frame container">
-    <span class="mark tl" aria-hidden="true">+</span>
-    <span class="mark tr" aria-hidden="true">+</span>
-    <span class="mark bl" aria-hidden="true">+</span>
-    <span class="mark br" aria-hidden="true">+</span>
-    <span class="side-tag">Dossier · 2025 Edition — Rev 4.7</span>
-
-    <div class="hero-meta reveal" data-delay="0">
-      <span>SEC.RESEARCHER — APPSEC</span>
-      <span class="hm-mid">AMSTERDAM · 52.37°N / 4.89°E</span>
-      <span class="hm-live"><i class="dot pulse"></i>OPEN FOR COLLAB</span>
-    </div>
-
-    <div class="hero-main">
-      <h1 class="reveal h1x" data-delay="1">
-        <span class="h-mask"><span class="h-in">Elias</span></span>
-        <span class="h-mask"><span class="h-in ital">Mercer</span></span>
-      </h1>
-      <p class="type-line reveal" data-delay="2"><span class="t-prompt">&gt;</span><span id="typed"></span><span class="t-caret" aria-hidden="true"></span></p>
-      <p class="intro reveal" data-delay="3">
-        I <strong class="i-key">take applications apart</strong> so their authors can rebuild them stronger — eight years of offensive security across cloud platforms and critical open source, with
-        <span class="redacted" tabindex="0"><span class="r-text">47 coordinated disclosures · 12 CVEs · zero lawsuits</span><span class="r-bar" aria-hidden="true"></span></span>
-        filed, coordinated and patched in full.
-      </p>
-      <p class="hint reveal" data-delay="4">[ CLASSIFIED FIELDS DETECTED — HOVER OR TAP TO DECLASSIFY ]</p>
-    </div>
-
-    <div class="hero-stats reveal" data-delay="4" id="statsRow">
-      <div class="stat"><span class="s-num" data-val="08">08</span><span class="s-l">Years offensive</span></div>
-      <div class="stat"><span class="s-num" data-val="47">47</span><span class="s-l">Coordinated disclosures</span></div>
-      <div class="stat"><span class="s-num" data-val="12">12</span><span class="s-l">CVEs assigned</span></div>
-      <div class="stat"><span class="s-num" data-val="23">23</span><span class="s-l">Talks &amp; trainings</span></div>
-    </div>
-
-    <div class="status-bar reveal" data-delay="5">
-      <div class="sb-cell"><span class="sb-l">STATUS</span><span class="sb-v"><i class="dot pulse"></i>OPERATIONAL</span></div>
-      <div class="sb-cell"><span class="sb-l">TIME</span><span class="sb-v" id="utcClock">--:--:-- UTC</span></div>
-      <div class="sb-cell"><span class="sb-l">SESSION</span><span class="sb-v" id="sessionId">0x0000</span></div>
-      <div class="sb-cell"><span class="sb-l">UPTIME</span><span class="sb-v" id="uptime">00:00</span></div>
-      <a class="sb-cell sb-cue" href="#focus"><span class="sb-l">NEXT</span><span class="sb-v">RESEARCH FOCUS <i data-lucide="arrow-down"></i></span></a>
-    </div>
-  </div>
-</header>
-
 <main>
-<!-- ================= 01 · RESEARCH FOCUS ================= -->
-<section class="section container" id="focus">
-  <div class="sec-head reveal">
-    <div class="kicker"><span><span class="k-num">(01)</span> — RESEARCH FOCUS</span><span>EST. 2017</span></div>
-    <h2>Two domains, one instinct — <em>trust nothing on the wire.</em></h2>
-  </div>
 
-  <div class="domains">
-    <div class="domain reveal" data-delay="0">
-      <div class="d-top"><span class="d-num">(01)</span><h3>Web Security</h3></div>
-      <p class="d-p">How the wire lies. I chase the gap between what an application believes it received and what was actually sent — request forgery chains, authentication bypasses, and the DOM quirks that quietly turn a harmless reflection into a full account takeover.</p>
-      <div class="chips">
-        <span class="chip">SSRF</span><span class="chip">REQUEST SMUGGLING</span><span class="chip">AUTH BYPASS</span>
-        <span class="chip">PROTOTYPE POLLUTION</span><span class="chip">DOM XSS</span><span class="chip">CACHE DECEPTION</span><span class="chip">OAUTH / OIDC</span>
-      </div>
-      <div class="now"><i class="dot pulse"></i><span>CURRENTLY EXPLORING — <b>browser cache-partitioning side channels</b></span></div>
+  <!-- headline -->
+  <section class="hero" id="top">
+    <div class="container">
+      <p class="hero-prompt reveal">~/portfolio <span class="dollar">$</span></p>
+      <h1 class="hero-title reveal" style="--d:.06s">
+        Security Researcher<span class="caret" aria-hidden="true"></span>
+        <span class="hero-line"><span class="pipe">|</span> Software Security &amp; Vulnerability Analysis</span>
+      </h1>
+      <a class="scroll-cue reveal" style="--d:.16s" href="#about">scroll <span class="arrow" aria-hidden="true">&darr;</span></a>
     </div>
+  </section>
 
-    <div class="domain domain-2 reveal" data-delay="1">
-      <div class="d-top"><span class="d-num">(02)</span><h3>Application Security</h3></div>
-      <p class="d-p">Breaking things early, on purpose. Threat modeling, secure SDLC and pipeline hardening — I embed with engineering teams to surface the vulnerable design decisions long before an attacker gets the chance to enumerate them in production.</p>
-      <div class="chips">
-        <span class="chip">THREAT MODELING</span><span class="chip">SECURE SDLC</span><span class="chip">CI/CD HARDENING</span>
-        <span class="chip">SUPPLY-CHAIN RISK</span><span class="chip">SAST / DAST</span><span class="chip">API SECURITY</span><span class="chip">SECRETS HYGIENE</span>
+  <!-- about -->
+  <section class="sec" id="about">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num">01</span>
+        <h2>About Me</h2>
+        <span class="sec-rule" aria-hidden="true"></span>
       </div>
-      <div class="now"><i class="dot pulse"></i><span>CURRENTLY EXPLORING — <b>OIDC for machine identities</b></span></div>
+      <div class="about">
+        <p class="reveal" style="--d:.05s">I am a cybersecurity enthusiast with a strong interest in <span class="hl">web application security</span>, <span class="hl">software security</span>, and <span class="hl">vulnerability research</span>. My work focuses on identifying and understanding security weaknesses in modern web applications, analyzing attack surfaces, and exploring effective approaches to improving application security.</p>
+        <p class="reveal" style="--d:.1s">I am particularly interested in web security research, secure software development, <span class="hl">authentication and authorization mechanisms</span>, and <span class="hl">automated vulnerability discovery</span>. I enjoy exploring security challenges through practical experimentation and continuous learning.</p>
+        <p class="reveal" style="--d:.15s">I aspire to contribute to <span class="hl">academic research in cybersecurity</span>, particularly in areas involving software security, web application protection, and automated security analysis. I am currently interested in pursuing <span class="hl">graduate research opportunities</span> in these areas.</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= 02 · FEATURED DISCLOSURES ================= -->
-<section class="section container" id="disclosures">
-  <div class="sec-head reveal">
-    <div class="kicker"><span><span class="k-num">(02)</span> — FEATURED DISCLOSURES</span><span>CVE · GHSA — 4 OF 47</span></div>
-    <h2>Selected advisories — <em>all patched, all public.</em></h2>
-  </div>
-
-  <div class="wp-list reveal" id="wpList">
-
-    <article class="wp-row" data-id="wp1">
-      <div class="wp-head" role="button" tabindex="0" aria-expanded="false">
-        <span class="wp-num">001</span>
-        <div>
-          <div class="wp-meta">
-            <span class="wp-id">CVE-2024-38192</span>
-            <span class="sev sev-c">CRITICAL</span>
-          </div>
-          <h3 class="wp-title">Authentication Bypass in Enterprise SAML Gateways</h3>
-          <p class="wp-abs">A signature-wrapping flaw in four widely deployed SAML service-provider libraries allowed full account takeover with a single crafted assertion — no credentials, no interaction.</p>
-        </div>
-        <div class="wp-side">
-          <span>2024 · 14 MIN</span>
-          <span class="wp-arrow"><i data-lucide="arrow-up-right"></i></span>
-        </div>
+  <!-- writeups -->
+  <section class="sec" id="writeups">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num">02</span>
+        <h2>Writeups</h2>
+        <span class="sec-rule" aria-hidden="true"></span>
       </div>
-      <div class="wp-body"><div class="wp-body-in">
-        <div class="wp-detail">
-          <div>
-            <span class="d-label">The long version</span>
-            <p class="dtext">Four SAML libraries parsed the assertion referenced by the signature, but enforced trust based on the response envelope. By rewriting the Reference URI to point at an attacker-supplied assertion while keeping the original &lt;Signature&gt; block, validation passed on XML that was never actually signed. The result was a one-request account takeover on every affected deployment I tested — including two Fortune-500 SSO gateways.</p>
-            <dl class="wp-facts">
-              <div><dt>CVSS</dt><dd>9.8 · Critical</dd></div>
-              <div><dt>Disclosed</dt><dd>2024-03-19</dd></div>
-              <div><dt>Patched</dt><dd>v4.2.1 — 2024-04-02</dd></div>
-              <div><dt>Affected</dt><dd>&lt; 4.2.0 (all SP deployments)</dd></div>
-              <div><dt>Vector</dt><dd>AV:N · AC:L · PR:N · UI:N</dd></div>
-            </dl>
-          </div>
-          <div>
-            <div class="term">
-              <div class="term-h"><span class="tdot" style="background:#FF5F57"></span><span class="tdot" style="background:#FEBC2E"></span><span class="tdot" style="background:#28C840"></span><span class="term-t">PoC — sanitized snapshot</span></div>
-              <div class="term-b">
-                <span class="tl-c">$ python3 samlwrap.py --target sp.corpo.example --file evil.xml</span>
-                <span class="tl-d">[*] original assertion signed by CN=idp.corpo.example</span>
-                <span class="tl-d">[*] Reference URI rewritten -&gt; #injected-assertion</span>
-                <span class="tl-o">[+] signature check passes: SignedInfo only</span>
-                <span class="tl-o">[+] NameID=admin@corpo.example · session established</span>
-              </div>
-            </div>
-            <div class="wp-tags"><span class="chip sm">SAML</span><span class="chip sm">XMLDSIG</span><span class="chip sm">AUTH BYPASS</span><span class="chip sm">ACCOUNT TAKEOVER</span></div>
-          </div>
-        </div>
-      </div></div>
-    </article>
-
-    <article class="wp-row" data-id="wp2">
-      <div class="wp-head" role="button" tabindex="0" aria-expanded="false">
-        <span class="wp-num">002</span>
-        <div>
-          <div class="wp-meta">
-            <span class="wp-id">CVE-2023-44790</span>
-            <span class="sev sev-h">HIGH</span>
-          </div>
-          <h3 class="wp-title">Stored XSS via PDF Polyglots in Document Pipelines</h3>
-          <p class="wp-abs">Chaining MIME confusion with an unsafe PDF-to-HTML converter to execute script in the origin of every user who previews a shared file.</p>
-        </div>
-        <div class="wp-side">
-          <span>2023 · 11 MIN</span>
-          <span class="wp-arrow"><i data-lucide="arrow-up-right"></i></span>
-        </div>
-      </div>
-      <div class="wp-body"><div class="wp-body-in">
-        <div class="wp-detail">
-          <div>
-            <span class="d-label">The long version</span>
-            <p class="dtext">The preview service sniffed the multipart body before the MIME allowlist ran, so a file that parsed as both valid PDF and valid HTML crossed the boundary as a PDF and landed as HTML. The converter preserved embedded &lt;JS&gt; objects into script tags. Anyone who previewed a shared document executed attacker script in the application origin — a stored XSS with nothing but file-upload reach.</p>
-            <dl class="wp-facts">
-              <div><dt>CVSS</dt><dd>8.2 · High</dd></div>
-              <div><dt>Disclosed</dt><dd>2023-11-07</dd></div>
-              <div><dt>Patched</dt><dd>v2.9.4</dd></div>
-              <div><dt>Affected</dt><dd>≤ 2.9.3 (preview pipeline)</dd></div>
-              <div><dt>Coordination</dt><dd>61 days · vendor-responsive</dd></div>
-            </dl>
-          </div>
-          <div>
-            <div class="term">
-              <div class="term-h"><span class="tdot" style="background:#FF5F57"></span><span class="tdot" style="background:#FEBC2E"></span><span class="tdot" style="background:#28C840"></span><span class="term-t">PoC — sanitized snapshot</span></div>
-              <div class="term-b">
-                <span class="tl-c">$ curl -F file=@polyglot.pdf https://docs.example/preview</span>
-                <span class="tl-d">[*] content sniffed: application/pdf -&gt; rendered text/html</span>
-                <span class="tl-d">[*] /JS object survived the conversion pipeline</span>
-                <span class="tl-o">[+] window.name payload executed in docs.example origin</span>
-                <span class="tl-o">[+] 3/3 victim sessions exfiltrated</span>
-              </div>
-            </div>
-            <div class="wp-tags"><span class="chip sm">XSS</span><span class="chip sm">MIME CONFUSION</span><span class="chip sm">PDF</span><span class="chip sm">STORED</span></div>
-          </div>
-        </div>
-      </div></div>
-    </article>
-
-    <article class="wp-row" data-id="wp3">
-      <div class="wp-head" role="button" tabindex="0" aria-expanded="false">
-        <span class="wp-num">003</span>
-        <div>
-          <div class="wp-meta">
-            <span class="wp-id">CVE-2023-27321</span>
-            <span class="sev sev-c">CRITICAL</span>
-          </div>
-          <h3 class="wp-title">From SSRF to RCE: Abusing Cloud Metadata Endpoints</h3>
-          <p class="wp-abs">A blind SSRF in a webhook validator, pivoted through IMDSv1 into long-lived credential theft and a full production-environment compromise.</p>
-        </div>
-        <div class="wp-side">
-          <span>2023 · 18 MIN</span>
-          <span class="wp-arrow"><i data-lucide="arrow-up-right"></i></span>
-        </div>
-      </div>
-      <div class="wp-body"><div class="wp-body-in">
-        <div class="wp-detail">
-          <div>
-            <span class="d-label">The long version</span>
-            <p class="dtext">A webhook validator fetched attacker-supplied URLs from an internal network position, but its blocklist only covered public CIDR ranges. DNS rebinding got me past the re-resolution check; IMDSv1 did the rest. Within an hour I held a deploy role with write access to production artifacts — the full chain is documented together with the fixes and detections the vendor shipped.</p>
-            <dl class="wp-facts">
-              <div><dt>CVSS</dt><dd>9.1 · Critical</dd></div>
-              <div><dt>Disclosed</dt><dd>2023-06-28</dd></div>
-              <div><dt>Patched</dt><dd>2023-07-11 (cloud-side)</dd></div>
-              <div><dt>Affected</dt><dd>Default configurations</dd></div>
-              <div><dt>Status</dt><dd>Fixed · IMDSv2 enforced</dd></div>
-            </dl>
-          </div>
-          <div>
-            <div class="term">
-              <div class="term-h"><span class="tdot" style="background:#FF5F57"></span><span class="tdot" style="background:#FEBC2E"></span><span class="tdot" style="background:#28C840"></span><span class="term-t">PoC — sanitized snapshot</span></div>
-              <div class="term-b">
-                <span class="tl-c">$ webhook-send --url http://169.254.169.254/latest/meta-data/iam/</span>
-                <span class="tl-d">[*] SSRF accepted: blocklist covers public ranges only</span>
-                <span class="tl-d">[*] IMDSv1 responded — no session token required</span>
-                <span class="tl-o">[+] AWS_SESSION_TOKEN captured (role: svc-deploy-prod)</span>
-                <span class="tl-w">[!] pivot complete: s3://prod-artifacts now writable</span>
-              </div>
-            </div>
-            <div class="wp-tags"><span class="chip sm">SSRF</span><span class="chip sm">IMDS</span><span class="chip sm">CLOUD META</span><span class="chip sm">RCE CHAIN</span></div>
-          </div>
-        </div>
-      </div></div>
-    </article>
-
-    <article class="wp-row" data-id="wp4">
-      <div class="wp-head" role="button" tabindex="0" aria-expanded="false">
-        <span class="wp-num">004</span>
-        <div>
-          <div class="wp-meta">
-            <span class="wp-id">GHSA-7f2c-q9x4-m3pj</span>
-            <span class="sev sev-m">MEDIUM</span>
-          </div>
-          <h3 class="wp-title">ReDoS in Regex-Based WAF Rule Engines</h3>
-          <p class="wp-abs">Catastrophic backtracking in commonly shipped rule chains — how 40kb of crafted query string bypassed a WAF and pinned its workers at 100% CPU.</p>
-        </div>
-        <div class="wp-side">
-          <span>2022 · 9 MIN</span>
-          <span class="wp-arrow"><i data-lucide="arrow-up-right"></i></span>
-        </div>
-      </div>
-      <div class="wp-body"><div class="wp-body-in">
-        <div class="wp-detail">
-          <div>
-            <span class="d-label">The long version</span>
-            <p class="dtext">The default rule set shipped a chain whose lookahead regex hit catastrophic backtracking on roughly 40kb of crafted query string. One request pinned a worker core; eight killed the connection pool. The vendor added linear-time guards in 3.2, and the research produced a reusable fuzzer for regex-based rule engines that has since found three more instances in unrelated projects.</p>
-            <dl class="wp-facts">
-              <div><dt>CVSS</dt><dd>5.9 · Medium</dd></div>
-              <div><dt>Disclosed</dt><dd>2022-09-14</dd></div>
-              <div><dt>Patched</dt><dd>Rule-set 3.2 — linear-time guards</dd></div>
-              <div><dt>Affected</dt><dd>Default chains &lt; 3.2</dd></div>
-              <div><dt>Status</dt><dd>Mitigated</dd></div>
-            </dl>
-          </div>
-          <div>
-            <div class="term">
-              <div class="term-h"><span class="tdot" style="background:#FF5F57"></span><span class="tdot" style="background:#FEBC2E"></span><span class="tdot" style="background:#28C840"></span><span class="term-t">PoC — sanitized snapshot</span></div>
-              <div class="term-b">
-                <span class="tl-c">$ h2load -n1 'q='$(python3 craft.py --len 40000)</span>
-                <span class="tl-d">[*] payload hits lookahead chain in rule #112</span>
-                <span class="tl-d">[*] worker CPU pinned 100% · p99 latency 42s</span>
-                <span class="tl-o">[+] request forwarded while rule engine thrashed</span>
-                <span class="tl-w">[-] 8 concurrent requests killed the connection pool</span>
-              </div>
-            </div>
-            <div class="wp-tags"><span class="chip sm">REDOS</span><span class="chip sm">WAF</span><span class="chip sm">REGEX</span><span class="chip sm">AVAILABILITY</span></div>
-          </div>
-        </div>
-      </div></div>
-    </article>
-
-  </div>
-  <p class="list-note"><span class="note-hover">HOVER FOR POC SNAPSHOT — </span>CLICK A ROW TO OPEN THE FULL ADVISORY</p>
-</section>
-
-<!-- ================= 03 · TECHNICAL WRITING ================= -->
-<section class="section container" id="writing">
-  <div class="sec-head reveal">
-    <div class="kicker"><span><span class="k-num">(03)</span> — TECHNICAL WRITING</span><span>INDEX — 7 ENTRIES</span></div>
-    <h2>Field notes from <em>the terminal.</em></h2>
-  </div>
-
-  <div class="art-list reveal" id="artList">
-    <div class="art-row" role="button" tabindex="0" data-art="0" aria-haspopup="dialog">
-      <span class="a-date">OCT 2025</span>
-      <span class="a-mid">
-        <span class="a-title">Threat Modeling for People Who Ship on Fridays</span>
-        <span class="a-tags"><span class="a-tag">APPSEC</span><span class="a-time">8 MIN READ</span></span>
-      </span>
-      <span class="a-arrow"><i data-lucide="arrow-up-right"></i></span>
+      <!-- Add your writeups here -->
     </div>
-    <div class="art-row" role="button" tabindex="0" data-art="1" aria-haspopup="dialog">
-      <span class="a-date">JUL 2025</span>
-      <span class="a-mid">
-        <span class="a-title">A Practical Guide to Fuzzing Auth Flows</span>
-        <span class="a-tags"><span class="a-tag">WEB</span><span class="a-time">12 MIN READ</span></span>
-      </span>
-      <span class="a-arrow"><i data-lucide="arrow-up-right"></i></span>
-    </div>
-    <div class="art-row" role="button" tabindex="0" data-art="2" aria-haspopup="dialog">
-      <span class="a-date">MAR 2025</span>
-      <span class="a-mid">
-        <span class="a-title">Cache Keys and the Lies They Tell</span>
-        <span class="a-tags"><span class="a-tag">WEB</span><span class="a-time">10 MIN READ</span></span>
-      </span>
-      <span class="a-arrow"><i data-lucide="arrow-up-right"></i></span>
-    </div>
-    <div class="art-row" role="button" tabindex="0" data-art="3" aria-haspopup="dialog">
-      <span class="a-date">NOV 2024</span>
-      <span class="a-mid">
-        <span class="a-title">Reading Source Code Like an Attacker</span>
-        <span class="a-tags"><span class="a-tag">METHODOLOGY</span><span class="a-time">7 MIN READ</span></span>
-      </span>
-      <span class="a-arrow"><i data-lucide="arrow-up-right"></i></span>
-    </div>
-    <div class="art-more"><div class="art-more-in">
-      <div class="art-row" role="button" tabindex="0" data-art="4" aria-haspopup="dialog">
-        <span class="a-date">JUN 2024</span>
-        <span class="a-mid">
-          <span class="a-title">Prototype Pollution: One Bug Class, Fifty Endings</span>
-          <span class="a-tags"><span class="a-tag">WEB</span><span class="a-time">15 MIN READ</span></span>
-        </span>
-        <span class="a-arrow"><i data-lucide="arrow-up-right"></i></span>
-      </div>
-      <div class="art-row" role="button" tabindex="0" data-art="5" aria-haspopup="dialog">
-        <span class="a-date">FEB 2024</span>
-        <span class="a-mid">
-          <span class="a-title">Notes on Bug Bounty Triage Burnout</span>
-          <span class="a-tags"><span class="a-tag">META</span><span class="a-time">6 MIN READ</span></span>
-        </span>
-        <span class="a-arrow"><i data-lucide="arrow-up-right"></i></span>
-      </div>
-      <div class="art-row" role="button" tabindex="0" data-art="6" aria-haspopup="dialog">
-        <span class="a-date">SEP 2023</span>
-        <span class="a-mid">
-          <span class="a-title">Hardening CI/CD: A Checklist I Actually Use</span>
-          <span class="a-tags"><span class="a-tag">APPSEC</span><span class="a-time">9 MIN READ</span></span>
-        </span>
-        <span class="a-arrow"><i data-lucide="arrow-up-right"></i></span>
-      </div>
-    </div></div>
-  </div>
+  </section>
 
-  <button class="more-btn" id="moreBtn" aria-expanded="false">
-    <span id="moreLabel">SHOW 3 MORE</span><i data-lucide="plus"></i>
-  </button>
-</section>
-
-<!-- ================= 04 · CONTACT ================= -->
-<section class="section container" id="contact">
-  <div class="sec-head reveal">
-    <div class="kicker"><span><span class="k-num">(04)</span> — CONTACT</span><span>PGP PREFERRED</span></div>
-    <h2>Found something interesting? <em>Tell me first.</em></h2>
-  </div>
-
-  <p class="c-lead reveal" data-delay="0">Responsible-disclosure inquiries, research collaboration, speaking and selective consulting — recent clients include
-    <span class="redacted" tabindex="0"><span class="r-text">the ones whose bug-bounty ads you have seen</span><span class="r-bar" aria-hidden="true"></span></span>.
-    Plain text accepted; encrypted preferred.</p>
-
-  <div class="email-block reveal" data-delay="1">
-    <a class="email-big" href="mailto:hello@eliasmercer.dev">hello@eliasmercer.dev</a>
-    <button class="copy-btn" data-copy="hello@eliasmercer.dev" data-msg="EMAIL COPIED TO CLIPBOARD" aria-label="Copy email address">
-      <i data-lucide="copy" class="ic-copy"></i>
-      <svg class="ic-done" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-    </button>
-  </div>
-
-  <div class="pgp-row reveal" data-delay="2">
-    <span class="pg-l"><i data-lucide="fingerprint"></i>PGP</span>
-    <span class="fp">3F2A 91C4 7D0E 5B88 · A1C3 44F9 0B2D 6E71</span>
-    <button class="copy-btn sm" data-copy="3F2A 91C4 7D0E 5B88 A1C3 44F9 0B2D 6E71" data-msg="PGP FINGERPRINT COPIED" aria-label="Copy PGP fingerprint">
-      <i data-lucide="copy" class="ic-copy"></i>
-      <svg class="ic-done" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-    </button>
-    <span>— KEYS.OPENPGP.ORG</span>
-  </div>
-
-  <div class="socials reveal" data-delay="3">
-    <a class="soc" href="https://github.com/eliasmercer" target="_blank" rel="noopener">
-      <span class="s-l"><i data-lucide="github"></i>GITHUB</span>
-      <span class="s-h">ELIASMERCER<i data-lucide="arrow-up-right"></i></span>
-    </a>
-    <a class="soc" href="https://hackerone.com/mercer" target="_blank" rel="noopener">
-      <span class="s-l"><i data-lucide="bug"></i>HACKERONE</span>
-      <span class="s-h">MERCER<i data-lucide="arrow-up-right"></i></span>
-    </a>
-    <a class="soc" href="https://twitter.com/eliasmercer" target="_blank" rel="noopener">
-      <span class="s-l"><i data-lucide="twitter"></i>TWITTER / X</span>
-      <span class="s-h">@ELIASMERCER<i data-lucide="arrow-up-right"></i></span>
-    </a>
-    <a class="soc" href="https://infosec.exchange/@emerco" target="_blank" rel="noopener">
-      <span class="s-l"><i data-lucide="at-sign"></i>MASTODON</span>
-      <span class="s-h">@EMERCO@INFOSEC.EXCHANGE<i data-lucide="arrow-up-right"></i></span>
-    </a>
-  </div>
-
-  <div class="avail reveal" data-delay="4"><i class="dot pulse"></i>AVAILABILITY — SELECT CONSULTING &amp; RESEARCH COLLAB · RESPONSE WINDOW 48H</div>
-</section>
 </main>
 
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <div class="container foot-in">
-    <span>© 2025 ELIAS MERCER</span>
-    <span>NO TRACKING · NO ANALYTICS · NO COOKIES — VIEW-SOURCE FRIENDLY</span>
-    <button class="top-btn" id="topBtn">TOP<i data-lucide="arrow-up"></i></button>
+<footer>
+  <div class="container foot-inner">
+    <span>&copy; <span id="year">2025</span></span>
+    <span>HTML &middot; CSS &middot; Vanilla JS</span>
   </div>
 </footer>
 
-<!-- floating PoC snapshot panel -->
-<aside class="wp-preview" id="wpPreview" aria-hidden="true">
-  <div class="pv-in">
-    <div class="pv-head"><span id="pvLabel">POC SNAPSHOT</span><span class="sev sev-c" id="pvSev">CRITICAL</span></div>
-    <div class="term pv-term"><div class="term-b" id="pvTerm"></div></div>
-    <div class="pv-foot"><span id="pvMeta">2024 · 14 MIN</span><span>CLICK TO OPEN ADVISORY</span></div>
-  </div>
-</aside>
-
-<!-- article excerpt modal -->
-<div class="modal" id="artModal" aria-hidden="true">
-  <div class="modal-back" data-close></div>
-  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-    <div class="modal-head"><span id="mMeta"></span><button class="sq-btn" id="mClose" data-close aria-label="Close excerpt"><i data-lucide="x"></i></button></div>
-    <div class="modal-body"><h3 id="mTitle"></h3><div id="mBody"></div></div>
-    <div class="modal-foot">END OF EXCERPT — FULL TEXT AVAILABLE ON REQUEST</div>
-  </div>
-</div>
-
-<div class="toast-wrap" id="toastWrap"></div>
-
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.lucide) lucide.createIcons();
+// nav background on scroll
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 10);
+onScroll();
+window.addEventListener('scroll', onScroll, { passive: true });
 
-  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const $  = s => document.querySelector(s);
-  const $$ = s => [...document.querySelectorAll(s)];
-  const html = document.documentElement;
-
-  /* ---------- scroll reveal (staggered via --rd) ---------- */
-  $$('[data-delay]').forEach(el => el.style.setProperty('--rd', el.dataset.delay));
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('in');
-      if (e.target.id === 'statsRow') runScrambles();
-      io.unobserve(e.target);
-    });
-  }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
-  $$('.reveal').forEach(el => io.observe(el));
-
-  /* ---------- typewriter focus line ---------- */
-  const WORDS = ['web security','application security','vulnerability research','reverse engineering','cloud exploitation'];
-  const typed = $('#typed');
-  if (RM) { typed.textContent = WORDS[0]; }
-  else {
-    let wi = 0, ci = 0, del = false;
-    (function loop() {
-      const w = WORDS[wi];
-      if (!del) {
-        typed.textContent = w.slice(0, ++ci);
-        if (ci === w.length) { del = true; return setTimeout(loop, 2100); }
-        setTimeout(loop, 46 + Math.random() * 42);
-      } else {
-        typed.textContent = w.slice(0, --ci);
-        if (ci === 0) { del = false; wi = (wi + 1) % WORDS.length; return setTimeout(loop, 380); }
-        setTimeout(loop, 24);
-      }
-    })();
-  }
-
-  /* ---------- live telemetry ---------- */
-  const t0 = Date.now();
-  const pad = n => String(n).padStart(2, '0');
-  $('#sessionId').textContent = '0x' + [...crypto.getRandomValues(new Uint8Array(2))]
-    .map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
-  (function tick() {
-    const d = new Date();
-    $('#utcClock').textContent = `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`;
-    const s = Math.floor((Date.now() - t0) / 1000);
-    const h = Math.floor(s / 3600);
-    $('#uptime').textContent = h
-      ? `${pad(h)}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`
-      : `${pad(Math.floor(s / 60))}:${pad(s % 60)}`;
-    setTimeout(tick, 1000);
-  })();
-
-  /* ---------- theme toggle: circular wipe from the button ---------- */
-  const themeBtn = $('#themeBtn'), metaTheme = document.querySelector('meta[name="theme-color"]');
-  function applyTheme(t) {
-    html.setAttribute('data-theme', t);
-    try { localStorage.setItem('em-theme', t); } catch (e) {}
-    themeBtn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
-    if (metaTheme) metaTheme.setAttribute('content', t === 'dark' ? '#0D0C0A' : '#F4F1E9');
-  }
-  applyTheme(html.getAttribute('data-theme'));
-  themeBtn.addEventListener('click', () => {
-    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    const r = themeBtn.getBoundingClientRect();
-    html.style.setProperty('--tx', (r.left + r.width / 2) + 'px');
-    html.style.setProperty('--ty', (r.top + r.height / 2) + 'px');
-    if (document.startViewTransition && !RM) document.startViewTransition(() => applyTheme(next));
-    else applyTheme(next);
-  });
-
-  /* ---------- mobile menu ---------- */
-  const overlay = $('#menuOverlay');
-  const openMenu  = () => { overlay.classList.add('open'); overlay.setAttribute('aria-hidden','false'); document.body.classList.add('lock'); };
-  const closeMenu = () => { overlay.classList.remove('open'); overlay.setAttribute('aria-hidden','true'); document.body.classList.remove('lock'); };
-  $('#menuBtn').addEventListener('click', openMenu);
-  $('#menuClose').addEventListener('click', closeMenu);
-  $$('.m-link').forEach(a => a.addEventListener('click', e => {
-    e.preventDefault();
-    const hash = a.getAttribute('href');
-    closeMenu();
-    setTimeout(() => document.querySelector(hash)?.scrollIntoView({ behavior: RM ? 'auto' : 'smooth' }), 340);
-  }));
-
-  /* ---------- scroll progress + active nav ---------- */
-  const pb = $('#progressBar');
-  addEventListener('scroll', () => {
-    const h = document.documentElement;
-    pb.style.transform = `scaleX(${h.scrollTop / (h.scrollHeight - h.clientHeight || 1)})`;
-  }, { passive: true });
-  const navAs = $$('#navLinks .n-link');
-  new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) navAs.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
-  }), { rootMargin: '-35% 0px -55% 0px' })
-    .observe && ['focus','disclosures','writing','contact'].forEach(id => {
-      const el = document.getElementById(id);
-      new IntersectionObserver(es => es.forEach(e => {
-        if (e.isIntersecting) navAs.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
-      }), { rootMargin: '-35% 0px -55% 0px' }).observe(el);
-    });
-
-  /* ---------- stat scramble (hex-decode effect) ---------- */
-  const HEX = '0123456789ABCDEF#$%';
-  function scramble(el) {
-    if (RM) return;
-    const target = el.dataset.val, len = target.length, dur = Math.max(14, len * 3);
-    let f = 0; cancelAnimationFrame(el._sr);
-    (function step() {
-      f++;
-      let out = '';
-      for (let i = 0; i < len; i++) {
-        const ch = target[i];
-        out += (f / dur) * len >= i ? ch : HEX[Math.random() * HEX.length | 0];
-      }
-      el.textContent = out;
-      if (f < dur) el._sr = requestAnimationFrame(step); else el.textContent = target;
-    })();
-  }
-  function runScrambles() { $$('#statsRow .s-num').forEach((el, i) => setTimeout(() => scramble(el), i * 150)); }
-  $$('#statsRow .stat').forEach(st => st.addEventListener('mouseenter', () => scramble(st.querySelector('.s-num'))));
-
-  /* ---------- declassify on tap (touch) ---------- */
-  $$('.redacted').forEach(r => r.addEventListener('click', () => r.classList.toggle('un')));
-
-  /* ---------- advisory rows: expand + floating PoC snapshot ---------- */
-  function pressable(el, fn) {
-    el.addEventListener('click', fn);
-    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(e); } });
-  }
-  const POC = {
-    wp1: { sev:'CRITICAL', cls:'sev sev-c', meta:'2024 · 14 MIN READ', lines:[
-      ['c','$ python3 samlwrap.py --target sp.corpo.example'],
-      ['d','[*] Reference URI rewritten -> #injected-assertion'],
-      ['o','[+] signature check passes: SignedInfo only'],
-      ['o','[+] session established: admin@corpo.example']]},
-    wp2: { sev:'HIGH', cls:'sev sev-h', meta:'2023 · 11 MIN READ', lines:[
-      ['c','$ curl -F file=@polyglot.pdf https://docs.example/preview'],
-      ['d','[*] application/pdf -> rendered as text/html'],
-      ['o','[+] /JS object survived conversion pipeline'],
-      ['o','[+] exec in docs.example origin — stored']]},
-    wp3: { sev:'CRITICAL', cls:'sev sev-c', meta:'2023 · 18 MIN READ', lines:[
-      ['c','$ webhook-send --url http://169.254.169.254/latest/meta-data/iam/'],
-      ['d','[*] blocklist covers public CIDRs only'],
-      ['o','[+] IMDSv1: no session token required'],
-      ['w','[!] AWS_SESSION_TOKEN captured (svc-deploy-prod)']]},
-    wp4: { sev:'MEDIUM', cls:'sev sev-m', meta:'2022 · 9 MIN READ', lines:[
-      ['c','$ h2load -n1 "q="$(python3 craft.py --len 40000)'],
-      ['d','[*] lookahead chain · rule #112'],
-      ['o','[+] bypass while worker thrashed'],
-      ['w','[-] p99 latency 42s · pool exhaustion at n=8']]}
-  };
-  const pv = $('#wpPreview'), pvLabel = $('#pvLabel'), pvSev = $('#pvSev'),
-        pvTerm = $('#pvTerm'), pvMeta = $('#pvMeta');
-  const fineHover = () => matchMedia('(hover:hover) and (pointer:fine)').matches && innerWidth > 900;
-  let pvOn = false, pvRaf = null;
-  const pos = { x: innerWidth / 2, y: innerHeight / 2 }, tgt = { ...pos };
-  function pvLoop() {
-    pos.x += (tgt.x - pos.x) * .16; pos.y += (tgt.y - pos.y) * .16;
-    const W = pv.offsetWidth, H = pv.offsetHeight;
-    let x = pos.x + 26, y = pos.y + 20;
-    if (x + W > innerWidth - 14) x = pos.x - W - 26;
-    if (y + H > innerHeight - 14) y = Math.max(14, pos.y - H - 20);
-    pv.style.left = x + 'px'; pv.style.top = y + 'px';
-    pvRaf = requestAnimationFrame(pvLoop);
-  }
-  function hidePV() { pv.classList.remove('on'); pvOn = false; cancelAnimationFrame(pvRaf); }
-  $$('.wp-row').forEach(row => {
-    const head = row.querySelector('.wp-head');
-    head.addEventListener('mouseenter', e => {
-      if (!fineHover() || row.classList.contains('open')) return;
-      const d = POC[row.dataset.id]; if (!d) return;
-      pvLabel.textContent = 'POC SNAPSHOT — ' + row.querySelector('.wp-id').textContent;
-      pvSev.textContent = d.sev; pvSev.className = d.cls;
-      pvMeta.textContent = d.meta;
-      pvTerm.innerHTML = '';
-      d.lines.forEach(([cls, txt]) => {
-        const s = document.createElement('span');
-        s.className = 'tl-' + cls; s.textContent = txt;
-        pvTerm.appendChild(s);
-      });
-      pos.x = tgt.x = e.clientX; pos.y = tgt.y = e.clientY;
-      pv.classList.add('on'); pvOn = true;
-      cancelAnimationFrame(pvRaf); pvRaf = requestAnimationFrame(pvLoop);
-    });
-    head.addEventListener('mousemove', e => { if (pvOn) { tgt.x = e.clientX; tgt.y = e.clientY; } });
-    head.addEventListener('mouseleave', hidePV);
-    pressable(head, () => {
-      const open = row.classList.toggle('open');
-      head.setAttribute('aria-expanded', open);
-      hidePV();
-    });
-  });
-
-  /* ---------- article excerpt modal ---------- */
-  const ARTICLES = [
-    { date:'OCT 2025', tag:'APPSEC', time:'8 MIN', title:'Threat Modeling for People Who Ship on Fridays', paras:[
-      "Threat modeling has a branding problem: it sounds like a workshop, a whiteboard, and a facilitator with sticky notes. In reality it is four questions you can ask in the time it takes CI to run.",
-      "What are we building? What can go wrong? What are we going to do about it? Did we do a good job? I walk through how I run this loop in under thirty minutes per feature — no ceremony, no ticket graveyard, and a standing rule that every 'we'll fix it later' gets an owner and a date.",
-      "The piece includes the template I actually use, three real (anonymized) examples, and the two questions that catch the most bugs per minute spent."]},
-    { date:'JUL 2025', tag:'WEB', time:'12 MIN', title:'A Practical Guide to Fuzzing Auth Flows', paras:[
-      "Authentication logic is where state machines go to die. This is a hands-on walkthrough of fuzzing login, reset, and session flows — not with a fuzzer that throws random bytes, but with a grammar that understands the protocol.",
-      "I cover building a small stateful harness in Python, seeding it with captures from a real application, and the mutations that historically find the most bugs: parameter swapping, step skipping, and replaying responses out of order.",
-      "Appendix: the exact proxy and interception configurations, plus a checklist of the twelve logic bugs this method has found for me in the last year."]},
-    { date:'MAR 2025', tag:'WEB', time:'10 MIN', title:'Cache Keys and the Lies They Tell', paras:[
-      "Every web cache is a database built on a hunch — the hunch that two requests are 'equivalent'. Web cache deception, poisoning, and segmentation bugs are all just that hunch failing in interesting ways.",
-      "This piece maps the full family of cache attacks onto a single mental model: who controls the key, and who controls the value. Once you see it that way, novel variants stop looking novel — you start finding them on sight.",
-      "Includes a decision tree for auditing any CDN configuration in about an hour, and notes on the browser-side partitioning changes that quietly killed half the classic playbook."]},
-    { date:'NOV 2024', tag:'METHODOLOGY', time:'7 MIN', title:'Reading Source Code Like an Attacker', paras:[
-      "Code review optimizes for correctness. Attack-surface reading optimizes for intent mismatch — the gap between what the author meant and what the machine will do. They are different skills, and the second one is almost never taught.",
-      "I share my entry-point-first approach: find the trust boundaries, read outward from them, and treat every deserializer, renderer, and command builder as a suspect until proven bored.",
-      "With examples from real audits of open-source projects, and the greppable patterns that consistently lead to findings within the first two hours."]},
-    { date:'JUN 2024', tag:'WEB', time:'15 MIN', title:'Prototype Pollution: One Bug Class, Fifty Endings', paras:[
-      "Prototype pollution is the closest thing web security has to a universal solvent: one merge-depth bug, and depending on the framework it becomes auth bypass, RCE, XSS, or a denial of service.",
-      "This is the reference piece I wished existed — a taxonomy of gadget types, how to hunt for them in bundled minified code, and why client-side pollution is quietly one of the most under-reported bug classes on the web.",
-      "With a browser extension that flags likely sinks as you browse, and a score of real-world examples mapped to their eventual impact."]},
-    { date:'FEB 2024', tag:'META', time:'6 MIN', title:'Notes on Bug Bounty Triage Burnout', paras:[
-      "Nobody writes about the throughput problem: reports are emotional labor, duplicates are demoralizing, and the reward curve punishes exactly the thoroughness we tell people to practice.",
-      "This is a candid piece about pacing bounty work like an athlete — season structure, deliberate rest, and why I stopped measuring weeks in valid reports.",
-      "Less a guide, more a field note. Several researchers told me it read like their own diary, which was the point."]},
-    { date:'SEP 2023', tag:'APPSEC', time:'9 MIN', title:'Hardening CI/CD: A Checklist I Actually Use', paras:[
-      "Your build pipeline is a code-execution-as-a-service box that runs on every pull request from strangers. Most teams secure it with a shrug and a branch protection rule.",
-      "The checklist covers the nine controls that block the attacks I actually see: runner isolation, secret scoping, dependency pinning, and the OIDC patterns that make long-lived tokens unnecessary.",
-      "Formatted to be pasted into an engineering wiki and argued about, which is how all good checklists begin."]}
-  ];
-  const modal = $('#artModal'), mMeta = $('#mMeta'), mTitle = $('#mTitle'), mBody = $('#mBody'), mClose = $('#mClose');
-  let lastFocus = null;
-  function openArt(i) {
-    const a = ARTICLES[i]; if (!a) return;
-    mMeta.textContent = `${a.date} · ${a.tag} · ${a.time} READ`;
-    mTitle.textContent = a.title;
-    mBody.innerHTML = '';
-    a.paras.forEach(p => { const el = document.createElement('p'); el.textContent = p; mBody.appendChild(el); });
-    modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('lock');
-    lastFocus = document.activeElement;
-    mClose.focus();
-    $('.modal-body').scrollTop = 0;
-  }
-  function closeArt() {
-    modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('lock');
-    if (lastFocus) lastFocus.focus();
-  }
-  $$('.art-row').forEach(row => pressable(row, () => openArt(+row.dataset.art)));
-  modal.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeArt(); });
-  document.addEventListener('keydown', e => {
-    if (e.key !== 'Escape') return;
-    if (modal.classList.contains('open')) closeArt();
-    else if (overlay.classList.contains('open')) closeMenu();
-  });
-
-  /* ---------- show more articles ---------- */
-  const moreBtn = $('#moreBtn'), moreLabel = $('#moreLabel');
-  moreBtn.addEventListener('click', () => {
-    const ex = $('#artList').classList.toggle('expanded');
-    moreBtn.classList.toggle('on', ex);
-    moreBtn.setAttribute('aria-expanded', ex);
-    moreLabel.textContent = ex ? 'COLLAPSE' : 'SHOW 3 MORE';
-  });
-
-  /* ---------- copy to clipboard + toasts ---------- */
-  const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
-  function toast(msg) {
-    const t = document.createElement('div');
-    t.className = 'toast';
-    t.innerHTML = `<span class="t-ic">${CHECK}</span><span class="t-msg"></span>`;
-    t.querySelector('.t-msg').textContent = msg;
-    $('#toastWrap').appendChild(t);
-    requestAnimationFrame(() => t.classList.add('show'));
-    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 2600);
-  }
-  async function copyText(txt) {
-    try { await navigator.clipboard.writeText(txt); return true; }
-    catch (e) {
-      const ta = document.createElement('textarea');
-      ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select();
-      let ok = false; try { ok = document.execCommand('copy'); } catch (_) {}
-      ta.remove(); return ok;
+// reveal elements on scroll
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      revealObserver.unobserve(entry.target);
     }
-  }
-  $$('[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
-    const ok = await copyText(btn.dataset.copy);
-    toast(ok ? (btn.dataset.msg || 'COPIED TO CLIPBOARD') : 'COPY FAILED — SELECT MANUALLY');
-    if (ok) { btn.classList.add('did'); setTimeout(() => btn.classList.remove('did'), 1300); }
-  }));
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
 
-  /* ---------- back to top ---------- */
-  $('#topBtn').addEventListener('click', () =>
-    window.scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }));
-});
+// highlight the active nav link
+const navLinks = document.querySelectorAll('.nav-links a');
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      navLinks.forEach((link) =>
+        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id)
+      );
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+document.querySelectorAll('main section[id]').forEach((s) => sectionObserver.observe(s));
+
+// keep the footer year current
+document.getElementById('year').textContent = new Date().getFullYear();
 </script>
+
 </body>
 </html>
