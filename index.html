@@ -21,6 +21,7 @@
   --line:rgba(255,255,255,.08);
   --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
   --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -87,18 +88,26 @@ nav a:hover{color:var(--ink)}
 .back:hover .barr{transform:translateX(-3px)}
 .paper h1{font:600 clamp(1.5rem,3.6vw,1.9rem)/1.3 var(--serif);letter-spacing:-.01em;
   color:var(--ink);margin-top:28px;max-width:30ch}
+.subline{font:italic 400 clamp(1rem,2vw,1.12rem)/1.6 var(--serif);color:var(--mut);
+  margin-top:16px;max-width:52ch}
 .ptags{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
 .ptags span{font:500 .68rem var(--sans);letter-spacing:.1em;text-transform:uppercase;
   color:var(--faint);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+.note{font:italic 400 .88rem var(--serif);color:var(--faint);margin-top:14px}
 .rs h2{font:600 1.24rem/1.4 var(--serif);color:var(--ink);margin-top:42px}
+.rs h2 .n{display:block;font:500 .68rem var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:8px}
 .rs h3{font:600 1.02rem/1.4 var(--serif);color:var(--ink);margin-top:30px}
 .rs .sub{font:500 .72rem var(--sans);letter-spacing:.14em;text-transform:uppercase;
   color:var(--faint);margin-top:24px}
 .rs p{font:400 1rem/1.8 var(--serif);color:var(--body);max-width:62ch;margin-top:15px}
 .rs strong{color:var(--ink);font-weight:500}
+.rs em{font-style:italic;color:var(--ink)}
 .rs a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(255,255,255,.3);
   text-underline-offset:3px;transition:text-decoration-color .18s}
 .rs a:hover{text-decoration-color:rgba(255,255,255,.75)}
+.rs code{font:400 .82rem var(--mono);color:var(--ink);background:rgba(255,255,255,.05);
+  border:1px solid var(--line);border-radius:4px;padding:2px 6px}
 .rs ul{list-style:none;margin-top:14px;max-width:62ch}
 .rs ul li{position:relative;padding:9px 0 9px 26px;font:400 .93rem/1.7 var(--sans);color:var(--body);
   border-top:1px dashed rgba(255,255,255,.06)}
@@ -108,6 +117,30 @@ nav a:hover{color:var(--ink)}
   font:400 .93rem/1.7 var(--sans);color:var(--body);border-top:1px dashed rgba(255,255,255,.06)}
 .rs ol.steps li::before{content:counter(step,decimal-leading-zero);position:absolute;left:0;top:11px;
   font:500 .72rem var(--sans);letter-spacing:.06em;color:var(--faint)}
+/* abstract block & keywords */
+.absbox{margin-top:20px;border-left:2px solid rgba(255,255,255,.22);background:rgba(255,255,255,.02);
+  border-radius:0 6px 6px 0;padding:18px 24px 8px;max-width:62ch}
+.absbox p:first-child{margin-top:0}
+.kw{font:italic 400 .88rem/1.7 var(--serif);color:var(--faint);margin-top:18px;max-width:62ch}
+/* code & formula blocks */
+.rs pre{margin-top:16px;background:rgba(255,255,255,.03);border:1px solid var(--line);
+  border-radius:6px;padding:14px 18px;overflow-x:auto;max-width:62ch;
+  font:400 .84rem/1.7 var(--mono);color:var(--mut)}
+.rs pre.math{line-height:1.9;color:var(--ink);font-size:.86rem}
+/* tables */
+.tblwrap{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:6px;max-width:62ch}
+.rs table{width:100%;border-collapse:collapse;min-width:440px}
+.rs th{font:500 .66rem var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+  text-align:left;padding:12px 16px;border-bottom:1px solid var(--line)}
+.rs td{font:400 .86rem/1.5 var(--sans);color:var(--body);padding:12px 16px;
+  border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.rs tr:last-child td{border-bottom:0}
+.rs td:first-child{color:var(--mut)}
+/* references */
+.refs ol{list-style:none;counter-reset:ref;margin-top:16px;max-width:62ch}
+.refs ol li{counter-increment:ref;position:relative;padding:11px 0 11px 36px;
+  font:400 .85rem/1.65 var(--sans);color:var(--mut);border-top:1px dashed rgba(255,255,255,.06)}
+.refs ol li::before{content:"[" counter(ref) "]";position:absolute;left:0;top:12px;color:var(--faint)}
 .nf-p{font:400 1.02rem/1.8 var(--serif);color:var(--body);margin-top:20px;max-width:56ch}
 .nf-p a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(255,255,255,.3);
   text-underline-offset:3px}
@@ -164,28 +197,16 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
     <section id="about" class="sec reveal">
       <p class="label">About</p>
       <p class="lede">Security Researcher &amp; Lifelong Learner</p>
-      <p class="body-p">My journey into cybersecurity began around 2022, although I can't pinpoint the
-        exact moment or reason that drew me in. It was probably a technical write-up, an unfamiliar
-        vulnerability, or a problem that made me curious enough to keep digging.</p>
-      <p class="body-p">What kept me hooked was the process itself: encountering something I didn't
-        understand, spending hours exploring it, questioning assumptions, connecting seemingly
-        unrelated pieces, and eventually uncovering how things worked beneath the surface. That
-        curiosity gradually became more than an interest; it became the way I approach learning.</p>
-      <p class="body-p">I've never been particularly good at limiting myself to a single discipline.
-        I'm fascinated by people who think across boundaries, challenge conventional wisdom, and
-        pursue ideas beyond what they're already familiar with. I've long admired thinkers and
-        builders such as Bill Gates, Elon Musk, John D. Rockefeller, and Richard Feynman.</p>
-      <p class="body-p">The philosophy of the early hacker culture resonates deeply with me:
-        curiosity over credentials, understanding over assumptions, and the freedom to question how
-        things are built rather than simply accepting how they work.</p>
-      <p class="body-p">Over time, my understanding of cybersecurity has evolved. I've come to see
-        that it's about much more than finding vulnerabilities in software. It's about understanding
-        complex systems, the boundaries of trust, human behaviour, incentives, and the assumptions
-        that hold everything together. Often, the most interesting weaknesses aren't in the code
-        itself, but in the gaps between how a system is designed to work and how it actually behaves.</p>
-      <p class="body-p">I'm driven by the desire to understand things at their deepest level, not
-        just to learn how to use them, but to understand why they exist, how they work, and where
-        they might break.</p>
+      <p class="body-p">I'm fascinated by complex systems, unconventional thinking, and problems that
+        challenge established assumptions. What started as an interest in finding vulnerabilities
+        gradually evolved into a deeper curiosity about how systems are designed, where trust breaks
+        down, and why things fail.</p>
+      <p class="body-p">I believe in understanding over memorization, curiosity over credentials, and
+        questioning over accepting things at face value.</p>
+      <p class="body-p">I'm not just interested in finding what's broken. I'm interested in
+        understanding why it breaks, how it happens, and what we can learn from it.</p>
+      <p class="body-p">My goal is to keep exploring, researching, and contributing to a deeper
+        understanding of technology and security.</p>
     </section>
 
     <section id="research" class="sec reveal">
@@ -225,9 +246,11 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
 
    1) A written post (full text rendered on the page):
 
-        { slug: "power-pages-stored-xss",
-          title: "Stored XSS via Unsafe Profile Rendering in Microsoft Power Pages",
+        { slug: "my-writeup",
+          title: "Post Title Here",
+          subtitle: "Optional line under the title",
           tags: ["Fixed", "Authorized disclosure", "$3,000 reward"],
+          note: "Optional status line, e.g. research status",
           body: [
             { h: "Section heading",
               html: `<p>First paragraph…</p><p>Second paragraph…</p>` },
@@ -240,12 +263,13 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
           title: "Authentication Bypass in Example Panel",
           pdf: "https://your-site.com/papers/my-new-bug.pdf" }
 
-   • slug  → becomes the page URL:  #/research/{slug}/read
-             (lowercase letters, numbers, hyphens)
-   • title → shown in the Research list and on the reading page
-   • tags  → optional small status labels under the title
-   • body  → optional written sections (HTML strings)
-   • pdf   → optional hosted PDF, embedded on the page
+   • slug    → becomes the page URL:  #/research/{slug}/read
+               (lowercase letters, numbers, hyphens)
+   • title   → shown in the Research list and on the reading page
+   • tags    → optional small status labels under the title
+   • note    → optional italic status line under the tags
+   • body    → optional written sections (HTML strings)
+   • pdf     → optional hosted PDF, embedded on the page
    • If a post has both `body` and `pdf`, the text renders first
      and the PDF appears below it.
 
@@ -353,19 +377,991 @@ const RESEARCH = [
     ]
   },
   {
-    slug: "xss-upload",
-    title: "Stored XSS Through File-Upload Metadata",
-    pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    slug: "power-pages-blind-xss",
+    title: "Blind Cross-Site Scripting in Idea Submission and Comment Workflows in Microsoft Power Pages",
+    tags: ["Authorized disclosure", "$3,000 reward"],
+    body: [
+      { h: "What is Microsoft Power Pages?", html: `
+        <p>Microsoft Power Pages is a low-code platform for building external-facing business websites
+          and portals. Organizations use it to provide functionality such as customer engagement, idea
+          submission, feedback collection, and collaborative workflows.</p>
+        <p>These applications often allow authenticated users to submit information that is subsequently
+          stored and displayed to other users.</p>
+        <p>Idea-management systems are particularly interesting from a security perspective because
+          submitted content can pass through multiple stages: initial submission, persistence, comment
+          creation, and subsequent viewing.</p>
+        <p>Each stage introduces an opportunity for user-controlled information to be rendered in a
+          different application context.</p>`
+      },
+      { h: "The Vulnerability", html: `
+        <p class="sub">01. Blind XSS via Idea Submission and Comment Functionality</p>
+        <h3>Description</h3>
+        <p>A blind cross-site scripting vulnerability was identified in the idea-management functionality
+          of a Microsoft Power Pages application.</p>
+        <p>The application allowed authenticated users to submit ideas through its Create New Idea
+          workflow. During testing, specially crafted JavaScript payloads were submitted through multiple
+          user-controlled fields, including the Idea Title and Description.</p>
+        <p>After submitting the idea, the application presented an additional comment form. The same type
+          of payload was also submitted through the comment functionality.</p>
+        <p>The injected content was persisted and subsequently processed by the application. Although
+          execution was not immediately visible in the original submission context, an external Blind XSS
+          monitoring service later received a callback when the affected idea page was viewed.</p>
+        <p>The callback confirmed that the submitted content resulted in JavaScript execution within the
+          origin of the Power Pages application.</p>
+        <p>Unlike conventional stored XSS, where execution can be directly observed by the person
+          submitting the payload, blind XSS requires monitoring for execution in a subsequent application
+          interaction.</p>
+        <p>This makes the vulnerability particularly interesting in applications where user-generated
+          content is stored and later consumed by other users or application components.</p>
+        <h3>Steps to Reproduce</h3>
+        <ol class="steps">
+          <li>Navigate to the application's idea submission page: Create New Idea.</li>
+          <li>Locate the Idea Title field and submit a Blind XSS test payload.</li>
+          <li>Select the product category Data Factory.</li>
+          <li>Submit a Blind XSS test payload in the Description field.</li>
+          <li>Submit the idea.</li>
+          <li>After submission, locate the comment form associated with the newly created idea.</li>
+          <li>Submit a Blind XSS test payload through the comment functionality.</li>
+          <li>Monitor the external Blind XSS service for execution callbacks.</li>
+          <li>Observe that the payload is subsequently executed when the affected idea page is viewed.</li>
+        </ol>
+        <h3>Proof of Concept</h3>
+        <p>The following idea page was identified during testing:</p>
+        <!-- Paste the affected idea page URL in the href below -->
+        <p><a href="#" target="_blank" rel="noopener">View affected idea →</a></p>
+        <p>The Blind XSS monitoring service recorded an execution callback with the following
+          information:</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Attribute</th><th>Observation</th></tr></thead>
+            <tbody>
+              <tr><td>Execution origin</td><td>Power Pages application</td></tr>
+              <tr><td>Affected page</td><td>Idea details page</td></tr>
+              <tr><td>Browser</td><td>Chrome 114</td></tr>
+              <tr><td>Operating system</td><td>Windows</td></tr>
+              <tr><td>Execution date</td><td>July 17, 2023</td></tr>
+              <tr><td>Detection method</td><td>External Blind XSS callback</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The original report also included browser-side evidence, a screenshot, and DOM information
+          collected during the proof of concept.</p>
+        <h3>Impact</h3>
+        <p>The vulnerability allowed attacker-controlled JavaScript to execute in the origin of the
+          affected Power Pages application when the stored idea or comment content was subsequently
+          rendered.</p>
+        <p>The blind nature of the vulnerability made it possible for execution to occur outside the
+          original submission session, potentially affecting other users who accessed the affected
+          content.</p>
+        <p>Depending on the identity of the affected user, their application privileges, and browser
+          security protections, this could potentially expose sensitive application information or
+          enable unauthorized actions within their authenticated context.</p>
+        <p>The finding demonstrated that user-generated content submitted through both idea creation
+          and commenting workflows could introduce persistent script execution into the application.</p>`
+      },
+      { h: "What This Finding Reveals", html: `
+        <p>Blind XSS introduces an interesting challenge in application security testing: the location
+          where malicious input is submitted may be different from the location where it eventually
+          executes.</p>
+        <p>This creates a gap between the attacker's interaction and the eventual execution context.</p>
+        <p>Three aspects are particularly important:</p>
+        <ul>
+          <li><strong>Delayed execution:</strong> A successful submission does not necessarily produce
+            immediate evidence of a vulnerability. Execution may occur during a later application
+            interaction.</li>
+          <li><strong>Multiple input workflows:</strong> Idea titles, descriptions, and comments represent
+            separate sources of user-controlled information that may be processed by different
+            application components.</li>
+          <li><strong>Execution-context uncertainty:</strong> The final impact depends on which
+            application user or component renders the stored content.</li>
+        </ul>
+        <p>This investigation demonstrates why testing user-generated content should extend beyond the
+          initial submission workflow. Monitoring for delayed execution can reveal vulnerabilities that
+          ordinary browser-based testing may overlook.</p>`
+      },
+      { h: "Defensive Considerations", html: `
+        <p>Developers should consider several protections against blind XSS:</p>
+        <ul>
+          <li>Apply context-aware output encoding to all user-generated content.</li>
+          <li>Avoid rendering untrusted information through unsafe HTML insertion mechanisms.</li>
+          <li>Use established HTML sanitization libraries when HTML formatting is required.</li>
+          <li>Review idea titles, descriptions, comments, and other content-rendering workflows
+            independently.</li>
+          <li>Implement Content Security Policy as an additional defense.</li>
+          <li>Include delayed-rendering scenarios in application security testing.</li>
+        </ul>`
+      }
+    ]
   },
   {
-    slug: "ssrf-metadata",
-    title: "Server-Side Request Forgery to Cloud Metadata Endpoints",
-    pdf: "https://pdfobject.com/pdf/sample.pdf"
+    slug: "session-context-confusion",
+    title: "Authentication Context Confusion Through Shared Session State",
+    body: [
+      { h: "Understanding How Password Recovery Workflows Can Affect Authenticated Sessions", html: `
+        <p>Web applications often rely on server-side sessions to maintain authentication state and
+          identify users across requests. When implemented correctly, these sessions ensure that users
+          can access only the resources and account information they are authorized to view.</p>
+        <p>However, problems arise when applications reuse session variables across different workflows
+          without properly separating authentication state from account-identification state.</p>
+        <p>This becomes particularly concerning in applications that handle sensitive information,
+          including financial platforms, banking applications, and enterprise systems.</p>`
+      },
+      { h: "<span class=\"n\">01</span>Understanding Session Management", html: `
+        <p>A typical application creates or updates session information after a user successfully
+          authenticates.</p>
+        <p>For example:</p>
+<pre>session.userId = 12345
+session.isLoggedIn = true</pre>
+        <p>Here:</p>
+        <ul>
+          <li><code>session.userId</code> identifies the account associated with the session.</li>
+          <li><code>session.isLoggedIn</code> indicates that the user has completed authentication.</li>
+        </ul>
+        <p>When the user requests account information, the application uses its session and
+          authorization logic to determine which resources they can access.</p>
+        <p>The important distinction is that identifying an account does not automatically prove that
+          the user is authenticated to access it.</p>`
+      },
+      { h: "<span class=\"n\">02</span>The Password Recovery Workflow", html: `
+        <p>Password recovery is a separate application workflow that allows users to regain access to
+          their accounts.</p>
+        <p>During this process, an application may temporarily associate a session with an account
+          identifier.</p>
+        <p>For example:</p>
+<pre>session.userId = 54321</pre>
+        <p>This might be necessary to keep track of which account is undergoing password recovery.</p>
+        <p>However, an architectural problem can occur when the application uses the same session
+          variables for both authenticated access and password recovery.</p>
+        <p>The application may update the account identifier without properly maintaining the
+          relationship between the authenticated identity and the session.</p>
+        <p>This creates a dangerous separation-of-responsibilities problem.</p>
+        <p>Two concepts must remain separate:</p>
+        <ul>
+          <li><strong>Account identification:</strong> Determining which account a workflow concerns.</li>
+          <li><strong>Authentication:</strong> Establishing that the current user has successfully
+            verified their identity.</li>
+        </ul>
+        <p>An account identifier should never be treated as proof of authentication.</p>`
+      },
+      { h: "<span class=\"n\">03</span>The Potential Security Impact", html: `
+        <p>Consider an application where a user has successfully authenticated to their own account.</p>
+        <p>The session contains:</p>
+<pre>session.userId = 12345
+session.isLoggedIn = true</pre>
+        <p>Now imagine that another application workflow modifies the account identifier associated
+          with that session.</p>
+        <p>If the application subsequently trusts the modified identifier without independently
+          validating the authenticated identity and authorization context, it may associate an existing
+          authenticated session with a different account.</p>
+        <p>The result could be an authentication-context confusion vulnerability.</p>
+        <p>Depending on the application's implementation, this could potentially expose another user's
+          account information or allow unauthorized actions.</p>
+        <p>The actual impact would depend on which application operations trust the shared session
+          state and whether additional authorization checks are performed.</p>
+        <p><strong>The fundamental issue:</strong> <em>A session identifying an account is not
+          necessarily a session authorized to access that account.</em></p>`
+      },
+      { h: "<span class=\"n\">04</span>What Security Researchers Should Understand", html: `
+        <p>When examining session-management implementations, the important question is not simply
+          whether a session identifier changes.</p>
+        <p>Instead, researchers should understand how the application maintains the relationship
+          between:</p>
+        <ul>
+          <li>The authenticated user.</li>
+          <li>The account identifier associated with the session.</li>
+          <li>The authentication state.</li>
+          <li>The current application workflow.</li>
+          <li>The authorization checks performed before accessing protected resources.</li>
+        </ul>
+        <p>Password recovery, username recovery, and authenticated account access should maintain
+          separate security contexts.</p>
+        <p>A change in one workflow should not silently change the identity or privileges established
+          by another.</p>`
+      },
+      { h: "<span class=\"n\">05</span>Defensive Recommendations", html: `
+        <h3>1. Separate authentication state from recovery state.</h3>
+        <p>Password recovery should use dedicated server-side state rather than modifying the identity
+          associated with an authenticated session.</p>
+        <h3>2. Bind authenticated sessions to verified identities.</h3>
+        <p>The application should maintain a trusted authenticated principal and must not rely
+          exclusively on mutable account-identification variables.</p>
+        <h3>3. Enforce authorization on every protected operation.</h3>
+        <p>Sensitive operations should independently verify that the authenticated principal has
+          permission to access the requested account and resource.</p>
+        <h3>4. Rotate or invalidate sessions when appropriate.</h3>
+        <p>Session lifecycle management should prevent authentication-context confusion and ensure
+          that changes in authentication state are handled securely.</p>
+        <h3>5. Test interactions between application workflows.</h3>
+        <p>Security testing should examine whether password recovery, username recovery, login,
+          logout, and account switching interfere with one another.</p>`
+      },
+      { h: "<span class=\"n\">06</span>Key Takeaway", html: `
+        <p>Authentication and account identification are closely related, but they are not
+          interchangeable.</p>
+        <p>A session may contain an account identifier without having the authority to access that
+          account.</p>
+        <p>Applications must preserve this distinction throughout their authentication, recovery, and
+          authorization workflows.</p>
+        <p><em>Sometimes, the most significant security problems are not caused by a missing
+          authentication mechanism. They emerge when individually legitimate application workflows
+          interact in ways the developers never intended.</em></p>`
+      }
+    ]
   },
   {
-    slug: "idor-billing",
-    title: "IDOR Chains in Billing and Invoice APIs",
-    pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    slug: "multi-tenant-authorization-study",
+    title: "An Empirical Study of Authorization Inconsistencies in Multi-Tenant SaaS Applications",
+    subtitle: "A Controlled Black-Box Evaluation of Tenant Isolation, Role Transitions, Resource Ownership, and Cross-Service Authorization Consistency",
+    tags: ["Research Proposal", "Web Application Security", "Access Control", "Cloud & SaaS Security"],
+    note: "Research status: Proposed methodology. Experimental results have not yet been collected.",
+    body: [
+      { h: "Abstract", html: `
+        <div class="absbox">
+          <p>Multi-tenant Software-as-a-Service (SaaS) applications support multiple organizations
+            through shared application infrastructure. Although this architecture provides scalability
+            and operational efficiency, it introduces significant challenges in maintaining consistent
+            authorization across tenants, users, resources, and application services.</p>
+          <p>Authorization decisions in these environments may depend on several interacting dimensions,
+            including authenticated identity, tenant membership, assigned roles, resource ownership,
+            requested operations, and resource lifecycle states. When these dimensions are evaluated
+            inconsistently across application components, security weaknesses may emerge even when
+            individual authorization mechanisms appear correctly implemented.</p>
+          <p>This research proposes a controlled empirical study of authorization consistency in
+            multi-tenant SaaS applications. Using self-developed test applications, intentionally
+            vulnerable environments, and authorized testing systems, the study will evaluate how
+            authorization decisions change across tenant boundaries, role transitions, membership
+            revocation, ownership changes, resource lifecycle transitions, and service boundaries.</p>
+          <p>The research will develop a taxonomy of authorization inconsistencies and establish a
+            repeatable black-box testing methodology for identifying and measuring discrepancies between
+            expected and observed authorization decisions.</p>
+          <p>Quantitative metrics will be used to evaluate authorization inconsistency, unauthorized
+            access, test coverage, and revocation enforcement. Qualitative analysis will investigate the
+            conditions under which discrepancies occur and identify potential architectural
+            explanations.</p>
+          <p>The expected contributions include a structured taxonomy, a reproducible experimental
+            methodology, and a synthetic dataset or testing harness that can support further research
+            into authorization consistency in multi-tenant systems.</p>
+          <p>The study will use synthetic identities and resources and will be conducted exclusively in
+            controlled environments or systems for which explicit testing authorization has been
+            obtained.</p>
+        </div>
+        <p class="kw">Keywords: Multi-Tenant SaaS, Authorization Consistency, Access Control, Tenant
+          Isolation, Broken Access Control, BOLA, IDOR, RBAC, ABAC, ReBAC, Distributed Authorization,
+          Black-Box Security Testing.</p>`
+      },
+      { h: "<span class=\"n\">01</span>Introduction", html: `
+        <p>Software-as-a-Service (SaaS) applications increasingly adopt multi-tenant architectures to
+          support multiple organizations through shared infrastructure, application services, and
+          data-processing components.</p>
+        <p>Within these environments, different organizations may use the same application while
+          maintaining separate users, resources, permissions, and administrative boundaries.</p>
+        <p>Although multi-tenancy provides substantial operational benefits, it introduces an important
+          security challenge: ensuring that authorization decisions remain consistent throughout the
+          application.</p>
+        <p>Authorization is not simply a matter of determining whether a user is authenticated. A secure
+          authorization decision may depend on several interacting factors:</p>
+        <ul>
+          <li>The identity of the authenticated user.</li>
+          <li>The tenant or organization to which the user belongs.</li>
+          <li>The user's assigned role and permissions.</li>
+          <li>The user's relationship with the requested resource.</li>
+          <li>The operation being performed.</li>
+          <li>The current state of the resource.</li>
+          <li>The application service responsible for processing the request.</li>
+        </ul>
+        <p>In complex SaaS applications, these decisions may be distributed across APIs, backend
+          services, background workers, integrations, and user-facing interfaces.</p>
+        <p>Consequently, an application may enforce an authorization policy correctly in one component
+          but inconsistently in another.</p>
+        <p>For example, a user may be denied access to an administrative operation through the web
+          interface while a related API operation applies a different authorization rule. Similarly, a
+          user's permissions may be updated following a role change, but another application component
+          may continue to evaluate the previous authorization state.</p>
+        <p>These scenarios demonstrate why authorization should not be evaluated solely at the individual
+          endpoint level.</p>
+        <p>Instead, it is necessary to examine how authorization decisions behave across application
+          components and changing relationships between users, tenants, and resources.</p>
+        <p>This research investigates that problem through a controlled empirical evaluation of
+          authorization consistency in multi-tenant SaaS applications.</p>`
+      },
+      { h: "<span class=\"n\">02</span>Problem Statement", html: `
+        <p>Modern SaaS applications frequently distribute authorization enforcement across multiple
+          application components.</p>
+        <p>These may include API gateways, backend services, data-access layers, background processing
+          systems, and external integrations.</p>
+        <p>Although these components may operate under a common access-control model, differences in
+          implementation, policy evaluation, identity context, caching, or lifecycle management can
+          produce inconsistent authorization outcomes.</p>
+        <p>Such inconsistencies may affect:</p>
+        <ul>
+          <li>Tenant isolation.</li>
+          <li>Role and permission enforcement.</li>
+          <li>Membership revocation.</li>
+          <li>Resource ownership.</li>
+          <li>Resource lifecycle management.</li>
+          <li>Cross-service authorization.</li>
+        </ul>
+        <p>Existing approaches to access-control testing provide important mechanisms for identifying
+          individual authorization weaknesses. However, evaluating individual operations does not
+          necessarily establish whether authorization remains consistent across related application
+          workflows and changing security contexts.</p>
+        <p>The central problem addressed by this research is:</p>
+        <p><em>How can authorization inconsistencies in multi-tenant SaaS applications be systematically
+          identified, measured, and classified through controlled black-box experimentation?</em></p>
+        <p>The study seeks to develop and evaluate a repeatable methodology for answering this
+          question.</p>`
+      },
+      { h: "<span class=\"n\">03</span>Research Aim and Objectives", html: `
+        <h3>3.1 Research Aim</h3>
+        <p>The primary aim is to design and empirically evaluate a repeatable black-box methodology for
+          identifying and measuring authorization inconsistencies in multi-tenant SaaS applications.</p>
+        <h3>3.2 Research Objectives</h3>
+        <p>The research will pursue the following objectives:</p>
+        <ol class="steps">
+          <li>Develop a conceptual model of authorization decisions incorporating identity, tenant
+            membership, roles, resource relationships, operations, application services, and resource
+            states.</li>
+          <li>Develop a taxonomy of authorization inconsistencies relevant to multi-tenant SaaS
+            architectures.</li>
+          <li>Design controlled experiments covering tenant isolation, role transitions, membership
+            revocation, ownership changes, resource lifecycle transitions, and cross-service
+            authorization.</li>
+          <li>Establish quantitative metrics for measuring authorization inconsistency, unauthorized
+            access, experimental coverage, and revocation enforcement.</li>
+          <li>Evaluate the repeatability and effectiveness of the proposed black-box testing
+            methodology.</li>
+          <li>Develop a reusable experimental framework and synthetic test dataset to support further
+            research.</li>
+        </ol>`
+      },
+      { h: "<span class=\"n\">04</span>Research Questions", html: `
+        <p>The study will investigate six research questions.</p>
+        <h3>RQ1 — Cross-Service Consistency</h3>
+        <p>To what extent do different application services enforce consistent authorization decisions
+          for equivalent operations involving the same user, resource, and security context?</p>
+        <h3>RQ2 — Tenant Isolation</h3>
+        <p>How consistently are tenant boundaries enforced across different application interfaces and
+          operations in multi-tenant environments?</p>
+        <h3>RQ3 — Role Transitions</h3>
+        <p>How reliably do application components enforce updated permissions following changes to a
+          user's assigned role?</p>
+        <h3>RQ4 — Membership Revocation</h3>
+        <p>How consistently are previously granted permissions invalidated after a user's membership in
+          a tenant is revoked?</p>
+        <h3>RQ5 — Resource Relationships and Lifecycle States</h3>
+        <p>How do changes in resource ownership, user-resource relationships, and resource lifecycle
+          states affect authorization decisions?</p>
+        <h3>RQ6 — Testing Methodology</h3>
+        <p>Which experimental dimensions and measurement techniques provide the most useful coverage for
+          identifying authorization inconsistencies in multi-tenant applications?</p>`
+      },
+      { h: "<span class=\"n\">05</span>Scope and Assumptions", html: `
+        <p>The primary unit of analysis is an authorization decision made by an application component
+          for a particular subject, resource, operation, and application state.</p>
+        <p>The study will focus on web applications that implement explicit tenant or organizational
+          boundaries.</p>
+        <p>Suitable research environments will include:</p>
+        <ul>
+          <li>Self-developed multi-tenant applications.</li>
+          <li>Intentionally vulnerable security training applications.</li>
+          <li>Open-source applications deployed in controlled environments.</li>
+          <li>Vendor-provided test environments with explicit written authorization.</li>
+        </ul>
+        <p>The research will use synthetic users, organizations, and resources.</p>
+        <p>It will not attempt to access real customer information, collect unrelated personal data, or
+          test third-party systems outside an explicitly authorized scope.</p>
+        <p>The study will focus on observable authorization behavior rather than assuming access to the
+          application's source code or internal authorization implementation.</p>
+        <p>Where source code or application-side logs are available, they may be used to supplement the
+          black-box observations.</p>`
+      },
+      { h: "<span class=\"n\">06</span>Literature Review and Research Context", html: `
+        <h3>6.1 Access-Control Models</h3>
+        <p>Access-control models provide the theoretical foundation for determining which subjects may
+          perform particular operations on application resources.</p>
+        <p>Three models are especially relevant to this research.</p>
+        <h3>Role-Based Access Control (RBAC)</h3>
+        <p>RBAC assigns permissions to users through predefined roles.</p>
+        <p>For example, an organization administrator may manage users and organizational settings, while
+          a standard member may have permission to access only assigned resources.</p>
+        <p>A challenge in multi-tenant systems is ensuring that role assignments and their associated
+          permissions are consistently enforced across application components.</p>
+        <h3>Attribute-Based Access Control (ABAC)</h3>
+        <p>ABAC evaluates attributes associated with the subject, resource, action, and environment.</p>
+        <p>For example, access may depend on organizational membership, resource classification, the
+          requested operation, or the current application context.</p>
+        <p>This model is particularly relevant when authorization depends on multiple conditions rather
+          than a user's role alone.</p>
+        <h3>Relationship-Based Access Control (ReBAC)</h3>
+        <p>ReBAC evaluates permissions through relationships between users and resources.</p>
+        <p>For example, a user may be allowed to edit a document because they own it, belong to an
+          authorized group, or have received an explicit sharing permission.</p>
+        <p>These models are not mutually exclusive. Modern SaaS applications may combine RBAC, ABAC, and
+          ReBAC to implement complex authorization policies.</p>
+        <p>This study will examine the consistency of the resulting authorization decisions rather than
+          evaluate one access-control model in isolation.</p>
+        <h3>6.2 Broken Object-Level Authorization</h3>
+        <p>Broken Object-Level Authorization (BOLA) occurs when an application does not correctly verify
+          whether a requester has permission to perform an operation on a particular resource.</p>
+        <p>An object identifier alone should never determine whether access is authorized.</p>
+        <p>The application must evaluate the relationship between the requesting identity, tenant
+          context, resource, and requested operation.</p>
+        <p>In multi-tenant environments, an authorization failure may allow a user to access or modify
+          resources belonging to another organization.</p>
+        <p>This research will examine BOLA as one potential outcome of broader authorization
+          inconsistencies.</p>
+        <h3>6.3 Distributed Authorization in SaaS Architectures</h3>
+        <p>Modern SaaS applications frequently distribute authorization responsibilities across several
+          services.</p>
+        <p>These may include:</p>
+        <ul>
+          <li>API gateways.</li>
+          <li>Authentication services.</li>
+          <li>Backend application services.</li>
+          <li>Data-access layers.</li>
+          <li>Background workers.</li>
+          <li>External integrations.</li>
+        </ul>
+        <p>A centralized authorization policy does not automatically guarantee consistent enforcement
+          across every component.</p>
+        <p>The Zanzibar authorization system developed at Google is an important foundational example of
+          large-scale relationship-based authorization. Its design highlights the importance of
+          consistent authorization decisions across distributed application environments.</p>
+        <p>More recent work on automated formal verification of authorization policies in microservice
+          systems also demonstrates the importance of evaluating authorization consistency beyond
+          individual endpoints.</p>
+        <h3>6.4 Existing Research on Multi-Tenant Authorization</h3>
+        <p>Recent work has explored several related areas:</p>
+        <ul>
+          <li>Automated black-box detection of IDOR vulnerabilities.</li>
+          <li>API security gateways for multi-tenant applications.</li>
+          <li>Revocable resource sharing in multi-tenant environments.</li>
+          <li>Zero-trust authorization across distributed cloud environments.</li>
+          <li>Formal verification of authorization policies in microservice architectures.</li>
+        </ul>
+        <p>For example, IDORD investigates automated black-box detection of IDOR vulnerabilities through
+          request analysis and authorization testing.</p>
+        <p>Research on multi-tenant API security gateways examines policy enforcement and tenant-aware
+          access control across application layers.</p>
+        <p>Other work investigates resource-level authorization and revocable sharing in multi-tenant
+          environments.</p>
+        <p>These studies provide important foundations for the proposed investigation.</p>
+        <h3>6.5 Research Gap</h3>
+        <p>The proposed study aims to complement existing endpoint-level vulnerability detection and
+          policy-verification approaches through a controlled empirical evaluation of authorization
+          consistency across multiple dimensions.</p>
+        <p>Its specific focus is the interaction between:</p>
+        <ol class="steps">
+          <li>Tenant boundaries.</li>
+          <li>Role and permission transitions.</li>
+          <li>Membership revocation.</li>
+          <li>Resource ownership and relationships.</li>
+          <li>Resource lifecycle states.</li>
+          <li>Cross-service authorization enforcement.</li>
+        </ol>
+        <p>The research will investigate whether these dimensions can be evaluated through a unified
+          black-box testing methodology and whether measurable inconsistencies can be identified across
+          related application components.</p>
+        <p>This is a proposed research gap, not an established claim that previous research has ignored
+          these issues.</p>
+        <p>A systematic literature review will be required to determine how much of this problem has
+          already been addressed and where a genuinely novel contribution can be made.</p>`
+      },
+      { h: "<span class=\"n\">07</span>Conceptual Authorization Model", html: `
+        <p>The study proposes representing an authorization decision through the following
+          dimensions:</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Dimension</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Subject</td><td>Authenticated identity and role</td></tr>
+              <tr><td>Tenant</td><td>Membership and organization context</td></tr>
+              <tr><td>Resource</td><td>Ownership and relationships</td></tr>
+              <tr><td>Operation</td><td>Read, update, delete, export, etc.</td></tr>
+              <tr><td>Application context</td><td>Service, workflow, and resource lifecycle state</td></tr>
+            </tbody>
+          </table>
+        </div>
+<pre class="math">Authorization policy evaluation  →  Expected permission decision  →  Allow / Deny</pre>
+        <p>Conceptually, the authorization decision can be represented as:</p>
+<pre class="math">D = P(S, T, R, A, C)</pre>
+        <p>Where:</p>
+        <ul>
+          <li><code>D</code> = authorization decision.</li>
+          <li><code>P</code> = authorization policy.</li>
+          <li><code>S</code> = requesting subject.</li>
+          <li><code>T</code> = tenant context.</li>
+          <li><code>R</code> = resource and its relationships.</li>
+          <li><code>A</code> = requested action.</li>
+          <li><code>C</code> = application context, including service and resource state.</li>
+        </ul>
+        <p>The purpose of this model is to identify which dimensions may influence authorization
+          decisions and evaluate whether the resulting decisions remain consistent across equivalent
+          application operations.</p>`
+      },
+      { h: "<span class=\"n\">08</span>Proposed Taxonomy of Authorization Inconsistencies", html: `
+        <p>The research proposes seven categories.</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Category</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Tenant-context inconsistency</td><td>Incorrect or inconsistent enforcement of
+                organizational boundaries.</td></tr>
+              <tr><td>Role inconsistency</td><td>Different permission outcomes following a role
+                change.</td></tr>
+              <tr><td>Membership inconsistency</td><td>Previously granted permissions remaining
+                effective after membership revocation.</td></tr>
+              <tr><td>Ownership inconsistency</td><td>Authorization decisions failing to reflect updated
+                resource ownership or relationships.</td></tr>
+              <tr><td>Lifecycle inconsistency</td><td>Permission decisions not reflecting the current
+                state of a resource.</td></tr>
+              <tr><td>Service-boundary inconsistency</td><td>Different services enforcing incompatible
+                authorization decisions for equivalent operations.</td></tr>
+              <tr><td>Property-level inconsistency</td><td>Sensitive fields receiving different
+                protection from the intended field-level policy.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The taxonomy will be refined during the literature review and experimental design.</p>
+        <p>A single observation may involve more than one category. Where this occurs, the study will
+          record a primary classification and any relevant secondary classifications to avoid
+          double-counting.</p>`
+      },
+      { h: "<span class=\"n\">09</span>Research Methodology", html: `
+        <h3>9.1 Research Design</h3>
+        <p>This study will use a controlled experimental research design.</p>
+        <p>A multi-tenant test application or authorized testing environment will be configured
+          with:</p>
+        <ul>
+          <li>At least two isolated tenants.</li>
+          <li>Multiple synthetic user identities.</li>
+          <li>Predefined organizational roles.</li>
+          <li>Synthetic resources with documented ownership.</li>
+          <li>Several application operations.</li>
+          <li>Multiple interfaces or services for selected operations.</li>
+        </ul>
+        <p>For each test case, the expected authorization decision will be established before
+          experimentation.</p>
+        <p>The observed outcome will then be compared with the expected outcome.</p>
+        <p>This approach will allow the research to identify authorization discrepancies under
+          controlled and repeatable conditions.</p>
+        <h3>9.2 Experimental Environment</h3>
+        <p>The experimental environment will contain the following components.</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Component</th><th>Proposed configuration</th></tr></thead>
+            <tbody>
+              <tr><td>Tenants</td><td>At least two isolated organizations</td></tr>
+              <tr><td>User identities</td><td>Administrator, member, restricted user</td></tr>
+              <tr><td>Resources</td><td>Synthetic objects with defined ownership</td></tr>
+              <tr><td>Operations</td><td>Read, create, update, delete, export, share</td></tr>
+              <tr><td>Interfaces</td><td>Web interface and supported APIs</td></tr>
+              <tr><td>Application state</td><td>Defined role, membership, ownership, and lifecycle
+                states</td></tr>
+              <tr><td>Logging</td><td>Structured experimental records</td></tr>
+              <tr><td>Data</td><td>Synthetic data only</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Additional application services will be included where their behavior can be evaluated
+          safely and meaningfully.</p>
+        <h3>9.3 Experimental Procedure</h3>
+        <p>The research will follow eight stages:</p>
+        <ol class="steps">
+          <li>Identify the application's tenant, user, role, resource, and workflow model.</li>
+          <li>Define the intended authorization policy for the selected test environment.</li>
+          <li>Establish expected authorization outcomes for every test case.</li>
+          <li>Execute controlled evaluations across relevant interfaces and application components.</li>
+          <li>Repeat selected evaluations following role, membership, ownership, and lifecycle
+            changes.</li>
+          <li>Record observed decisions and supporting evidence.</li>
+          <li>Compare expected and observed outcomes.</li>
+          <li>Classify discrepancies and calculate the defined research metrics.</li>
+        </ol>
+        <h3>9.4 Experimental Controls</h3>
+        <p>To improve reliability and reproducibility, the study will maintain the following
+          controls:</p>
+        <ul>
+          <li>Use synthetic identities and resources.</li>
+          <li>Establish expected permissions before testing.</li>
+          <li>Change one experimental variable at a time where feasible.</li>
+          <li>Document application versions and configurations.</li>
+          <li>Record relevant state transitions.</li>
+          <li>Repeat selected experiments.</li>
+          <li>Distinguish temporary failures from repeatable authorization discrepancies.</li>
+          <li>Preserve both positive and negative observations.</li>
+        </ul>
+        <h3>9.5 Definition of an Authorization Inconsistency</h3>
+        <p>For this research, an authorization inconsistency will be defined as a discrepancy between an
+          observed authorization decision and the expected decision established by the documented test
+          policy.</p>
+        <p>However, not every discrepancy represents a security vulnerability.</p>
+        <p>The research will distinguish between:</p>
+        <ul>
+          <li><strong>Policy deviation:</strong> The application behaves differently from the expected
+            policy, but no unauthorized access or action is demonstrated.</li>
+          <li><strong>Security-relevant authorization failure:</strong> The application permits access
+            or an operation that the requesting identity is not authorized to perform.</li>
+          <li><strong>Inconclusive observation:</strong> Available evidence is insufficient to determine
+            whether the behavior violates the intended policy.</li>
+        </ul>
+        <p>This distinction is essential for avoiding false positives and overstated research
+          conclusions.</p>`
+      },
+      { h: "<span class=\"n\">10</span>Planned Experiments", html: `
+        <p>The research will consist of six primary experiments.</p>
+        <h3>Experiment 1: Cross-Tenant Authorization Consistency</h3>
+        <p><strong>Objective:</strong> Evaluate whether tenant isolation is consistently enforced across
+          application interfaces and services.</p>
+        <p><strong>Experimental design:</strong> Configure two isolated tenants with independent
+          synthetic resources. Evaluate predefined authorization decisions for users operating within
+          their assigned tenant contexts.</p>
+        <p><strong>Measurements:</strong></p>
+        <ul>
+          <li>Expected and observed authorization decisions.</li>
+          <li>Consistency across interfaces.</li>
+          <li>Tenant-related policy deviations.</li>
+          <li>Confirmed unauthorized access, if any.</li>
+        </ul>
+        <p><strong>Expected behavior:</strong> Users should access only resources permitted by the
+          defined tenant and authorization policy.</p>
+        <h3>Experiment 2: Role Transition Consistency</h3>
+        <p><strong>Objective:</strong> Evaluate whether permission changes are consistently enforced
+          following role transitions.</p>
+        <p><strong>Experimental design:</strong> Define an initial user role and its permissions. Change
+          the role within the controlled environment and evaluate the updated authorization policy
+          across relevant components.</p>
+        <p><strong>Measurements:</strong></p>
+        <ul>
+          <li>Permission enforcement before and after the transition.</li>
+          <li>Differences between application components.</li>
+          <li>Time required for the updated permissions to take effect.</li>
+        </ul>
+        <p><strong>Expected behavior:</strong> Permissions removed by the role transition should no
+          longer be granted after the defined policy-update point.</p>
+        <h3>Experiment 3: Membership Revocation Consistency</h3>
+        <p><strong>Objective:</strong> Examine whether permissions derived from tenant membership are
+          correctly revoked.</p>
+        <p><strong>Experimental design:</strong> Establish an authorized membership for a synthetic
+          user, document the permissions associated with it, and subsequently revoke that
+          membership.</p>
+        <p><strong>Measurements:</strong></p>
+        <ul>
+          <li>Authorization outcomes before and after revocation.</li>
+          <li>Consistency across relevant services.</li>
+          <li>Revocation enforcement delay.</li>
+        </ul>
+        <p><strong>Expected behavior:</strong> Permissions derived solely from the revoked membership
+          should no longer be granted after the documented revocation point.</p>
+        <h3>Experiment 4: Resource Ownership Consistency</h3>
+        <p><strong>Objective:</strong> Evaluate whether authorization decisions reflect changes in
+          resource ownership and relationships.</p>
+        <p><strong>Experimental design:</strong> Use synthetic resources with predefined ownership and
+          sharing relationships. Evaluate authorization behavior before and after an authorized
+          ownership transfer.</p>
+        <p><strong>Measurements:</strong></p>
+        <ul>
+          <li>Owner-related permission changes.</li>
+          <li>Relationship-based access decisions.</li>
+          <li>Consistency across relevant application components.</li>
+        </ul>
+        <p><strong>Expected behavior:</strong> Authorization decisions should reflect the current
+          ownership and sharing policy.</p>
+        <h3>Experiment 5: Resource Lifecycle Authorization Consistency</h3>
+        <p><strong>Objective:</strong> Examine how resource lifecycle transitions influence
+          authorization decisions.</p>
+        <p><strong>Experimental design:</strong> Evaluate synthetic resources across supported lifecycle
+          states, such as draft, published, archived, transferred, or deleted.</p>
+        <p><strong>Measurements:</strong></p>
+        <ul>
+          <li>Authorization decisions for each resource state.</li>
+          <li>Operation-specific permission differences.</li>
+          <li>Consistency across application workflows.</li>
+        </ul>
+        <p><strong>Expected behavior:</strong> Access should reflect the documented permissions
+          applicable to the current resource state.</p>
+        <h3>Experiment 6: Cross-Service Authorization Consistency</h3>
+        <p><strong>Objective:</strong> Determine whether different application services enforce
+          compatible authorization decisions for equivalent operations.</p>
+        <p><strong>Experimental design:</strong> Identify operations exposed through multiple supported
+          interfaces or services. Establish equivalent test conditions and compare the resulting
+          authorization decisions.</p>
+        <p><strong>Measurements:</strong></p>
+        <ul>
+          <li>Agreement between service decisions.</li>
+          <li>Policy deviations.</li>
+          <li>Differences in enforcement across application boundaries.</li>
+        </ul>
+        <p><strong>Expected behavior:</strong> Equivalent authorization contexts should produce
+          decisions consistent with the intended policy.</p>`
+      },
+      { h: "<span class=\"n\">11</span>Proposed Research Metrics", html: `
+        <p>The study will use quantitative metrics to measure authorization consistency and
+          experimental coverage.</p>
+        <p>Each metric will be calculated using explicitly documented denominators.</p>
+        <h3>11.1 Authorization Inconsistency Rate (AIR)</h3>
+        <p>Measures the proportion of comparable authorization evaluations that produce decisions
+          inconsistent with the predefined policy.</p>
+<pre class="math">            Inconsistent evaluations
+AIR  =  ─────────────────────────────────────  ×  100
+            Total comparable evaluations</pre>
+        <p>A higher value indicates more frequent deviations within the evaluated environment.</p>
+        <h3>11.2 Unauthorized Allow Rate (UAR)</h3>
+        <p>Measures how frequently operations expected to be denied are incorrectly permitted.</p>
+<pre class="math">              Unauthorized operations allowed
+UAR  =  ──────────────────────────────────────────  ×  100
+              Total expected-deny evaluations</pre>
+        <p>This metric specifically measures security-relevant authorization failures.</p>
+        <h3>11.3 Authorization Coverage (AC)</h3>
+        <p>Measures the proportion of identified in-scope authorization test cases that have been
+          evaluated.</p>
+<pre class="math">              Executed in-scope test cases
+AC  =  ──────────────────────────────────────────────  ×  100
+              Total identified in-scope test cases</pre>
+        <p>Coverage will be reported by experiment and authorization category.</p>
+        <h3>11.4 Revocation Enforcement Rate (RER)</h3>
+        <p>Measures the proportion of revocation test cases in which revoked permissions are correctly
+          denied after the defined revocation point.</p>
+<pre class="math">              Correctly denied revocation evaluations
+RER  =  ─────────────────────────────────────────────────  ×  100
+              Total revocation evaluations</pre>
+        <h3>11.5 Cross-Service Decision Agreement (CSDA)</h3>
+        <p>Measures the proportion of comparable evaluations in which different application components
+          produce authorization decisions consistent with the expected policy.</p>
+<pre class="math">              Consistent comparable service decisions
+CSDA  =  ──────────────────────────────────────────────────  ×  100
+              Total comparable service evaluations</pre>
+        <p>This metric will help evaluate whether authorization behavior remains consistent across
+          application boundaries.</p>
+        <h3>11.6 Metric Interpretation</h3>
+        <p>All metrics will be reported alongside raw counts.</p>
+        <p>For example, a reported rate of 5% has a different meaning when it represents 1 discrepancy
+          out of 20 evaluations versus 100 out of 2,000 evaluations.</p>
+        <p>The study will therefore document sample sizes, experimental conditions, repeated
+          evaluations, and confidence intervals where appropriate.</p>
+        <p>The metrics are proposed research measures and will be refined after pilot testing.</p>`
+      },
+      { h: "<span class=\"n\">12</span>Data Collection and Analysis", html: `
+        <h3>12.1 Data Collection</h3>
+        <p>Each experiment will produce a structured record containing:</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Field</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Experiment ID</td><td>Unique experiment identifier</td></tr>
+              <tr><td>Application version</td><td>Evaluated application version</td></tr>
+              <tr><td>Component</td><td>Interface or service</td></tr>
+              <tr><td>Test identity</td><td>Synthetic requesting user</td></tr>
+              <tr><td>Tenant context</td><td>Requesting user's tenant</td></tr>
+              <tr><td>Resource tenant</td><td>Tenant associated with the resource</td></tr>
+              <tr><td>User role</td><td>Assigned role</td></tr>
+              <tr><td>Membership status</td><td>Current membership state</td></tr>
+              <tr><td>Resource ownership</td><td>Current owner or relationship</td></tr>
+              <tr><td>Operation</td><td>Requested action</td></tr>
+              <tr><td>Resource state</td><td>Current lifecycle state</td></tr>
+              <tr><td>Expected decision</td><td>Predefined policy outcome</td></tr>
+              <tr><td>Observed decision</td><td>Actual application outcome</td></tr>
+              <tr><td>Repeat count</td><td>Number of executions</td></tr>
+              <tr><td>Classification</td><td>Inconsistency category</td></tr>
+              <tr><td>Evidence reference</td><td>Supporting experimental evidence</td></tr>
+              <tr><td>Confidence</td><td>Confidence in the classification</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The experimental dataset will exclude live credentials, session tokens, and unrelated
+          personal information.</p>
+        <h3>12.2 Quantitative Analysis</h3>
+        <p>Quantitative analysis will summarize:</p>
+        <ul>
+          <li>Total executed test cases.</li>
+          <li>Expected and observed authorization decisions.</li>
+          <li>Number of policy deviations.</li>
+          <li>Number of confirmed unauthorized operations.</li>
+          <li>AIR, UAR, AC, RER, and CSDA values.</li>
+          <li>Results by experiment and inconsistency category.</li>
+          <li>Revocation enforcement delays.</li>
+          <li>Variations across repeated evaluations.</li>
+        </ul>
+        <h3>12.3 Qualitative Analysis</h3>
+        <p>Qualitative analysis will investigate the conditions associated with observed
+          discrepancies.</p>
+        <p>Potential explanations may include:</p>
+        <ul>
+          <li>Inconsistent policy enforcement.</li>
+          <li>Stale authorization context.</li>
+          <li>Incomplete tenant scoping.</li>
+          <li>Missing resource-relationship checks.</li>
+          <li>Differences in service-level authorization logic.</li>
+          <li>Incorrect handling of role changes.</li>
+          <li>Delayed permission revocation.</li>
+          <li>Resource lifecycle inconsistencies.</li>
+        </ul>
+        <p>These explanations will be treated as hypotheses unless supported by sufficient
+          implementation evidence.</p>
+        <h3>12.4 Reproducibility</h3>
+        <p>Where licensing and disclosure obligations permit, the study will publish:</p>
+        <ul>
+          <li>Synthetic test data.</li>
+          <li>Experimental test-case definitions.</li>
+          <li>Testing scripts.</li>
+          <li>Metric calculation procedures.</li>
+          <li>Application configuration details.</li>
+          <li>Anonymized experimental results.</li>
+        </ul>
+        <p>This will help other researchers reproduce and independently evaluate the proposed
+          methodology.</p>`
+      },
+      { h: "<span class=\"n\">13</span>Results and Findings", html: `
+        <h3>Pending experimentation</h3>
+        <p>No empirical results are claimed at this stage.</p>
+        <p>This section will be completed after the proposed experiments have been conducted.</p>
+        <p>The final paper will report:</p>
+        <ol class="steps">
+          <li>Evaluated applications, versions, configurations, and experimental scope.</li>
+          <li>Number of tenants, users, resources, operations, and test cases.</li>
+          <li>Expected and observed authorization outcomes.</li>
+          <li>Calculated research metrics and their denominators.</li>
+          <li>Results organized by inconsistency category.</li>
+          <li>Representative evidence supporting confirmed observations.</li>
+          <li>Negative results and inconclusive experiments.</li>
+          <li>Limitations affecting interpretation and reproducibility.</li>
+        </ol>
+        <p>The findings will distinguish observed behavior from inferred implementation causes.</p>`
+      },
+      { h: "<span class=\"n\">14</span>Ethical and Legal Considerations", html: `
+        <p>The research will prioritize locally deployed applications, intentionally vulnerable
+          environments, and systems for which explicit written authorization has been obtained.</p>
+        <p>All test identities and resources will use synthetic data.</p>
+        <p>The research will follow these principles:</p>
+        <ul>
+          <li>No unauthorized access to third-party applications.</li>
+          <li>No collection or exposure of real customer information.</li>
+          <li>No disruption of application availability.</li>
+          <li>No testing outside explicitly authorized scopes.</li>
+          <li>No unnecessary retention of sensitive information.</li>
+          <li>Responsible disclosure of confirmed vulnerabilities discovered in authorized
+            environments.</li>
+        </ul>
+        <p>The study will document the authorization basis, testing scope, data-handling procedures,
+          and any required institutional ethics approval before experimentation.</p>
+        <p>Applicable legal requirements and institutional research policies will be followed throughout
+          the study.</p>`
+      },
+      { h: "<span class=\"n\">15</span>Threats to Validity and Limitations", html: `
+        <h3>15.1 External Validity</h3>
+        <p>A limited number of applications may not adequately represent the broader SaaS
+          ecosystem.</p>
+        <p>Different platforms may implement substantially different authorization architectures and
+          policies.</p>
+        <h3>15.2 Construct Validity</h3>
+        <p>The expected authorization policy may be incorrectly understood or incompletely
+          documented.</p>
+        <p>Such misunderstandings could result in false classifications of application behavior.</p>
+        <h3>15.3 Internal Validity</h3>
+        <p>Caching, asynchronous processing, configuration differences, and timing-related behavior may
+          influence observed authorization decisions.</p>
+        <p>These factors must be considered when interpreting results.</p>
+        <h3>15.4 Measurement Validity</h3>
+        <p>An HTTP status code alone does not establish whether an unauthorized operation
+          succeeded.</p>
+        <p>The research must verify the actual security-relevant outcome using appropriate evidence from
+          the controlled environment.</p>
+        <h3>15.5 Reproducibility</h3>
+        <p>Commercial SaaS applications may change over time. Updates to application versions, policies,
+          and configurations may make previous observations difficult to reproduce.</p>
+        <h3>15.6 Black-Box Limitations</h3>
+        <p>Black-box testing can identify observable authorization discrepancies but may not reveal
+          their precise internal root causes.</p>
+        <p>Source-code access, application logs, or collaboration with system operators may be necessary
+          for deeper causal analysis.</p>`
+      },
+      { h: "<span class=\"n\">16</span>Expected Research Contributions", html: `
+        <p>The research is expected to produce five contributions.</p>
+        <h3>1. Authorization Inconsistency Taxonomy</h3>
+        <p>A structured classification of authorization inconsistencies covering tenant context, role
+          transitions, membership revocation, ownership, lifecycle states, service boundaries, and
+          property-level access.</p>
+        <h3>2. Repeatable Testing Methodology</h3>
+        <p>A controlled black-box methodology for evaluating authorization decisions across different
+          application dimensions and workflows.</p>
+        <h3>3. Synthetic Dataset and Testing Harness</h3>
+        <p>A reusable experimental framework containing synthetic identities, resources, predefined
+          policies, and test cases.</p>
+        <h3>4. Empirical Evaluation</h3>
+        <p>An evidence-based analysis of authorization consistency across the evaluated environments,
+          including positive, negative, and inconclusive observations.</p>
+        <h3>5. Practical Security Recommendations</h3>
+        <p>Recommendations for improving authorization consistency across multi-tenant application
+          components and distributed services.</p>
+        <p>The validity and significance of these contributions will be determined by the experimental
+          results.</p>`
+      },
+      { h: "<span class=\"n\">17</span>Provisional Research Timeline", html: `
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Phase</th><th>Research activity</th><th>Duration</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Systematic literature review and research-question refinement</td>
+                <td>3–4 weeks</td></tr>
+              <tr><td>2</td><td>Test environment selection and authorization model design</td>
+                <td>2–3 weeks</td></tr>
+              <tr><td>3</td><td>Experimental design and test-case development</td><td>2 weeks</td></tr>
+              <tr><td>4</td><td>Controlled experimentation and data collection</td><td>3–5 weeks</td></tr>
+              <tr><td>5</td><td>Data analysis and validation</td><td>2–3 weeks</td></tr>
+              <tr><td>6</td><td>Research writing, revision, and preparation for submission</td>
+                <td>3–4 weeks</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The timeline is indicative and may change depending on the availability of suitable research
+          environments, experimental complexity, and institutional approval requirements.</p>`
+      },
+      { h: "<span class=\"n\">18</span>Conclusion", html: `
+        <p>Authorization consistency is a fundamental security requirement in multi-tenant SaaS
+          applications.</p>
+        <p>Users, organizations, resources, and application services interact through complex
+          relationships that may change over time. Maintaining correct authorization decisions across
+          these relationships requires more than implementing isolated access-control checks.</p>
+        <p>This proposal presents a controlled empirical approach to investigating authorization
+          inconsistencies across tenant boundaries, role transitions, membership revocation, resource
+          ownership, lifecycle states, and distributed application services.</p>
+        <p>By developing a structured taxonomy, establishing repeatable experiments, and defining
+          measurable evaluation criteria, the research aims to provide a systematic methodology for
+          studying authorization consistency in multi-tenant environments.</p>
+        <p>The significance of the proposed work will ultimately depend on rigorous experimental design,
+          reproducible evidence, transparent measurements, and honest interpretation of both positive
+          and negative results.</p>
+        <p>The immediate next step is to implement the experimental environment, validate the proposed
+          metrics, and collect empirical observations before presenting the work as a completed research
+          paper.</p>`
+      },
+      { h: "References", html: `
+        <p>The following references provide a starting point for the literature review. Bibliographic
+          information should be checked against publisher records before final submission.</p>
+        <div class="refs">
+          <ol>
+            <li>Pang, R., et al. (2019). Zanzibar: Google's Consistent, Global Authorization System.
+              2019 USENIX Annual Technical Conference, 33–46. USENIX publication.</li>
+            <li>Hossain, A., Sizan, N. S., Kawsar, B., &amp; Saha, T. (2025). Automated Black-Box
+              Detection of Insecure Direct Object Reference (IDOR) Vulnerabilities in Web Applications.
+              IEEE RAAICON 2025. https://doi.org/10.1109/RAAICON69033.2025.11502030.</li>
+            <li>Mao, Y., Ma, X., &amp; Li, J. (2025). Research on API Security Gateway and Data Access
+              Control Model for Multi-Tenant Full-Stack Systems. 2025 International Conference on Big
+              Data Applications, Mechatronics Engineering and Automation.
+              https://doi.org/10.1109/BDAMEA68159.2025.11406329.</li>
+            <li>Melnychenko, A. V., &amp; Shaldenko, O. V. (2026). Two-Point Authorization Engine with
+              Revocable Sharing for Multitenant Environments. Information Technologies and Systems,
+              9(3), 102–118. https://doi.org/10.15407/intechsys.2026.03.102.</li>
+            <li>Tan, R., Zhang, Y., Liu, W., et al. (2026). TLBAC: A Zero-Trust Based
+              Cloud-Edge-Endpoint Access Control System Using Trusted Labels. Cybersecurity, 9,
+              Article 180. https://doi.org/10.1186/s42400-026-00616-0.</li>
+            <li>Wojtak, C., Weerasinghe, S., Rao, N., &amp; Cerny, T. (2026). Towards Automated Formal
+              Verification of Authorization Policy in Microservice Systems. Cluster Computing, 29(15),
+              Article 837. https://doi.org/10.1007/s10586-026-06522-x.</li>
+          </ol>
+        </div>`
+      }
+    ]
   }
 ];
 
@@ -407,7 +1403,9 @@ function renderReading(r){
     <article class="paper">
       <a class="back" href="#/"><span class="barr" aria-hidden="true">←</span> All research</a>
       <h1>${r.title}</h1>
+      ${r.subtitle ? `<p class="subline">${r.subtitle}</p>` : ""}
       ${r.tags && r.tags.length ? `<div class="ptags">${r.tags.map(t=>`<span>${t}</span>`).join("")}</div>` : ""}
+      ${r.note ? `<p class="note">${r.note}</p>` : ""}
       ${r.body ? r.body.map(s => `<section class="rs"><h2>${s.h}</h2>${s.html}</section>`).join("") : ""}
       ${r.pdf ? `
       <div class="pdf-frame">
