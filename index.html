@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0f0f11">
-<title>Sunil — Security Research</title>
-<meta name="description" content="Personal website of Sunil — security researcher focused on application security and vulnerability research.">
+<title>Khumraj — Security Research</title>
+<meta name="description" content="Personal website of Khumraj — security researcher focused on application security and vulnerability research.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600&display=swap" rel="stylesheet">
@@ -181,7 +181,7 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
 
 <header id="siteHead">
   <div class="wrap head-inner">
-    <a class="brand" href="#/">Sunil</a>
+    <a class="brand" href="#/">Khumraj</a>
     <nav aria-label="Site">
       <a href="#/" data-target="about">About</a>
       <a href="#/" data-target="research">Research</a>
@@ -221,8 +221,8 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
 
       <!-- Replace the X handle below with your real profile -->
       <dl class="facts">
-        <div><dt>Email</dt><dd><a href="mailto:sunil@robotah.com">sunil@robotah.com</a></dd></div>
-        <div><dt>X (Twitter)</dt><dd><a href="https://x.com/sunilrobotah" target="_blank" rel="noopener">@sunilrobotah</a></dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:khumraj@robotah.com">khumraj@robotah.com</a></dd></div>
+        <div><dt>X (Twitter)</dt><dd><a href="https://x.com/khumrajrobotah" target="_blank" rel="noopener">@khumrajrobotah</a></dd></div>
       </dl>
     </section>
 
@@ -234,7 +234,7 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
 
 <footer>
   <div class="wrap foot">
-    <span class="fbrand">Sunil</span>
+    <span class="fbrand">Khumraj</span>
   </div>
 </footer>
 
@@ -1437,8 +1437,8 @@ function route(){
 function showReading(r, badSlug){
   if (view === "home") savedScroll = window.scrollY;
   view = "reading";
-  if (r){ renderReading(r); document.title = r.title + " — Sunil"; }
-  else  { renderNotFound(badSlug || ""); document.title = "Not found — Sunil"; }
+  if (r){ renderReading(r); document.title = r.title + " — Khumraj"; }
+  else  { renderNotFound(badSlug || ""); document.title = "Not found — Khumraj"; }
   homeEl.hidden = true;
   readEl.hidden = false;
   jumpTo(0);
@@ -1446,7 +1446,7 @@ function showReading(r, badSlug){
 function showHome(){
   const wasReading = (view === "reading");
   view = "home";
-  document.title = "Sunil — Security Research";
+  document.title = "Khumraj — Security Research";
   readEl.hidden = true;
   homeEl.hidden = false;
   if (pendingScroll != null){
