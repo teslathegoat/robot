@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0f0f11">
-<title>Sunil — Research</title>
-<meta name="description" content="Personal research page of Sunil — robot learning, manipulation, tactile perception, and the sim-to-real gap.">
+<title>Sunil — Security Research</title>
+<meta name="description" content="Personal website of Sunil — security researcher focused on application security and vulnerability research.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600&display=swap" rel="stylesheet">
@@ -50,15 +50,14 @@ nav a:hover{color:var(--ink)}
 .label{font:500 .72rem var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
 .lede{font:400 clamp(1.2rem,2.4vw,1.35rem)/1.66 var(--serif);color:var(--ink);max-width:52ch;margin-top:24px}
 .body-p{font:400 .95rem/1.75 var(--sans);color:var(--body);max-width:62ch;margin-top:16px}
-.sec-intro{font:400 .94rem/1.7 var(--sans);color:var(--mut);max-width:56ch;margin-top:22px}
 
-/* ---------- research list (titles only) ---------- */
+/* ---------- research list (title + Read link only) ---------- */
 .work-list{margin-top:34px}
-.work{display:flex;align-items:baseline;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;
+.work{display:flex;align-items:baseline;justify-content:space-between;gap:14px 28px;flex-wrap:wrap;
   padding:22px 0;border-top:1px solid var(--line)}
 .work:last-child{border-bottom:1px solid var(--line)}
 .work h2{margin:0}
-.work h2 a{font:600 clamp(1.15rem,2.2vw,1.32rem)/1.4 var(--serif);color:var(--ink);
+.work h2 a{font:600 clamp(1.12rem,2.2vw,1.3rem)/1.4 var(--serif);color:var(--ink);
   text-decoration:none;letter-spacing:-.005em;transition:color .18s}
 .work h2 a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px;
   text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.35)}
@@ -141,13 +140,14 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
 
     <section id="about" class="sec reveal">
       <p class="label">About</p>
-      <p class="lede">I'm Sunil. I research how robots learn — manipulation, touch,
-        and the honest distance between simulation and the physical world.</p>
-      <p class="body-p">I'm a researcher at Robotah, where my week splits between training models
-        and watching them fail on real hardware. My background is machine learning; my daily work
-        is making clean ideas survive messy physics.</p>
-      <p class="body-p">Each paper below opens in the browser — read it right here,
-        nothing to download.</p>
+      <p class="lede">I'm Sunil, a security researcher. I care about how applications
+        work — and, more interestingly, how they fail.</p>
+      <p class="body-p">My focus is application security: probing real software for the
+        assumptions its authors never tested, understanding the root cause of each
+        vulnerability, and writing it up clearly enough that the next developer
+        doesn't ship the same bug.</p>
+      <p class="body-p">My published findings are listed below. Each opens as a PDF
+        you can read directly in the browser — nothing to download, nothing to sign up for.</p>
     </section>
 
     <section id="research" class="sec reveal">
@@ -157,8 +157,8 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
 
     <section id="contact" class="sec reveal">
       <p class="label">Contact</p>
-      <p class="sec-intro">The fastest way to reach me is email — I read everything myself
-        and usually reply within a day or two.</p>
+      <p class="body-p" style="margin-top:30px">For responsible disclosure questions, collaboration,
+        or anything else — email is fastest.</p>
 
       <!-- Replace the X handle below with your real profile -->
       <dl class="facts">
@@ -181,40 +181,45 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
 
 <script>
 /* ================================================================
-   Sunil — personal research site (single file, no build step)
+   ADD / EDIT RESEARCH POSTS HERE  —  this is the only part you touch
+   ----------------------------------------------------------------
+   To publish a new paper, add one entry to the list below:
 
-   Routing: reading pages live at hash routes that mirror the
-   /research/{slug}/read path pattern, e.g.
+       { slug: "my-new-bug",
+         title: "Authentication Bypass in Example Panel",
+         pdf:   "https://your-site.com/papers/my-new-bug.pdf" },
 
-       index.html#/research/ai/read
+   • slug  → becomes the page URL:  #/research/my-new-bug/read
+             (use lowercase letters, numbers and hyphens)
+   • title → shown in the Research list and on the reading page
+   • pdf   → direct link to the hosted PDF, embedded on the page
 
-   Each entry shows only its title on the homepage; opening it
-   embeds the corresponding PDF directly in the reading page.
+   The list and the reading pages update automatically —
+   no other code needs to change.
 
-   To customize: edit the RESEARCH array below — set `pdf` to the
-   URL of each hosted paper PDF. The URLs here are placeholders.
+   The PDF URLs below are placeholders; replace them with your own.
    ================================================================ */
 "use strict";
 
 const RESEARCH = [
   {
-    slug: "ai",
-    title: "Small World Models for Real Robots",
+    slug: "auth-bypass",
+    title: "Authentication Bypass in Multi-Tenant SaaS Panels",
     pdf: "https://pdfobject.com/pdf/sample.pdf"
   },
   {
-    slug: "robotics",
-    title: "Manipulation Without a Perfect Model",
+    slug: "xss-upload",
+    title: "Stored XSS Through File-Upload Metadata",
     pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
   },
   {
-    slug: "perception",
-    title: "Touch, Taken Seriously",
+    slug: "ssrf-metadata",
+    title: "Server-Side Request Forgery to Cloud Metadata Endpoints",
     pdf: "https://pdfobject.com/pdf/sample.pdf"
   },
   {
-    slug: "sim2real",
-    title: "The Sim-to-Real Gap, Measured Honestly",
+    slug: "idor-billing",
+    title: "IDOR Chains in Billing and Invoice APIs",
     pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
   }
 ];
@@ -242,12 +247,12 @@ function scrollToSection(target){
   if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
 }
 
-/* ---------------- research list (titles only) ---------------- */
+/* ---------------- research list (title + Read) ---------------- */
 function buildList(){
   document.getElementById("workList").innerHTML = RESEARCH.map(r => `
     <article class="work">
       <h2><a href="#/research/${r.slug}/read">${r.title}</a></h2>
-      <a class="rlink" href="#/research/${r.slug}/read">Read Research →</a>
+      <a class="rlink" href="#/research/${r.slug}/read">Read →</a>
     </article>`).join("");
 }
 
@@ -295,7 +300,7 @@ function showReading(r, badSlug){
 function showHome(){
   const wasReading = (view === "reading");
   view = "home";
-  document.title = "Sunil — Research";
+  document.title = "Sunil — Security Research";
   readEl.hidden = true;
   homeEl.hidden = false;
   if (pendingScroll != null){
