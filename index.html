@@ -77,7 +77,7 @@ nav a:hover{color:var(--ink)}
   padding-bottom:2px;transition:color .18s,border-color .18s}
 .facts dd a:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
 
-/* ---------- reading page (embedded PDF) ---------- */
+/* ---------- reading page ---------- */
 .paper{padding-top:48px}
 .back{display:inline-flex;align-items:center;gap:8px;font:500 .84rem var(--sans);color:var(--mut);
   text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px;
@@ -87,12 +87,35 @@ nav a:hover{color:var(--ink)}
 .back:hover .barr{transform:translateX(-3px)}
 .paper h1{font:600 clamp(1.5rem,3.6vw,1.9rem)/1.3 var(--serif);letter-spacing:-.01em;
   color:var(--ink);margin-top:28px;max-width:30ch}
-.pdf-frame{margin-top:26px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#000}
-.pdf-frame iframe{display:block;width:100%;height:min(82vh,880px);border:0}
+.ptags{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.ptags span{font:500 .68rem var(--sans);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+.rs h2{font:600 1.24rem/1.4 var(--serif);color:var(--ink);margin-top:42px}
+.rs h3{font:600 1.02rem/1.4 var(--serif);color:var(--ink);margin-top:30px}
+.rs .sub{font:500 .72rem var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin-top:24px}
+.rs p{font:400 1rem/1.8 var(--serif);color:var(--body);max-width:62ch;margin-top:15px}
+.rs strong{color:var(--ink);font-weight:500}
+.rs a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(255,255,255,.3);
+  text-underline-offset:3px;transition:text-decoration-color .18s}
+.rs a:hover{text-decoration-color:rgba(255,255,255,.75)}
+.rs ul{list-style:none;margin-top:14px;max-width:62ch}
+.rs ul li{position:relative;padding:9px 0 9px 26px;font:400 .93rem/1.7 var(--sans);color:var(--body);
+  border-top:1px dashed rgba(255,255,255,.06)}
+.rs ul li::before{content:"—";position:absolute;left:0;color:var(--faint)}
+.rs ol.steps{list-style:none;counter-reset:step;margin-top:14px;max-width:62ch}
+.rs ol.steps li{counter-increment:step;position:relative;padding:9px 0 9px 42px;
+  font:400 .93rem/1.7 var(--sans);color:var(--body);border-top:1px dashed rgba(255,255,255,.06)}
+.rs ol.steps li::before{content:counter(step,decimal-leading-zero);position:absolute;left:0;top:11px;
+  font:500 .72rem var(--sans);letter-spacing:.06em;color:var(--faint)}
 .nf-p{font:400 1.02rem/1.8 var(--serif);color:var(--body);margin-top:20px;max-width:56ch}
 .nf-p a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(255,255,255,.3);
   text-underline-offset:3px}
 .nf-p a:hover{text-decoration-color:rgba(255,255,255,.75)}
+
+/* ---------- embedded PDF viewer ---------- */
+.pdf-frame{margin-top:26px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#000}
+.pdf-frame iframe{display:block;width:100%;height:min(82vh,880px);border:0}
 
 /* ---------- footer (minimal) ---------- */
 footer{margin-top:96px;border-top:1px solid var(--line)}
@@ -150,7 +173,8 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
         curiosity gradually became more than an interest; it became the way I approach learning.</p>
       <p class="body-p">I've never been particularly good at limiting myself to a single discipline.
         I'm fascinated by people who think across boundaries, challenge conventional wisdom, and
-        pursue ideas beyond what they're already familiar with.</p>
+        pursue ideas beyond what they're already familiar with. I've long admired thinkers and
+        builders such as Bill Gates, Elon Musk, John D. Rockefeller, and Richard Feynman.</p>
       <p class="body-p">The philosophy of the early hacker culture resonates deeply with me:
         curiosity over credentials, understanding over assumptions, and the freedom to question how
         things are built rather than simply accepting how they work.</p>
@@ -197,29 +221,136 @@ footer{margin-top:96px;border-top:1px solid var(--line)}
 /* ================================================================
    ADD / EDIT RESEARCH POSTS HERE  —  this is the only part you touch
    ----------------------------------------------------------------
-   To publish a new paper, add one entry to the list below:
+   Each post can be one of two kinds:
 
-       { slug: "my-new-bug",
-         title: "Authentication Bypass in Example Panel",
-         pdf:   "https://your-site.com/papers/my-new-bug.pdf" },
+   1) A written post (full text rendered on the page):
 
-   • slug  → becomes the page URL:  #/research/my-new-bug/read
-             (use lowercase letters, numbers and hyphens)
+        { slug: "power-pages-stored-xss",
+          title: "Stored XSS via Unsafe Profile Rendering in Microsoft Power Pages",
+          tags: ["Fixed", "Authorized disclosure", "$3,000 reward"],
+          body: [
+            { h: "Section heading",
+              html: `<p>First paragraph…</p><p>Second paragraph…</p>` },
+            …more sections…
+          ] }
+
+   2) A PDF post (embedded PDF viewer):
+
+        { slug: "my-new-bug",
+          title: "Authentication Bypass in Example Panel",
+          pdf: "https://your-site.com/papers/my-new-bug.pdf" }
+
+   • slug  → becomes the page URL:  #/research/{slug}/read
+             (lowercase letters, numbers, hyphens)
    • title → shown in the Research list and on the reading page
-   • pdf   → direct link to the hosted PDF, embedded on the page
+   • tags  → optional small status labels under the title
+   • body  → optional written sections (HTML strings)
+   • pdf   → optional hosted PDF, embedded on the page
+   • If a post has both `body` and `pdf`, the text renders first
+     and the PDF appears below it.
 
-   The list and the reading pages update automatically —
+   The list and reading pages update automatically —
    no other code needs to change.
-
-   The PDF URLs below are placeholders; replace them with your own.
    ================================================================ */
 "use strict";
 
 const RESEARCH = [
   {
-    slug: "auth-bypass",
-    title: "Authentication Bypass in Multi-Tenant SaaS Panels",
-    pdf: "https://pdfobject.com/pdf/sample.pdf"
+    slug: "power-pages-stored-xss",
+    title: "Stored XSS via Unsafe Profile Rendering in Microsoft Power Pages",
+    tags: ["Fixed", "Authorized disclosure", "$3,000 reward"],
+    body: [
+      { h: "What is Microsoft Power Pages?", html: `
+        <p>Microsoft Power Pages is a low-code platform for building external-facing business websites
+          and portals. These applications can provide authenticated users with profile management,
+          customer support, and other business services.</p>
+        <p>Because these applications often serve users with different privileges, information submitted
+          by ordinary users may eventually be displayed in interfaces accessed by administrators.</p>
+        <p>This creates an important security boundary: user-controlled information must remain data,
+          regardless of where it is subsequently rendered.</p>
+        <p>The vulnerability described here demonstrates what can happen when that boundary is not
+          properly maintained.</p>`
+      },
+      { h: "The Vulnerability", html: `
+        <p class="sub">01. Stored XSS via Unsafe Rendering of Business Phone Number</p>
+        <h3>Description</h3>
+        <p>A stored cross-site scripting vulnerability was identified in the profile management
+          functionality of a Microsoft Power Pages application.</p>
+        <p>The Business Phone Number field accepted specially crafted input and persisted the submitted
+          value. After updating the profile, navigating back to the application's home page caused the
+          stored content to execute JavaScript.</p>
+        <p>The issue was not limited to the account that originally submitted the input. During testing,
+          the same stored content was also observed executing in an administrator's browser within the
+          same Power Pages application.</p>
+        <p>This demonstrated that user-controlled profile information could reach a privileged user's
+          browser and trigger JavaScript execution within the application's origin.</p>
+        <p>The underlying issue was unsafe HTML rendering of persisted user-controlled information.
+          Rather than consistently treating the stored profile value as untrusted text, the application
+          rendered it in a way that allowed browser-side execution.</p>
+        <h3>Steps to Reproduce</h3>
+        <ol class="steps">
+          <li>Navigate to https://pstnsd.powerappsportals.com/ and authenticate.</li>
+          <li>Navigate to the profile management section.</li>
+          <li>Locate the Business Phone Number field.</li>
+          <li>Submit specially crafted input that triggers JavaScript execution.</li>
+          <li>Click the submit button to save the profile changes.</li>
+          <li>Navigate back to the application's home page.</li>
+          <li>Observe the JavaScript execution caused by the previously stored input.</li>
+          <li>Verify that the stored content also executes when the affected home page is accessed
+            through an administrator's account.</li>
+        </ol>
+        <h3>Proof of Concept</h3>
+        <p>An unlisted demonstration video was provided as part of the original vulnerability report.</p>
+        <!-- Paste your unlisted demo video URL in the href below -->
+        <p><a href="#" target="_blank" rel="noopener">Watch the proof of concept →</a></p>
+        <h3>Impact</h3>
+        <p>The vulnerability enabled persistent JavaScript execution in the context of the affected
+          Power Pages application.</p>
+        <p>Its impact was particularly significant because the stored content also executed in an
+          administrator's browser.</p>
+        <p>This created a privilege-boundary security issue: an ordinary authenticated user could submit
+          persistent content that subsequently executed in the browser of a more privileged application
+          user.</p>
+        <p>Depending on the administrator's available functionality, browser security controls, and
+          session protections, this type of vulnerability could potentially expose privileged
+          application interactions to attacker-controlled scripts.</p>
+        <p>The vulnerability was successfully reported, fixed by the affected organization, and
+          rewarded with $3,000.</p>`
+      },
+      { h: "What This Finding Reveals", html: `
+        <p>This finding highlights an important security consideration in business applications:
+          user-controlled information does not become trustworthy simply because it has been stored
+          in a database.</p>
+        <p>Profile management functionality is often treated as relatively low risk because users are
+          generally restricted to modifying their own information. However, the same information may
+          later be consumed by different application components and users with greater privileges.</p>
+        <p>Three aspects are particularly important:</p>
+        <ul>
+          <li><strong>Persistent input handling:</strong> Data submitted by users must remain untrusted
+            throughout its lifecycle, including after database storage.</li>
+          <li><strong>Unsafe rendering:</strong> HTML rendering without appropriate sanitization or
+            context-aware output encoding can transform ordinary profile information into executable
+            content.</li>
+          <li><strong>Privilege boundaries:</strong> The security impact changes when user-controlled
+            information is rendered in the browser of a privileged user.</li>
+        </ul>
+        <p>The investigation demonstrates why security testing should examine not only where data enters
+          an application, but also where that data eventually gets rendered.</p>`
+      },
+      { h: "Defensive Considerations", html: `
+        <p>Developers should consider several protections against this class of vulnerability:</p>
+        <ul>
+          <li>Apply context-aware output encoding whenever user-controlled information is rendered.</li>
+          <li>Avoid inserting untrusted content through unsafe HTML rendering mechanisms.</li>
+          <li>Sanitize HTML using an established allowlist-based sanitizer when HTML input is genuinely
+            required.</li>
+          <li>Review shared profile components and dashboards used by both ordinary users and
+            administrators.</li>
+          <li>Treat Content Security Policy as an additional security layer, not a replacement for
+            proper output handling.</li>
+        </ul>`
+      }
+    ]
   },
   {
     slug: "xss-upload",
@@ -270,15 +401,18 @@ function buildList(){
     </article>`).join("");
 }
 
-/* ---------------- reading page (embedded PDF) ---------------- */
+/* ---------------- reading page (written text and/or embedded PDF) ---------------- */
 function renderReading(r){
   readEl.innerHTML = `
     <article class="paper">
       <a class="back" href="#/"><span class="barr" aria-hidden="true">←</span> All research</a>
       <h1>${r.title}</h1>
+      ${r.tags && r.tags.length ? `<div class="ptags">${r.tags.map(t=>`<span>${t}</span>`).join("")}</div>` : ""}
+      ${r.body ? r.body.map(s => `<section class="rs"><h2>${s.h}</h2>${s.html}</section>`).join("") : ""}
+      ${r.pdf ? `
       <div class="pdf-frame">
         <iframe src="${r.pdf}" title="${r.title} — embedded PDF reader" loading="lazy"></iframe>
-      </div>
+      </div>` : ""}
     </article>`;
 }
 function renderNotFound(slug){
